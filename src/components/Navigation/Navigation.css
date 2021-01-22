@@ -1,0 +1,28 @@
+.navigation {
+  
+}
+
+.navigation__list {
+  height: 100%;
+  display: flex;
+}
+
+.navigation__list-item {
+  margin-right: 32px;
+}
+
+.navigation__list-item:last-of-type {
+  margin-right: 0;
+}
+
+.navigation__link {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.navigation__link_active {
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid;
+}

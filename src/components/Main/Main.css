@@ -1,0 +1,4 @@
+.cover {
+  min-height: 576px;
+  background: center / cover url(../../images/banner.png);
+}

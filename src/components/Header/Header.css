@@ -1,0 +1,53 @@
+.header {
+  min-height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid;
+}
+
+.header_type_main-page {
+  color: #fff;
+  border-color: #ffffff20;
+}
+
+.header_type_main-page .header__link_active {
+  border-bottom-color: #fff;
+}
+
+.header_type_secondary-page .header__link_active {
+  border-bottom-color: #1A1B22;
+}
+
+.header_type_secondary-page {
+  border-color: #1A1B2220;
+}
+
+.header__navigation {
+  margin-left: 32px;
+  margin-right: 32px;
+}
+
+.header__control {
+  display: flex;
+  min-height: inherit;
+  align-items: stretch;
+}
+
+.header__button {
+  height: 48px;
+  align-self: center;
+  background-color: transparent;
+  border: 1px solid;
+  font-size: 18px;
+}
+
+.header__button_type_main-page {
+  border-color: #fff;
+  color: #fff;
+}
+
+.header__button_type_secondary-page {
+  border-color:#1A1B22;
+  color: #1A1B22;
+}
