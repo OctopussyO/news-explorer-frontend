@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
-import joinClassNames from '../../utils/joinClassNames';
+import joinCN from '../../utils/joinClassNames';
 import './Button.css';
 
 const Button = ({
@@ -10,9 +10,9 @@ const Button = ({
   isActive = true,
 }) => {
   const { robotoText } = useContext(CommonPageStylesContext);
-  const className = joinClassNames({
-    basicClasses: ['button', robotoText, outerClassName],
-    conditionClasses: {
+  const className = joinCN({
+    basic: ['button', robotoText, outerClassName],
+    condition: {
       'button_type_submit': isSubmit,
       'button_active': isSubmit & isActive,
       'button_inactive': isSubmit & !isActive,

@@ -1,8 +1,8 @@
-const joinClassNames = ({ basicClasses = [], conditionClasses = {} }) => {
-  const condition = Object.keys(conditionClasses).length > 0
-    ? Object.keys(conditionClasses).map((key) => {
+const joinClassNames = ({ basic = [], condition = {} }) => {
+  const conditionArr = Object.keys(condition).length > 0
+    ? Object.keys(condition).map((key) => {
       if (key.trim()) {
-        if (conditionClasses[key]) {
+        if (condition[key]) {
           return key;
         }
       }
@@ -10,7 +10,7 @@ const joinClassNames = ({ basicClasses = [], conditionClasses = {} }) => {
     })
     : [];
 
-    return [...basicClasses, ...condition].filter((el) => {
+    return [...basic, ...conditionArr].filter((el) => {
       if (el) {
         return Boolean(el.trim()); 
       }

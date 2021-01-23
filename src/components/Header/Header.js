@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
-import joinClassNames from '../../utils/joinClassNames';
+import joinCN from '../../utils/joinClassNames';
 import Button from '../Button/Button';
 import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
@@ -12,17 +12,17 @@ const Header = ({
 }) => {
   const { pageNarrowClassName } = useContext(CommonPageStylesContext);
 
-  const headerClassName = joinClassNames({
-    basicClasses: ['header', pageNarrowClassName],
-    conditionClasses: {
+  const headerClassName = joinCN({
+    basic: ['header', pageNarrowClassName],
+    condition: {
       'header_type_main-page': isMainPage,
       'header_type_secondary-page': !isMainPage,
     },
   });
   
-  const headerButtonClassName = joinClassNames({
-    basicClasses: ['header__button'],
-    conditionClasses: {
+  const headerButtonClassName = joinCN({
+    basic: ['header__button'],
+    condition: {
       'header__button_type_main-page': isMainPage,
       'header__button_type_secondary-page': !isMainPage,
     },

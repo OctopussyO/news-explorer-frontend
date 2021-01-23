@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
-import joinClassNames from '../../utils/joinClassNames';
+import joinCN from '../../utils/joinClassNames';
 import Link from '../Link/Link';
 import './Footer.css';
 
@@ -12,10 +12,10 @@ const Footer = () => {
     pageListClassName,
   } = useContext(CommonPageStylesContext);
 
-  const footerClassName = joinClassNames({ basicClasses: ['footer', pageNarrowClassName] });
-  const footerCopyrightClassName = joinClassNames({ basicClasses: ['footer__copyright', robotoText] });
-  const footerLinksListClassName = joinClassNames({ basicClasses: ['footer__list', pageListClassName] });
-  const footerLinkClassName = joinClassNames({ basicClasses: ['footer__link', robotoText] });
+  const footerClassName = joinCN({ basic: ['footer', pageNarrowClassName] });
+  const footerCopyrightClassName = joinCN({ basic: ['footer__copyright', robotoText] });
+  const footerLinksListClassName = joinCN({ basic: ['footer__list', pageListClassName] });
+  const footerLinkClassName = joinCN({ basic: ['footer__link', robotoText] });
   
   return (
     <footer className={footerClassName}>

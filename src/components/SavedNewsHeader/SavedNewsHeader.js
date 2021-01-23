@@ -1,14 +1,14 @@
 import { useContext } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
-import joinClassNames from '../../utils/joinClassNames';
+import joinCN from '../../utils/joinClassNames';
 import './SavedNewsHeader.css';
 
 const SavedNewsHeader = () => {
   const { pageNarrowClassName, robotoText, robotoSlabText } = useContext(CommonPageStylesContext);
-  const sectionClassName = joinClassNames({ basicClasses: ['saved-news-header', pageNarrowClassName] });
-  const titleClassName = joinClassNames({ basicClasses: ['saved-news-header__title', robotoText] });
-  const subtitleClassName = joinClassNames({ basicClasses: ['saved-news-header__subtitle', robotoSlabText] });
-  const keywordsClassname = joinClassNames({ basicClasses: ['saved-news-header__keywords', robotoText] });
+  const sectionClassName = joinCN({ basic: ['saved-news-header', pageNarrowClassName] });
+  const titleClassName = joinCN({ basic: ['saved-news-header__title', robotoText] });
+  const subtitleClassName = joinCN({ basic: ['saved-news-header__subtitle', robotoSlabText] });
+  const keywordsClassname = joinCN({ basic: ['saved-news-header__keywords', robotoText] });
   
   return (
     <section className={sectionClassName}>

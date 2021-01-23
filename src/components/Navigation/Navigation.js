@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { CommonPageStylesContext } from "../../contexts/CommonPageStylesContext";
-import joinClassNames from "../../utils/joinClassNames";
+import joinCN from "../../utils/joinClassNames";
 import Link from "../Link/Link";
 import './Navigation.css';
 
@@ -10,17 +10,14 @@ const Navigation = ({
   outerLinkClassName,
   outerActiveLinkClassName,
 }) => {
-  const {
-    robotoText,
-    pageListClassName,
-  } = useContext(CommonPageStylesContext);
+  const { robotoText, pageListClassName } = useContext(CommonPageStylesContext);
 
-  const navClassName = joinClassNames({ basicClasses: ['navigation', outerClassName] });
-  const navLinkClassName = joinClassNames({ basicClasses: ['navigation__link', outerLinkClassName, robotoText] });
-  const navLinkActiveClassName = joinClassNames({
-    basicClasses: ['navigation__link_active', outerActiveLinkClassName],
+  const navClassName = joinCN({ basic: ['navigation', outerClassName] });
+  const navLinkClassName = joinCN({ basic: ['navigation__link', outerLinkClassName, robotoText] });
+  const navLinkActiveClassName = joinCN({
+    basic: ['navigation__link_active', outerActiveLinkClassName],
   });
-  const navListClassName = joinClassNames({ basicClasses: ['navigation__list', pageListClassName] });
+  const navListClassName = joinCN({ basic: ['navigation__list', pageListClassName] });
 
   return (
     <nav className={navClassName}>

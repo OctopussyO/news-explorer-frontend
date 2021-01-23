@@ -1,5 +1,5 @@
 import { Link as InnerLink, NavLink } from 'react-router-dom';
-import joinClassNames from '../../utils/joinClassNames';
+import joinCN from '../../utils/joinClassNames';
 import './Link.css';
 
 const Link = ({
@@ -11,7 +11,7 @@ const Link = ({
   exact = false,
   path,
 }) => {
-  const className = joinClassNames({ basicClasses: ['link', outerClassName] });
+  const className = joinCN({ basic: ['link', outerClassName] });
 
   return (
     <>
