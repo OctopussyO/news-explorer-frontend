@@ -9,7 +9,6 @@ const Main = ({
       <section className="cover">
         <Header isMainPage={true} isLoggedIn={isLoggedIn} />
       </section>
-
     </>
   );
 }
