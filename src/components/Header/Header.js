@@ -10,9 +10,7 @@ const Header = ({
   isMainPage = false,
   isLoggedIn,
 }) => {
-  const {
-    pageNarrowClassName,
-  } = useContext(CommonPageStylesContext);
+  const { pageNarrowClassName } = useContext(CommonPageStylesContext);
 
   const headerClassName = joinClassNames({
     basicClasses: ['header', pageNarrowClassName],

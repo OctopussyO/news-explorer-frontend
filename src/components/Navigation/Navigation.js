@@ -17,18 +17,35 @@ const Navigation = ({
 
   const navClassName = joinClassNames({ basicClasses: ['navigation', outerClassName] });
   const navLinkClassName = joinClassNames({ basicClasses: ['navigation__link', outerLinkClassName, robotoText] });
-  const navLinkActiveClassName = joinClassNames({ basicClasses: ['navigation__link_active', outerActiveLinkClassName] });
+  const navLinkActiveClassName = joinClassNames({
+    basicClasses: ['navigation__link_active', outerActiveLinkClassName],
+  });
   const navListClassName = joinClassNames({ basicClasses: ['navigation__list', pageListClassName] });
 
   return (
     <nav className={navClassName}>
       <ul className={navListClassName}>
         <li className="navigation__list-item">
-          <Link exact={true} path="/" isNav={true} outerClassName={navLinkClassName} activeClassName={navLinkActiveClassName}>Главная</Link>
+          <Link
+            exact={true}
+            path="/"
+            isNav={true}
+            outerClassName={navLinkClassName}
+            activeClassName={navLinkActiveClassName}
+          >
+            Главная
+          </Link>
         </li>
         { isLoggedIn && (
           <li className="navigation__list-item">
-            <Link path="/saved-news" isNav={true} outerClassName={navLinkClassName} activeClassName={navLinkActiveClassName}>Сохранённые статьи</Link>
+            <Link
+              path="/saved-news"
+              isNav={true}
+              outerClassName={navLinkClassName}
+              activeClassName={navLinkActiveClassName}
+            >
+              Сохранённые статьи
+            </Link>
           </li>
         ) }
       </ul>
