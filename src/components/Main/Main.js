@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import joinClassNames from '../../utils/joinClassNames';
 import joinCN from '../../utils/joinClassNames';
+import About from '../About/About';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import './Main.css';
@@ -9,9 +10,8 @@ import './Main.css';
 const Main = ({
   isLoggedIn,
 }) => {
-  const { robotoText, robotoSlabText, pageNarrowClassName } = useContext(CommonPageStylesContext);
+  const { robotoText, robotoSlabText } = useContext(CommonPageStylesContext);
 
-  // const coverContentClassName = joinClassNames({ basic: ['cover__content', pageNarrowClassName] });
   const titleClassName = joinCN({ basic: ['cover__title', robotoSlabText] });
   const subtitleClassName = joinCN({ basic: ['cover__subtitle', robotoText] });
 
@@ -30,6 +30,7 @@ const Main = ({
           <SearchForm outerClassName="cover__search-form" />
         </div>
       </section>
+      <About />
     </>
   );
 }

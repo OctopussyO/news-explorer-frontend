@@ -1,0 +1,37 @@
+.about {
+  display: flex;
+  padding-top: 80px;padding-bottom: 80px;
+}
+
+.about__avatar {
+  width: 464px;
+  height: 464px;
+  border-radius: 50%;
+}
+
+.about__description {
+  display: flex;
+  flex-direction: column;
+  padding-right: 112px;
+  padding-left: 56px;
+}
+
+.about__title {
+  display: inline-flex;
+  align-items: flex-end;
+  max-height: 80px;
+  margin-top: 0;
+  margin-bottom: 24px;
+  flex-grow: 1;
+  color: #1A1B22;
+  font-size: 40px;
+  line-height: 46px;
+}
+
+.about__paragraph {
+  color: #1A1B22;
+  font-size: 18px;
+  line-height: 24px;
+  margin-top: 0;
+  margin-bottom: 24px;
+}
