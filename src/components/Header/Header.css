@@ -11,16 +11,34 @@
   border-color: #ffffff20;
 }
 
+.header_type_secondary-page {
+  border-color: #1A1B2220;
+}
+
+.header_type_main-page .header__link {
+  color: #B6BCBF;
+}
+
+.header_type_main-page .header__link:hover {
+  color: #fff;
+}
+
 .header_type_main-page .header__link_active {
+  color: #fff;
   border-bottom-color: #fff;
 }
 
-.header_type_secondary-page .header__link_active {
-  border-bottom-color: #1A1B22;
+.header_type_secondary-page .header__link {
+  color: #D1D2D6;
 }
 
-.header_type_secondary-page {
-  border-color: #1A1B2220;
+.header_type_secondary-page .header__link:hover {
+  color: #1A1B22;
+}
+
+.header_type_secondary-page .header__link_active {
+  color: #1A1B22;
+  border-bottom-color: #1A1B22;
 }
 
 .header__navigation {
@@ -44,11 +62,19 @@
 }
 
 .header__button_type_main-page {
-  border-color: #fff;
   color: #fff;
+  border-color: #D1D2D6;
+}
+
+.header__button_type_main-page:hover {
+  border-color: #fff;
 }
 
 .header__button_type_secondary-page {
-  border-color:#1A1B22;
   color: #1A1B22;
+  border-color: #B6BCBF;;
+}
+
+.header__button_type_secondary-page:hover {
+  border-color:#1A1B22;
 }
