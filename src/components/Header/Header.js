@@ -3,6 +3,7 @@ import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext'
 import joinCN from '../../utils/joinClassNames';
 import Button from '../Button/Button';
 import Logo from '../Logo/Logo';
+import LogoutIcon from '../svg/LogoutIcon';
 import Navigation from '../Navigation/Navigation';
 import './Header.css';
 
@@ -40,8 +41,11 @@ const Header = ({
         />
         <Button outerClassName={headerButtonClassName}>
           { isLoggedIn
-            ? 'Грета'
-            : 'Авторизоваться'
+            ? (
+              <>
+                Грета <LogoutIcon className="header__logout-icon" fill={isMainPage ? "#fff" : "#1A1B22"} />
+              </>
+            ) : 'Авторизоваться'
           }
         </Button>
       </div>

@@ -78,3 +78,7 @@
 .header__button_type_secondary-page:hover {
   border-color:#1A1B22;
 }
+
+.header__logout-icon {
+  margin-left: 10px;
+}

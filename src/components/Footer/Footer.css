@@ -21,7 +21,7 @@
 
 .footer__list {
   display: flex;
-  margin-right: 36px;
+  margin-right: 48px;
 }
 
 .footer__list:last-of-type {
@@ -29,14 +29,33 @@
 }
 
 .footer__list-item {
-  margin-right: 24px;
+  margin-right: 36px;
 }
 
 .footer__list-item:last-of-type {
   margin-right: 0;
 }
 
+.footer__icon-list-item {
+  margin-right: 24px;
+}
+
+.footer__icon-list-item:last-of-type {
+  margin-right: 0;
+}
+
 .footer__link {
   font-size: 18px;
   line-height: 24px;
+}
+
+.footer__link:hover {
+  color: #D1D2D6;
+}
+
+.footer__icon {
+  transition: .3s ease-in-out;
+}
+.footer__icon-list-item:hover .footer__icon {
+  fill: #D1D2D6;
 }

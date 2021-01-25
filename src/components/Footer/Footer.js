@@ -1,5 +1,7 @@
 import { useContext } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
+import FBIcon from '../svg/FBIcon';
+import GHIcon from '../svg/GHIcon';
 import joinCN from '../../utils/joinClassNames';
 import Link from '../Link/Link';
 import './Footer.css';
@@ -36,14 +38,14 @@ const Footer = () => {
           </li>
         </ul>
         <ul className={footerLinksListClassName}>
-          <li className="footer__list-item">
-            <Link isOuter={true} path="" outerClassName={footerLinkClassName}>
-              П
+          <li className="footer__icon-list-item">
+            <Link isOuter={true} path="https://github.com/OctopussyO" outerClassName={footerLinkClassName}>
+              <GHIcon pathClessName="footer__icon" />
             </Link>
           </li>
-          <li className="footer__list-item">
-            <Link isOuter={true} path="" outerClassName={footerLinkClassName}>
-              П
+          <li className="footer__icon-list-item">
+            <Link isOuter={true} path="https://www.facebook.com/vosmikiska" outerClassName={footerLinkClassName}>
+              <FBIcon pathClessName="footer__icon" />
             </Link>
           </li>
         </ul>

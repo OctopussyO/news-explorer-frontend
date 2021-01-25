@@ -1,5 +1,5 @@
 .link {
   text-decoration: none;
   color: inherit;
-  transition: .2s linear;
+  transition: .3s ease-in-out;
 }
