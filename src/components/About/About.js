@@ -17,8 +17,8 @@ const About = () => {
         <h3 className={titleClassName}>
           Об авторе
         </h3>
-        { authorConfig.info.map((el) => (
-          <p className={paragraphClassName}>
+        { authorConfig.info.map((el, i) => (
+          <p className={paragraphClassName} key={i}>
             { el }
           </p>
         )) }

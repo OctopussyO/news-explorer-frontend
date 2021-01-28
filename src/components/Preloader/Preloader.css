@@ -20,5 +20,5 @@
 	bottom: 0;
 	margin: auto;
 	
-	animation: spin .75s infinite linear;
+	animation: spin .75s infinite ease-out;
 }

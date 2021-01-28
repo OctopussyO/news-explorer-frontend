@@ -14,8 +14,8 @@
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
-  padding-left: calc((100% - 1236px)/2);
-  padding-right: calc((100% - 1236px)/2);
+  padding-left: calc((100% - 1232px)/2);
+  padding-right: calc((100% - 1232px)/2);
   
 }
 
@@ -34,9 +34,9 @@
   font-family: 'Roboto Slab', 'Times New Roman', Times, serif;
 }
 
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 1280px) {
   .page__narrow {
-    padding-left: 104px;
-    padding-right: 104px;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 }

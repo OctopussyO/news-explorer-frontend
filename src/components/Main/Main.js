@@ -1,9 +1,10 @@
 import { useContext } from 'react';
+import { сards } from '../../utils/testCards';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
-import joinClassNames from '../../utils/joinClassNames';
 import joinCN from '../../utils/joinClassNames';
 import About from '../About/About';
 import Header from '../Header/Header';
+import NewsCardList from '../NewsCardList/NewsCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import './Main.css';
 
@@ -30,6 +31,7 @@ const Main = ({
           <SearchForm outerClassName="cover__search-form" />
         </div>
       </section>
+      <NewsCardList cards={сards} isVisible={true} />
       <About />
     </>
   );

@@ -35,7 +35,10 @@
 
 .search-form__button {
   position: absolute;
-  width: 168px;
   top: -1px;
   right: -1px;
+  width: 168px;
+  padding-left: 18px;
+  padding-right: 18px;
+  border-radius: 100px;
 }

@@ -54,11 +54,14 @@
 
 .header__button {
   height: 48px;
-  align-self: center;
+  padding-left: 18px;
+  padding-right: 18px;
+  border-radius: 100px;
   background-color: transparent;
   border: 1px solid;
   font-size: 18px;
   line-height: 24px;
+  align-self: center;
 }
 
 .header__button_type_main-page {

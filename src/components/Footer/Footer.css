@@ -54,7 +54,7 @@
 }
 
 .footer__icon {
-  transition: .3s ease-in-out;
+  transition: .3s ease-out;
 }
 .footer__icon-list-item:hover .footer__icon {
   fill: #D1D2D6;

@@ -27,7 +27,7 @@ const Footer = () => {
       <div className="footer__links">
         <ul className={footerLinksListClassName}>
           <li className="footer__list-item">
-            <Link to="/" outerClassName={footerLinkClassName}>
+            <Link path="/" outerClassName={footerLinkClassName}>
               Главная
             </Link>
           </li>
@@ -40,12 +40,12 @@ const Footer = () => {
         <ul className={footerLinksListClassName}>
           <li className="footer__icon-list-item">
             <Link isOuter={true} path="https://github.com/OctopussyO" outerClassName={footerLinkClassName}>
-              <GHIcon pathClessName="footer__icon" />
+              <GHIcon pathClassName="footer__icon" />
             </Link>
           </li>
           <li className="footer__icon-list-item">
             <Link isOuter={true} path="https://www.facebook.com/vosmikiska" outerClassName={footerLinkClassName}>
-              <FBIcon pathClessName="footer__icon" />
+              <FBIcon pathClassName="footer__icon" />
             </Link>
           </li>
         </ul>

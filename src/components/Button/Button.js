@@ -8,6 +8,7 @@ const Button = ({
   outerClassName,
   isSubmit = false,
   isActive = true,
+  onClick,
 }) => {
   const { robotoText } = useContext(CommonPageStylesContext);
   const className = joinCN({
@@ -21,7 +22,7 @@ const Button = ({
   const type = isSubmit ? 'submit' : 'button';
 
   return (
-    <button type={type} className={className} disabled={!isActive}>
+    <button type={type} className={className} disabled={!isActive} onClick={onClick}>
       {children}
     </button>
   );
