@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
+import delay from '../../utils/delay';
 import joinCN from '../../utils/joinClassNames';
 import Button from '../Button/Button';
 import Popup from '../Popup/Popup';
@@ -27,8 +28,6 @@ const PopupWithForm = ({
   // useEffect(() => {
   //   setErrorMessage('Такой пользователь уже есть');
   // }, []);
-
-  const delay = async (ms) => await new Promise(resolve => setTimeout(resolve, ms));
 
   const handleBtnClick = async () => {
     onClose();

@@ -56,3 +56,27 @@
 .popup__close-btn:hover .popup__close-icon {
   opacity: .8;
 }
+
+.popup__info-text {
+  margin-top: 0;
+  margin-bottom: 14px;
+  color: #000000;
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: 900;
+}
+
+.popup__link-button {
+  display: inline;
+  width: fit-content;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  color: #2F71E5;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.popup__link-button:hover {
+  color: #347EFF;
+}

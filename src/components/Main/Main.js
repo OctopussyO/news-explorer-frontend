@@ -9,6 +9,9 @@ import SearchForm from '../SearchForm/SearchForm';
 import './Main.css';
 import PopupLogin from '../PopupLogin/PopupLogin';
 import PopupRegister from '../PopupRegister/PopupRegister';
+import PopupInfo from '../PopupInfo/PopupInfo';
+import { SUCCESS_REGISTRATION_MESSAGE } from '../../utils/constants';
+import delay from '../../utils/delay';
 
 const Main = ({
   onLogout,
@@ -39,9 +42,11 @@ const Main = ({
     closeAllPopups();
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     onRegister();
     closeAllPopups();
+    await delay(500);
+    openInfoPopup();
   };
 
   // СТИЛИ
@@ -77,6 +82,13 @@ const Main = ({
         onClose={closeAllPopups}
         onRegister={handleRegister}
         onChangePopup={openLoginPopup}
+      />
+      <PopupInfo
+        isOpen={isInfoPopupOpen}
+        onClose={closeAllPopups}
+        onBtnClick={openLoginPopup}
+        infoText={SUCCESS_REGISTRATION_MESSAGE}
+        linkBtnTitle="Войти"
       />
     </>
   );

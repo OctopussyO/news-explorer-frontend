@@ -10,10 +10,10 @@ const joinClassNames = ({ basic = [], condition = {} }) => {
     })
     : [];
 
-    return [...basic, ...conditionArr].filter((el) => {
-      if (el) {
-        return Boolean(el.trim()); 
-      }
+  return [...basic, ...conditionArr].filter((el) => {
+    if (el) {
+      return Boolean(el.trim()); 
+    }
   }).join(' ');
 };
 
