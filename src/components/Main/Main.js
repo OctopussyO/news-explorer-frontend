@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { сards } from '../../utils/testCards';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import joinCN from '../../utils/joinClassNames';
@@ -7,18 +7,46 @@ import Header from '../Header/Header';
 import NewsCardList from '../NewsCardList/NewsCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import './Main.css';
+import PopupLogin from '../PopupLogin/PopupLogin';
 
-const Main = () => {
+const Main = ({
+  onLogout,
+  onLogin,
+}) => {
+  const [isLoginPopupOpen, setLoginPopupState] = useState(false);
+  const [isRegisterPopupOpen, setRegisterPopupState] = useState(false);
+  const [isInfoPopupOpen, setInfoPopupState] = useState(false);
+
+  const openLoginPopup = () => setLoginPopupState(true);
+  const openRegisterPopup= () => setRegisterPopupState(true);
+  const openInfoPopup = () => setInfoPopupState(true);
+
+  const closeAllPopups = () => {
+    setLoginPopupState(false);
+    setRegisterPopupState(false);
+    setInfoPopupState(false);
+  };
+
+  const handleLogin = () => {
+    onLogin();
+    closeAllPopups();
+  };
+
+  const handleLogout = () => {
+    onLogout();
+    closeAllPopups();
+  }
+
+  // СТИЛИ
   const { robotoText, robotoSlabText } = useContext(CommonPageStylesContext);
 
   const titleClassName = joinCN({ basic: ['cover__title', robotoSlabText] });
   const subtitleClassName = joinCN({ basic: ['cover__subtitle', robotoText] });
 
-
   return (
     <>
       <section className="cover">
-        <Header isMainPage={true} />
+        <Header isMainPage={true} onLogoutClick={handleLogout} onLoginClick={openLoginPopup} />
         <div className="cover__content">
           <h2 className={titleClassName}>
             Что творится в мире?
@@ -31,6 +59,7 @@ const Main = () => {
       </section>
       <NewsCardList cards={сards} isVisible={true} />
       <About />
+      <PopupLogin isOpen={isLoginPopupOpen} onClose={closeAllPopups} onLogin={handleLogin} />
     </>
   );
 }

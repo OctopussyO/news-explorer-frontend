@@ -10,9 +10,13 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 const Header = ({
   isMainPage = false,
+  onLogoutClick,
+  onLoginClick,
 }) => {
   const { isLoggedIn } = useContext(CurrentUserContext);
-  const { pageNarrowClassName } = useContext(CommonPageStylesContext);
+
+  // СТИЛИ
+  const { pageNarrowClassName, robotoText } = useContext(CommonPageStylesContext);
 
   const headerClassName = joinCN({
     basic: ['header', pageNarrowClassName],
@@ -22,7 +26,7 @@ const Header = ({
     },
   });
   const headerButtonClassName = joinCN({
-    basic: ['header__button'],
+    basic: ['header__button', robotoText],
     condition: {
       'header__button_type_main-page': isMainPage,
       'header__button_type_secondary-page': !isMainPage,
@@ -38,15 +42,17 @@ const Header = ({
           outerLinkClassName="header__link"
           outerActiveLinkClassName="header__link_active"
         />
-        <Button outerClassName={headerButtonClassName}>
-          { isLoggedIn
-            ? (
-              <>
-                Грета <LogoutIcon className="header__logout-icon" fill={isMainPage ? "#fff" : "#1A1B22"} />
-              </>
-            ) : 'Авторизоваться'
-          }
-        </Button>
+        { isLoggedIn
+          ? (
+            <Button outerClassName={headerButtonClassName} onClick={onLogoutClick}>
+              Грета <LogoutIcon className="header__logout-icon" fill={isMainPage ? "#fff" : "#1A1B22"} />
+            </Button>
+          ) : (
+            <Button outerClassName={headerButtonClassName} onClick={onLoginClick}>
+              Авторизоваться
+            </Button>
+          )
+        }
       </div>
     </header>
   );

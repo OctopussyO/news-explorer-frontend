@@ -9,8 +9,6 @@ const Button = ({
   isSubmit = false,
   isActive = true,
   onClick,
-  onMouseEnter,
-  onMouseLeave,
 }) => {
   const { robotoText } = useContext(CommonPageStylesContext);
   const className = joinCN({

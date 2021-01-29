@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
-import joinClassNames from '../../utils/joinClassNames';
 import joinCN from '../../utils/joinClassNames';
 import Button from '../Button/Button';
 import './SearchForm.css';
@@ -10,7 +9,9 @@ const SearchForm = ({
 }) => {
   const { robotoText } = useContext(CommonPageStylesContext);
   const formClassName = joinCN({ basic: ['search-form', outerClassName] });
-  const inputClassName = joinClassNames({ basic: ['search-form__input', robotoText] });
+  const inputClassName = joinCN({ basic: ['search-form__input', robotoText] });
+  const buttonClassName = joinCN({ basic: ['search-form__button', robotoText] });
+  
   return (
     <form className={formClassName}>
       <input
@@ -20,7 +21,7 @@ const SearchForm = ({
         autoComplete="off"
         required
       />
-      <Button isSubmit={true} outerClassName="search-form__button">Искать</Button>
+      <Button isSubmit={true} outerClassName={buttonClassName}>Искать</Button>
     </form>
   );
 }

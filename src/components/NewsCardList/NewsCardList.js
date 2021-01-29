@@ -10,7 +10,7 @@ const NewsCardList = ({
   isOwn = false,
   isVisible = false,
 }) => {
-  const { pageNarrowClassName, pageListClassName } = useContext(CommonPageStylesContext);
+  const { pageNarrowClassName, pageListClassName, robotoText } = useContext(CommonPageStylesContext);
   const sectionClassName = joinCN({
     basic: ['news-cards', pageNarrowClassName],
     condition: {
@@ -18,6 +18,7 @@ const NewsCardList = ({
       'news-cards_type_search': !isOwn,
     }
   });
+  const loadButtonClassName = joinCN({ basic: ['news-cards__button', robotoText] });
   const listClassName = joinCN({ basic: ['news-cards__list', pageListClassName] });
 
   const [renderingAmount, setRenderingAmount] = useState(isOwn ? null : 3);
@@ -53,7 +54,7 @@ const NewsCardList = ({
               )) }
             </ul>
             { Boolean(renderingAmount !== null & renderingAmount < cards.length) &&
-              <Button outerClassName="news-cards__button" onClick={handleLoadMoreClick}>
+              <Button outerClassName={loadButtonClassName} onClick={handleLoadMoreClick}>
                 Показать ещё
               </Button>
             }

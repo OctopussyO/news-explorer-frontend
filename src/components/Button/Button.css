@@ -6,6 +6,8 @@
   align-items: center;
   cursor: pointer;
   transition: all .3s ease-out;
+  -webkit-appearance: button;
+  margin: 0;
 }
 
 .button:focus {
@@ -14,6 +16,9 @@
 
 .button_type_submit {
   height: 64px;
+  padding-left: 18px;
+  padding-right: 18px;
+  border-radius: 100px;
   border: none;
   font-size: 18px;
   line-height: 24px;
@@ -31,6 +36,7 @@
 
 .button_active:active {
   background-color: #2A65CC;
+  box-shadow: none;
 }
 
 .button_inactive {

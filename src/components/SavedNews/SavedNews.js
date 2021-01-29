@@ -4,10 +4,12 @@ import { savedCards } from '../../utils/testCards';
 import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
 import './SavedNews.css';
 
-const SavedNews = () => {
+const SavedNews = ({
+  onLogout,
+}) => {
   return (
     <>
-      <Header isMainPage={false} />
+      <Header isMainPage={false} onLogoutClick={onLogout} />
       <SavedNewsHeader />
       <NewsCardList cards={savedCards} isOwn={true} />
     </>

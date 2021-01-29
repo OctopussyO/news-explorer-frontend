@@ -8,12 +8,19 @@ import SavedNews from '../SavedNews/SavedNews';
 import './App.css';
 
 const App = () => {
-  const [isLoggedIn, setLoggedIn] = useState(true);
-
   const [currentUser, setCurrentUser] = useState({
-    isLoggedIn: isLoggedIn,
+    isLoggedIn: false,
     name: 'Грета',
-  })
+  });
+
+  const handleLogin = () => {
+    setCurrentUser({ ...currentUser, isLoggedIn: true });
+    console.log('hi')
+  };
+
+  const handleLogout = () => {
+    setCurrentUser({ ...currentUser, isLoggedIn: false });
+  };
 
   const commonPageStyles = {
     pageNarrowClassName: 'page__narrow',
@@ -31,10 +38,10 @@ const App = () => {
           <div className="page__content">
             <Switch>
               <Route exact path="/">
-                <Main />
+                <Main onLogin={handleLogin} onLogout={handleLogout} />
               </Route>
               <Route path="/saved-news">
-                <SavedNews />
+                <SavedNews onLogout={handleLogout} />
               </Route>
               <Route>
                 <Redirect to="/" />
