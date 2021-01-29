@@ -6,20 +6,28 @@ import Button from "../Button/Button";
 import Link from "../Link/Link";
 import TrashIcon from "../svg/TrashIcon";
 import './NewsCard.css';
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 const NewsCard = ({
   card,
   isOwn = false,
 }) => {
+  const { isLoggedIn } = useContext(CurrentUserContext);
+
   const [isTooltipVisible, setTooltipState] = useState(false);
-  const handleButtonHover = () => setTooltipState(!isTooltipVisible);
+  const handleButtonHover = (e) => setTooltipState(!isTooltipVisible);
 
   const [isSaved, setSavedState] = useState(false);
-  const handleOwnCardClick = () => setSavedState(!isSaved);
+  const handleCommonCardClick = () => {
+    if (isLoggedIn) {
+      setSavedState(!isSaved);
+    }
+  };
 
   const altText = `${card.keyword}, фотография`;
   const linkTitle = card.source.toUpperCase();
 
+  // СТИЛИ
   const { robotoText, robotoSlabText, sourceSansText } = useContext(CommonPageStylesContext);
   const keywordClassName = joinCN({ basic: ['card__keyword', robotoText] });
   const tooltipClassName = joinCN({
@@ -45,9 +53,6 @@ const NewsCard = ({
       'card__icon_marked': isSaved,
     },
   });
-  
-  // TODO
-  const isLoggedIn = true;
 
   return (
     <figure className="card">
@@ -64,7 +69,7 @@ const NewsCard = ({
                 <TrashIcon pathClassName="card__icon card__icon_act_delete" /> 
               </Button>
             ) : (
-              <Button outerClassName="card__button" onClick={handleOwnCardClick}>
+              <Button outerClassName="card__button" onClick={handleCommonCardClick}>
                 <BookmarkIcon pathClassName={saveIconClassName} />
               </Button>
             )

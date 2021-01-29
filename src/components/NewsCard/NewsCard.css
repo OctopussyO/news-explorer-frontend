@@ -62,6 +62,7 @@
 
 .card__icon {
   transition: .3s ease-out;
+  /* pointer-events: none; */
 }
 
 .card__button:hover .card__icon_act_delete {

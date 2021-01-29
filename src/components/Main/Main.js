@@ -8,9 +8,7 @@ import NewsCardList from '../NewsCardList/NewsCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import './Main.css';
 
-const Main = ({
-  isLoggedIn,
-}) => {
+const Main = () => {
   const { robotoText, robotoSlabText } = useContext(CommonPageStylesContext);
 
   const titleClassName = joinCN({ basic: ['cover__title', robotoSlabText] });
@@ -20,7 +18,7 @@ const Main = ({
   return (
     <>
       <section className="cover">
-        <Header isMainPage={true} isLoggedIn={isLoggedIn} />
+        <Header isMainPage={true} />
         <div className="cover__content">
           <h2 className={titleClassName}>
             Что творится в мире?

@@ -4,15 +4,13 @@ import { savedCards } from '../../utils/testCards';
 import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
 import './SavedNews.css';
 
-const SavedNews = ({
-  isLoggedIn,
-}) => {
+const SavedNews = () => {
   return (
-    <div className="saved">
-      <Header isMainPage={false} isLoggedIn={isLoggedIn} />
+    <>
+      <Header isMainPage={false} />
       <SavedNewsHeader />
       <NewsCardList cards={savedCards} isOwn={true} />
-    </div>
+    </>
   );
 }
 

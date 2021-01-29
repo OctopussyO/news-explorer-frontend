@@ -6,11 +6,12 @@ import Logo from '../Logo/Logo';
 import LogoutIcon from '../svg/LogoutIcon';
 import Navigation from '../Navigation/Navigation';
 import './Header.css';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 const Header = ({
   isMainPage = false,
-  isLoggedIn,
 }) => {
+  const { isLoggedIn } = useContext(CurrentUserContext);
   const { pageNarrowClassName } = useContext(CommonPageStylesContext);
 
   const headerClassName = joinCN({
@@ -20,7 +21,6 @@ const Header = ({
       'header_type_secondary-page': !isMainPage,
     },
   });
-  
   const headerButtonClassName = joinCN({
     basic: ['header__button'],
     condition: {
@@ -34,7 +34,6 @@ const Header = ({
       <Logo outerClassName="header__logo" />
       <div className="header__control">
         <Navigation
-          isLoggedIn={isLoggedIn}
           outerClassName="header__navigation"
           outerLinkClassName="header__link"
           outerActiveLinkClassName="header__link_active"

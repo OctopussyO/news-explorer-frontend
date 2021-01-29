@@ -1,15 +1,16 @@
 import { useContext } from "react";
 import { CommonPageStylesContext } from "../../contexts/CommonPageStylesContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import joinCN from "../../utils/joinClassNames";
 import Link from "../Link/Link";
 import './Navigation.css';
 
 const Navigation = ({
-  isLoggedIn,
   outerClassName,
   outerLinkClassName,
   outerActiveLinkClassName,
 }) => {
+  const { isLoggedIn } = useContext(CurrentUserContext);
   const { robotoText, pageListClassName } = useContext(CommonPageStylesContext);
 
   const navClassName = joinCN({ basic: ['navigation', outerClassName] });
