@@ -10,13 +10,19 @@ const NewsCardList = ({
   isOwn = false,
   isVisible = false,
 }) => {
-  const { pageNarrowClassName, pageListClassName, robotoText } = useContext(CommonPageStylesContext);
+  const {
+    pageNarrowClassName,
+    pageListClassName,
+    robotoText,
+    robotoSlabText
+  } = useContext(CommonPageStylesContext);
+  const titleClassName = joinCN({ basic: ['news-cards__title', robotoSlabText] });
   const sectionClassName = joinCN({
     basic: ['news-cards', pageNarrowClassName],
     condition: {
       'news-cards_type_saved': isOwn,
       'news-cards_type_search': !isOwn,
-    }
+    },
   });
   const loadButtonClassName = joinCN({ basic: ['news-cards__button', robotoText] });
   const listClassName = joinCN({ basic: ['news-cards__list', pageListClassName] });
@@ -43,7 +49,7 @@ const NewsCardList = ({
       {
         Boolean(!isOwn & isVisible) &&
           <section className={sectionClassName}>
-            <h2>
+            <h2 className={titleClassName}>
               Результаты поиска
             </h2>
             <ul className={listClassName}>

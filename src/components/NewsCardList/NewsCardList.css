@@ -12,6 +12,14 @@
   padding-bottom: 80px;
 }
 
+.news-cards__title {
+  margin-top: 0;
+  margin-bottom: 64px;
+  color: #1A1B22;
+  font-size: 40px;
+  line-height: 46px;
+}
+
 .news-cards__list {
  display: grid;
  grid-template-columns: repeat(3, minmax(224px, 1fr));
