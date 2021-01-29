@@ -13,9 +13,12 @@ const App = () => {
     name: 'Грета',
   });
 
+  const handleRegister = () => {
+    console.log('Зарегистрирован!');
+  };
+
   const handleLogin = () => {
     setCurrentUser({ ...currentUser, isLoggedIn: true });
-    console.log('hi')
   };
 
   const handleLogout = () => {
@@ -38,7 +41,7 @@ const App = () => {
           <div className="page__content">
             <Switch>
               <Route exact path="/">
-                <Main onLogin={handleLogin} onLogout={handleLogout} />
+                <Main onLogin={handleLogin} onLogout={handleLogout} onRegister={handleRegister} />
               </Route>
               <Route path="/saved-news">
                 <SavedNews onLogout={handleLogout} />

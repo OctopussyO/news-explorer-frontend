@@ -3,10 +3,10 @@ import setCustomValidity from '../../utils/setCustomValidity';
 import FormInput from '../FormInput/FormInput';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
-const PopupLogin = ({
+const PopupRegister = ({
   isOpen,
   onClose,
-  onLogin,
+  onRegister,
   onChangePopup,
 }) => {
 
@@ -18,8 +18,8 @@ const PopupLogin = ({
     resetForm
   } = useFormValidation(setCustomValidity);
 
-  const handleLogin = () => {
-    onLogin();
+  const handleRegister = () => {
+    onRegister();
     resetForm();
   }
 
@@ -28,10 +28,10 @@ const PopupLogin = ({
       isOpen={isOpen}
       onClose={onClose}
       isSubmitActive={isFormValid}
-      onSubmit={handleLogin}
-      formTitle="Вход"
-      submitTitle="Войти"
-      linkBtnTitle="Зарегистрироваться"
+      onSubmit={handleRegister}
+      formTitle = "Регистрация"
+      submitTitle = "Зарегистрироваться"
+      linkBtnTitle = "Войти"
       onBtnClick={onChangePopup}
     >
       <FormInput
@@ -56,8 +56,21 @@ const PopupLogin = ({
         required={true}
         onChange={handleChange}
       />
+      <FormInput
+        name="name"
+        labelText="Имя"
+        placeholder="Введите своё имя"
+        value={values.name || ''}
+        error={errors.name || ''}
+        type="text"
+        minLength="2"
+        maxLength="30"
+        pattern="^[A-Za-zА-Яа-яёЁ\s\-]+$"
+        required={true}
+        onChange={handleChange}
+      />
     </PopupWithForm>
   )
 };
 
-export default PopupLogin;
+export default PopupRegister;

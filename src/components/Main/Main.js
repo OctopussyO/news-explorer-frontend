@@ -8,17 +8,19 @@ import NewsCardList from '../NewsCardList/NewsCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import './Main.css';
 import PopupLogin from '../PopupLogin/PopupLogin';
+import PopupRegister from '../PopupRegister/PopupRegister';
 
 const Main = ({
   onLogout,
   onLogin,
+  onRegister,
 }) => {
   const [isLoginPopupOpen, setLoginPopupState] = useState(false);
   const [isRegisterPopupOpen, setRegisterPopupState] = useState(false);
   const [isInfoPopupOpen, setInfoPopupState] = useState(false);
 
   const openLoginPopup = () => setLoginPopupState(true);
-  const openRegisterPopup= () => setRegisterPopupState(true);
+  const openRegisterPopup = () => setRegisterPopupState(true);
   const openInfoPopup = () => setInfoPopupState(true);
 
   const closeAllPopups = () => {
@@ -35,7 +37,12 @@ const Main = ({
   const handleLogout = () => {
     onLogout();
     closeAllPopups();
-  }
+  };
+
+  const handleRegister = () => {
+    onRegister();
+    closeAllPopups();
+  };
 
   // СТИЛИ
   const { robotoText, robotoSlabText } = useContext(CommonPageStylesContext);
@@ -59,8 +66,18 @@ const Main = ({
       </section>
       <NewsCardList cards={сards} isVisible={true} />
       <About />
-      <PopupLogin isOpen={isLoginPopupOpen} onClose={closeAllPopups} onLogin={handleLogin} />
-      
+      <PopupLogin
+        isOpen={isLoginPopupOpen}
+        onClose={closeAllPopups}
+        onLogin={handleLogin}
+        onChangePopup={openRegisterPopup}
+      />
+      <PopupRegister
+        isOpen={isRegisterPopupOpen}
+        onClose={closeAllPopups}
+        onRegister={handleRegister}
+        onChangePopup={openLoginPopup}
+      />
     </>
   );
 }
