@@ -1,4 +1,5 @@
 import useFormValidation from '../../hooks/useFormWithValidation';
+import setCustomValidity from '../../utils/setCustomValidity';
 import FormInput from '../FormInput/FormInput';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
@@ -8,7 +9,13 @@ const PopupLogin = ({
   onLogin,
 }) => {
 
-  const { values, errors, isFormValid, handleChange, resetForm } = useFormValidation();
+  const {
+    values,
+    errors,
+    isFormValid,
+    handleChange,
+    resetForm
+  } = useFormValidation(setCustomValidity);
 
   const handleLogin = () => {
     onLogin();

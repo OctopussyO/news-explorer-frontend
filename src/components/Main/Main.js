@@ -60,6 +60,7 @@ const Main = ({
       <NewsCardList cards={сards} isVisible={true} />
       <About />
       <PopupLogin isOpen={isLoginPopupOpen} onClose={closeAllPopups} onLogin={handleLogin} />
+      
     </>
   );
 }

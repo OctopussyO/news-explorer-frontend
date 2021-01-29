@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import joinCN from '../../utils/joinClassNames';
 import Button from '../Button/Button';
@@ -20,6 +20,13 @@ const PopupWithForm = ({
     onSubmit();
   }
 
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // ДЛЯ ПРОВЕРКИ СТИЛЕЙ ОШИБКИ РАСКОММЕНТИРОВАТЬ:
+  // useEffect(() => {
+  //   setErrorMessage('Такой пользователь уже есть');
+  // }, []);
+
   // СТИЛИ
   const { robotoText, interText } = useContext(CommonPageStylesContext);
 
@@ -27,6 +34,7 @@ const PopupWithForm = ({
   const submitClassName = joinCN({ basic: ['form__submit-button', robotoText] });
   const linkClassName = joinCN({ basic: ['form__link-button', interText] });
   const choiseClassName = joinCN({ basic: ['form__choise', interText] });
+  const errorClassname = joinCN({ basic: ['form__response-error', interText] });
 
   return (
     <Popup isOpen={isOpen} onClose={onClose}>
@@ -35,6 +43,7 @@ const PopupWithForm = ({
           {formTitle}
         </h3>
         {children}
+        <span className={errorClassname}>{errorMessage}</span>
         <Button isSubmit={true} isActive={isSubmitActive} outerClassName={submitClassName}>
           {submitTitle}
         </Button>

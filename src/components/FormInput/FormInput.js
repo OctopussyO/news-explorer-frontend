@@ -42,6 +42,7 @@ const FormInput = ({
         required={required}
         value={value}
         onChange={onChange}
+        autoComplete="off"
         className={inputClassName}
       />
       <span className={errorClassName}>{error && error}</span>
