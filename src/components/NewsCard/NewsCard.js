@@ -7,6 +7,7 @@ import Link from "../Link/Link";
 import TrashIcon from "../svg/TrashIcon";
 import './NewsCard.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import useCardTextTruncate from "../../hooks/useCardTextTruncate";
 
 const NewsCard = ({
   card,
@@ -15,7 +16,7 @@ const NewsCard = ({
   const { isLoggedIn } = useContext(CurrentUserContext);
 
   const [isTooltipVisible, setTooltipState] = useState(false);
-  const handleButtonHover = (e) => setTooltipState(!isTooltipVisible);
+  const handleButtonHover = () => setTooltipState(!isTooltipVisible);
 
   const [isSaved, setSavedState] = useState(false);
   const handleCommonCardClick = () => {
@@ -26,6 +27,11 @@ const NewsCard = ({
 
   const altText = `${card.keyword}, фотография`;
   const linkTitle = card.source.toUpperCase();
+
+  const titleRef = useRef(null);
+  const textRef = useRef(null);
+
+  const { titleLinesAmount, isTextTruncateNeeded } = useCardTextTruncate(titleRef, textRef);
 
   // СТИЛИ
   const { robotoText, robotoSlabText, sourceSansText } = useContext(CommonPageStylesContext);
@@ -40,7 +46,19 @@ const NewsCard = ({
   });
   const dateClassName = joinCN({ basic: ['card__date', sourceSansText] });
   const titleClassName = joinCN({ basic: ['card__title', robotoSlabText] });
-  const textClassName = joinCN({ basic: ['card__text', robotoText] });
+  // TODO --- подумать, как расставлять классы. сейчас работает немного не так, как нужно
+  // либо truncated  перенести в стили основные, а расставлять только модификаторы,
+  // либо продумать правильно условия
+  const textClassName = joinCN({
+    basic: ['card__text', robotoText],
+    condition: {
+      'card__text_truncated': isTextTruncateNeeded,
+      'card__text_truncate_def': titleLinesAmount === 0 & isTextTruncateNeeded,
+      'card__text_truncate_min': titleLinesAmount === 1 & isTextTruncateNeeded,
+      'card__text_truncate_mid': titleLinesAmount === 2 & isTextTruncateNeeded,
+      'card__text_truncate_max': titleLinesAmount === 3 & isTextTruncateNeeded,
+    },
+  });
   const sourcelinkClassName = joinCN({
     basic: ['card__link', 'card__link_content_source', robotoSlabText],
   });
@@ -93,12 +111,12 @@ const NewsCard = ({
           {card.date}
         </p>
         <div className="card__description">
-          <h3 className={titleClassName}>
+          <h3 className={titleClassName} ref={titleRef}>
             <Link isOuter={true} path={card.link} outerClassName={titleLinkClassName} >
               {card.title}
             </Link>
           </h3>
-          <p className={textClassName}>
+          <p className={textClassName} ref={textRef}>
             {card.text}
           </p>
         </div>

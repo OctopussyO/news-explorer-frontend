@@ -1,7 +1,5 @@
 .card {
   position: relative;
-  /* display: flex;
-  flex-direction: column; */
   width: 100%;
   max-width: 400px;
   height: 576px;
@@ -150,13 +148,13 @@
   color: #1A1B22;
   font-size: 26px;
   line-height: 30px;
-  /* display: block;
+  display: block;
   display: -webkit-box;
   line-clamp: 3;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
-  overflow: hidden; */
+  overflow: hidden;
 }
 
 .card__text {
@@ -166,13 +164,34 @@
   font-size: 16px;
   line-height: 22px;
   cursor: default;
-  /* display: block;
+}
+
+.card__text_truncated {
+  display: block;
   display: -webkit-box;
-  line-clamp: 5;
-  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
-  overflow: hidden; */
+  overflow: hidden;
+}
+
+.card__text_truncate_def {
+  line-clamp: 7;
+  -webkit-line-clamp: 7;
+}
+
+.card__text_truncate_min {
+  line-clamp: 6;
+  -webkit-line-clamp: 6;
+}
+
+.card__text_truncate_mid {
+  line-clamp: 5;
+  -webkit-line-clamp: 5;
+}
+
+.card__text_truncate_max {
+  line-clamp: 4;
+  -webkit-line-clamp: 4;
 }
 
 .card__link {

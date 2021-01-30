@@ -34,8 +34,9 @@ const NewsCardList = ({
 
   return (
     <>
+    {/* Сохранённые карточки */}
       {
-        Boolean(isOwn & cards.length > 0) &&
+        Boolean(isOwn & cards.length > 0) && (
           <section className={sectionClassName}>
             <ul className={listClassName}>
               { cards.map((card) => (
@@ -45,9 +46,11 @@ const NewsCardList = ({
               )) }
             </ul>
           </section>
+        )
       }
+      {/* Найденные карточки */}
       {
-        Boolean(!isOwn & isVisible) &&
+        Boolean(!isOwn & isVisible) && (
           <section className={sectionClassName}>
             <h2 className={titleClassName}>
               Результаты поиска
@@ -65,6 +68,7 @@ const NewsCardList = ({
               </Button>
             }
           </section>
+        )
       }
     </>
   )
