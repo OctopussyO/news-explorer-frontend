@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import delay from '../../utils/delay';
 import joinCN from '../../utils/joinClassNames';

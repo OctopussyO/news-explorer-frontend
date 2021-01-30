@@ -4,6 +4,7 @@ import joinCN from '../../utils/joinClassNames';
 import './FormInput.css';
 
 const FormInput = ({
+  id,
   name,
   labelText,
   placeholder,
@@ -32,7 +33,7 @@ const FormInput = ({
     <div className="input-group">
       <label className={labelClassName} htmlFor={name}>{labelText}</label>
       <input
-        id={name}
+        id={id ? id : name}
         name={name}
         type={type}
         placeholder={placeholder}

@@ -35,6 +35,7 @@ const PopupLogin = ({
       onBtnClick={onChangePopup}
     >
       <FormInput
+        id="email-login"
         name="email"
         labelText="Email"
         placeholder="Введите почту"
@@ -46,6 +47,7 @@ const PopupLogin = ({
         onChange={handleChange}
       />
       <FormInput
+        id="password-login"
         name="password"
         labelText="Пароль"
         placeholder="Введите пароль"

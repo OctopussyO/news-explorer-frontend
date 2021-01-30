@@ -35,6 +35,7 @@ const PopupRegister = ({
       onBtnClick={onChangePopup}
     >
       <FormInput
+        id="email-register"
         name="email"
         labelText="Email"
         placeholder="Введите почту"
@@ -46,6 +47,7 @@ const PopupRegister = ({
         onChange={handleChange}
       />
       <FormInput
+        id="password-register"
         name="password"
         labelText="Пароль"
         placeholder="Введите пароль"
