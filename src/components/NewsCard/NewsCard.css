@@ -5,7 +5,7 @@
   height: 576px;
   margin: 0;
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 15px;
   overflow: hidden;
   transition: .3s ease-out;
   user-select: none;
@@ -24,6 +24,7 @@
   padding-right: 24px;
   padding-left: 24px;
   display: flex;
+  flex-direction: row-reverse;
   justify-content: space-between;
 }
 
@@ -43,9 +44,6 @@
 
 .card__control {
   position: relative;
-  display: flex;
-  flex-direction: row-reverse;
-  flex-wrap: wrap;
 }
 
 .card__button {
@@ -126,7 +124,7 @@
   justify-content: space-between;
   align-items: flex-start;
   box-sizing: border-box;
-  padding: 20px 24px 24px;
+  padding: 16px 24px 28px;
 }
 
 .card__description {
@@ -148,6 +146,7 @@
   color: #1A1B22;
   font-size: 26px;
   line-height: 30px;
+  font-weight: 400;
   display: block;
   display: -webkit-box;
   line-clamp: 3;
@@ -201,6 +200,9 @@
 .card__link_content_source {
   margin-top: 10px;
   color: #B6BCBF;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 700;
 }
 
 .card__link_content_source:hover {

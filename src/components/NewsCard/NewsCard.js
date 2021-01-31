@@ -75,7 +75,6 @@ const NewsCard = ({
   return (
     <figure className="card">
       <div className="card__over-elements">
-        <span className={keywordClassName}>{card.keyword}</span>
         <div
           className="card__control"
           onMouseEnter={handleButtonHover}
@@ -104,6 +103,7 @@ const NewsCard = ({
             )
           }
         </div>
+        { isOwn && <span className={keywordClassName}>{card.keyword}</span> }
       </div>
       <img className="card__image" src={card.image} alt={altText} />
       <figcaption className=" card__text-content">

@@ -19,13 +19,14 @@
 .about__title {
   display: inline-flex;
   align-items: flex-end;
-  max-height: 80px;
+  max-height: 98px;
   margin-top: 0;
   margin-bottom: 24px;
   flex-grow: 1;
   color: #1A1B22;
   font-size: 40px;
   line-height: 46px;
+  font-weight: 400;
 }
 
 .about__paragraph {
