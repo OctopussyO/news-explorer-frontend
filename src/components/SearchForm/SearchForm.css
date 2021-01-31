@@ -8,10 +8,7 @@
   align-items: center;
   background-color: #fff;
   box-sizing: border-box;
-  border: 1px solid #D1D2D6;
-  /* outline: 1px solid #D1D2D6; */
-  
-  
+  border: 1px solid #D1D2D6;  
   border-radius: 100px;
 }
 
@@ -38,4 +35,16 @@
   top: -1px;
   right: -1px;
   width: 168px;
+  height: 64px;
+}
+
+@media screen and (max-width: 1024px) {
+  .search-form {
+    height: 56px;
+  }
+  
+  .search-form__button  {
+    width: 160px;
+    height: 56px;
+  }
 }

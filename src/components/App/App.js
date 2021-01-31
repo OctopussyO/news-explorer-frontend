@@ -9,7 +9,7 @@ import './App.css';
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState({
-    isLoggedIn: true,
+    isLoggedIn: false,
     name: 'Грета',
   });
 
