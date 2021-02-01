@@ -49,3 +49,10 @@
     padding-right: 40px;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .page__narrow {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

@@ -16,7 +16,12 @@ const Footer = () => {
 
   const footerClassName = joinCN({ basic: ['footer', pageNarrowClassName] });
   const footerCopyrightClassName = joinCN({ basic: ['footer__copyright', robotoText] });
-  const footerLinksListClassName = joinCN({ basic: ['footer__list', pageListClassName] });
+  const footerLinksListClassName = joinCN({
+    basic: ['footer__list', 'footer__list_content_text', pageListClassName],
+  });
+  const footerIconsListClassName = joinCN({
+    basic: ['footer__list', 'footer__list_content_icon', pageListClassName],
+  });
   const footerLinkClassName = joinCN({ basic: ['footer__link', robotoText] });
   
   return (
@@ -37,7 +42,7 @@ const Footer = () => {
             </Link>
           </li>
         </ul>
-        <ul className={footerLinksListClassName}>
+        <ul className={footerIconsListClassName}>
           <li className="footer__icon-list-item">
             <Link isOuter={true} path="https://github.com/OctopussyO" outerClassName={footerLinkClassName}>
               <GHIcon pathClassName="footer__icon" />

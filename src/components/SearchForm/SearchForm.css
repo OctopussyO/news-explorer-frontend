@@ -48,3 +48,21 @@
     height: 56px;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .search-form {
+    padding-right: 24px;
+    margin-bottom: 72px;
+  }
+
+  .search-form__input {
+    width: 100%;
+  }
+
+  .search-form__button {
+    width: 100%;
+    top: calc(100% + 16px);
+    right: 0;
+    
+  }
+}

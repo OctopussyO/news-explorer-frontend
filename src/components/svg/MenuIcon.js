@@ -1,8 +1,9 @@
 const MenuIcon = ({
   className = '',
+  pathClassName = '',
   width = 24,
   height = 24,
-  fill = '#1A1B22',
+  fill = '#fff',
 }) => {
   return (
     <svg
@@ -13,7 +14,7 @@ const MenuIcon = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path fill={fill} d="M4 8h16v2H4zM4 14h16v2H4z"/>
+      <path pathClassName={pathClassName} fill={fill} d="M4 8h16v2H4zM4 14h16v2H4z"/>
     </svg>
   )
 };

@@ -6,12 +6,12 @@ import About from '../About/About';
 import Header from '../Header/Header';
 import NewsCardList from '../NewsCardList/NewsCardList';
 import SearchForm from '../SearchForm/SearchForm';
-import './Main.css';
 import PopupLogin from '../PopupLogin/PopupLogin';
 import PopupRegister from '../PopupRegister/PopupRegister';
 import PopupInfo from '../PopupInfo/PopupInfo';
 import { SUCCESS_REGISTRATION_MESSAGE } from '../../utils/constants';
 import delay from '../../utils/delay';
+import './Main.css';
 
 const Main = ({
   onLogout,
