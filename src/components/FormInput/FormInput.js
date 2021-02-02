@@ -43,7 +43,7 @@ const FormInput = ({
       />
       <span className={errorClassName}>{error && error}</span>
     </div>
-  )
+  );
 };
 
 export default FormInput;

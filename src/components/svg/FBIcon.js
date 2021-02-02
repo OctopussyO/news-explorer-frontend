@@ -20,7 +20,7 @@ const FBIcon = ({
       fill={fill}
     />
     </svg>
-  )
+  );
 };
 
 export default FBIcon;

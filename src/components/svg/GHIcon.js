@@ -22,7 +22,7 @@ const GHIcon = ({
         fill={fill}
       />
     </svg>
-  )
+  );
 };
 
 export default GHIcon;

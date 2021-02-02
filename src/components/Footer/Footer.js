@@ -7,7 +7,6 @@ import Link from '../Link/Link';
 import './Footer.css';
 
 const Footer = () => {
-
   const {
     pageNarrowClassName,
     robotoText,
@@ -67,6 +66,6 @@ const Footer = () => {
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;

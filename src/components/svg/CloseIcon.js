@@ -25,7 +25,7 @@ const CloseIcon = ({
         fill={fill}
       />
     </svg>
-  )
+  );
 };
 
 export default CloseIcon;

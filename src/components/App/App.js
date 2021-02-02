@@ -60,6 +60,6 @@ const App = () => {
       </CommonPageStylesContext.Provider>
     </CurrentUserContext.Provider>
   );
-}
+};
 
 export default App;

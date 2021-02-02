@@ -17,7 +17,7 @@ const SearchForm = ({
     e.preventDefault();
     onSearchClick();
     e.target.reset();
-  }
+  };
   
   return (
     <form className={formClassName} onSubmit={handleSubmit}>
@@ -35,6 +35,6 @@ const SearchForm = ({
       </Button>
     </form>
   );
-}
+};
 
 export default SearchForm;

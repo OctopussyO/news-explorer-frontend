@@ -26,6 +26,6 @@ const SavedNewsHeader = () => {
       </p>
     </section>
   );
-}
+};
 
 export default SavedNewsHeader;

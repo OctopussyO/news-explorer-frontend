@@ -5,9 +5,9 @@ import BookmarkIcon from "../svg/BookmarkIcon";
 import Button from "../Button/Button";
 import Link from "../Link/Link";
 import TrashIcon from "../svg/TrashIcon";
-import './NewsCard.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import useCardTextTruncate from "../../hooks/useCardTextTruncate";
+import './NewsCard.css';
 
 const NewsCard = ({
   card,
@@ -122,7 +122,7 @@ const NewsCard = ({
         </Link>
       </figcaption>
     </figure>
-  )
+  );
 };
 
 export default NewsCard;

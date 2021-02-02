@@ -41,7 +41,7 @@ const useFormValidation = (setCustomValidity) => {
     isFormValid,
     handleChange,
     resetForm,
-  }
-}
+  };
+};
 
 export default useFormValidation;

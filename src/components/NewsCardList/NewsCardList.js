@@ -20,7 +20,7 @@ const NewsCardList = ({
     pageNarrowClassName,
     pageListClassName,
     robotoText,
-    robotoSlabText
+    robotoSlabText,
   } = useContext(CommonPageStylesContext);
   const titleClassName = joinCN({ basic: ['news-cards__title', robotoSlabText] });
   const sectionClassName = joinCN({
@@ -82,11 +82,10 @@ const NewsCardList = ({
               )
             }
           </section>
-        
         )
       }
     </>
-  )
+  );
 };
 
 export default NewsCardList;

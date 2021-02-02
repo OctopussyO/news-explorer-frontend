@@ -15,13 +15,13 @@ const PopupLogin = ({
     errors,
     isFormValid,
     handleChange,
-    resetForm
+    resetForm,
   } = useFormValidation(setCustomValidity);
 
   const handleLogin = () => {
     onLogin();
     resetForm();
-  }
+  };
 
   return (
     <PopupWithForm
@@ -59,7 +59,7 @@ const PopupLogin = ({
         onChange={handleChange}
       />
     </PopupWithForm>
-  )
+  );
 };
 
 export default PopupLogin;

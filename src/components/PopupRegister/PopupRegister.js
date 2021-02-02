@@ -15,13 +15,13 @@ const PopupRegister = ({
     errors,
     isFormValid,
     handleChange,
-    resetForm
+    resetForm,
   } = useFormValidation(setCustomValidity);
 
   const handleRegister = () => {
     onRegister();
     resetForm();
-  }
+  };
 
   return (
     <PopupWithForm
@@ -72,7 +72,7 @@ const PopupRegister = ({
         onChange={handleChange}
       />
     </PopupWithForm>
-  )
+  );
 };
 
 export default PopupRegister;

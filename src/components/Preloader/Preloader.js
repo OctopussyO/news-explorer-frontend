@@ -8,6 +8,6 @@ const Preloader = ({
   return (
     <i className={preloadeClassName} />
   );
-}
+};
 
 export default Preloader;

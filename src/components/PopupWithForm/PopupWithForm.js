@@ -20,7 +20,7 @@ const PopupWithForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit();
-  }
+  };
 
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -63,7 +63,7 @@ const PopupWithForm = ({
         </p>
       </form>
     </Popup>
-  )
+  );
 };
 
 export default PopupWithForm;

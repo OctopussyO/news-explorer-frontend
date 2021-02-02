@@ -22,7 +22,7 @@ const TrashIcon = ({
         fill={fill}
       />
     </svg>
-  )
+  );
 };
 
 export default TrashIcon;

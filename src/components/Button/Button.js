@@ -33,6 +33,6 @@ const Button = ({
       {children}
     </button>
   );
-}
+};
 
 export default Button;

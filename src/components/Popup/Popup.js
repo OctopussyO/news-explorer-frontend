@@ -46,7 +46,7 @@ const Popup = ({
         {children}
       </div>
     </div>
-  )
+  );
 };
 
 export default Popup;

@@ -23,7 +23,7 @@ const BookmarkIcon = ({
         fill="#ffffff00"
       />
     </svg>
-  )
+  );
 };
 
 export default BookmarkIcon;

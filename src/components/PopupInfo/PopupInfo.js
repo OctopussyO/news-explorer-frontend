@@ -34,7 +34,7 @@ const PopupInfo = ({
         {linkBtnTitle}
       </Button>
     </Popup>
-  )
+  );
 };
 
 export default PopupInfo;

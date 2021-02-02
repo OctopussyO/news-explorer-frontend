@@ -13,6 +13,6 @@ const SavedNews = ({
       <NewsCardList cards={savedCards} isOwn={true} />
     </>
   );
-}
+};
 
 export default SavedNews;

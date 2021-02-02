@@ -16,7 +16,7 @@ const MenuIcon = ({
     >
       <path className={pathClassName} fill={fill} d="M4 8h16v2H4zM4 14h16v2H4z"/>
     </svg>
-  )
+  );
 };
 
 export default MenuIcon;
