@@ -4,6 +4,7 @@ import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import SavedNews from '../SavedNews/SavedNews';
 import './App.css';
 
@@ -43,9 +44,12 @@ const App = () => {
               <Route exact path="/">
                 <Main onLogin={handleLogin} onLogout={handleLogout} onRegister={handleRegister} />
               </Route>
-              <Route path="/saved-news">
-                <SavedNews onLogout={handleLogout} />
-              </Route>
+              <ProtectedRoute
+                path="/saved-news"
+                loggedIn={currentUser.isLoggedIn}
+                component={SavedNews}
+                onLogout={handleLogout}
+              />
               <Route>
                 <Redirect to="/" />
               </Route>
