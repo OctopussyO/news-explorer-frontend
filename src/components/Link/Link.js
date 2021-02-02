@@ -10,13 +10,14 @@ const Link = ({
   isNav = false,
   exact = false,
   path,
+  labelText = '',
 }) => {
   const className = joinCN({ basic: ['link', outerClassName] });
 
   return (
     <>
       { isOuter ? (
-        <a href={path} className={className} target="_blank" rel="noreferrer">
+        <a href={path} className={className} target="_blank" rel="noreferrer" aria-label={labelText}>
           {children}
         </a>
         ) : isNav ? (

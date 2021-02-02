@@ -15,8 +15,8 @@ const useCardTextTruncate = (titleRef, textRef) => {
     const titleLineHeight = window.innerWidth <= 1024 ? 24 : 30;
     const maxLinesInCard = window.innerWidth <= 600 ? 6 : 7;
     const textElement = textRef.current;
-    const titleLines = titleElement.offsetHeight / titleLineHeight;
-    const textLines = textElement.scrollHeight / TEXT_LINE_HEIGHT;
+    const titleLines = Math.round(titleElement.offsetHeight / titleLineHeight);
+    const textLines = Math.round(textElement.scrollHeight / TEXT_LINE_HEIGHT);
     setTitleLinesAmount(titleLines);
     if (titleLines + textLines > maxLinesInCard) {
       setTextTruncateState(true);

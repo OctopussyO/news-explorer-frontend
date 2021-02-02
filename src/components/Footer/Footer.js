@@ -44,12 +44,22 @@ const Footer = () => {
         </ul>
         <ul className={footerIconsListClassName}>
           <li className="footer__icon-list-item">
-            <Link isOuter={true} path="https://github.com/OctopussyO" outerClassName={footerLinkClassName}>
+            <Link
+              isOuter={true}
+              path="https://github.com/OctopussyO"
+              outerClassName={footerLinkClassName}
+              labelText="Гитхаб"
+            >
               <GHIcon pathClassName="footer__icon" />
             </Link>
           </li>
           <li className="footer__icon-list-item">
-            <Link isOuter={true} path="https://www.facebook.com/vosmikiska" outerClassName={footerLinkClassName}>
+            <Link
+              isOuter={true}
+              path="https://www.facebook.com/vosmikiska"
+              outerClassName={footerLinkClassName}
+              labelText="Фейсбук"
+            >
               <FBIcon pathClassName="footer__icon" />
             </Link>
           </li>

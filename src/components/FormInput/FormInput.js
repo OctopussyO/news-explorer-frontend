@@ -41,6 +41,7 @@ const FormInput = ({
         minLength={minLength}
         maxLength={maxLength}
         required={required}
+        aria-required={required}
         value={value}
         onChange={onChange}
         autoComplete="off"

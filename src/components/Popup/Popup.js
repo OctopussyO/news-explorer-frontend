@@ -40,7 +40,7 @@ const Popup = ({
   return (
     <div className={popupClassName} onMouseDown={handleOverlayClick}>
       <div className="popup__content">
-        <Button outerClassName="popup__close-btn" onClick={onClose}>
+        <Button outerClassName="popup__close-btn" onClick={onClose} labelText="Закрыть">
           <CloseIcon className="popup__close-icon" />
         </Button>
         {children}

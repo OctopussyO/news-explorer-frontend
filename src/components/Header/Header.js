@@ -83,7 +83,11 @@ const Header = ({
   return (
     <header className={headerClassName}>
       <Logo outerClassName="header__logo" />
-      <Button outerClassName="header__menu-button" onClick={handleMenuClick}>
+      <Button
+        outerClassName="header__menu-button"
+        onClick={handleMenuClick}
+        labelText={isMenuOpen ? "Закрыть меню" : "Открыть меню"}
+      >
         { isMenuOpen
           ? <CloseIcon fill={isMainPage ? "#fff" : "#1A1B22"} />
           : <MenuIcon fill={isMainPage ? "#fff" : "#1A1B22"} />
@@ -100,7 +104,7 @@ const Header = ({
         />
         { isLoggedIn
           ? (
-            <Button outerClassName={headerButtonClassName} onClick={handleLogoutClick}>
+            <Button outerClassName={headerButtonClassName} onClick={handleLogoutClick} labelText="Выйти">
               Грета <LogoutIcon className="header__logout-icon" fill={isMainPage ? "#fff" : "#1A1B22"} />
             </Button>
           ) : (

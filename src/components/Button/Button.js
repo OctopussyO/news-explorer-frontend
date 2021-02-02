@@ -9,6 +9,7 @@ const Button = ({
   isSubmit = false,
   isActive = true,
   onClick,
+  labelText = '',
 }) => {
   const { robotoText } = useContext(CommonPageStylesContext);
   const className = joinCN({
@@ -22,7 +23,13 @@ const Button = ({
   const type = isSubmit ? 'submit' : 'button';
 
   return (
-    <button type={type} className={className} disabled={!isActive} onClick={onClick}>
+    <button
+      type={type}
+      className={className}
+      disabled={!isActive}
+      onClick={onClick}
+      aria-label={labelText}
+    >
       {children}
     </button>
   );

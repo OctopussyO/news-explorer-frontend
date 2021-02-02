@@ -20,6 +20,8 @@ const SearchForm = ({
         placeholder="Введите тему новости"
         autoComplete="off"
         required
+        aria-required="true"
+        aria-label="Ключевое слово для поиска"
       />
       <Button isSubmit={true} outerClassName={buttonClassName}>Искать</Button>
     </form>

@@ -14,7 +14,7 @@ const MenuIcon = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path pathClassName={pathClassName} fill={fill} d="M4 8h16v2H4zM4 14h16v2H4z"/>
+      <path className={pathClassName} fill={fill} d="M4 8h16v2H4zM4 14h16v2H4z"/>
     </svg>
   )
 };

@@ -82,11 +82,11 @@ const NewsCard = ({
         >
           { isOwn 
             ? (
-              <Button outerClassName="card__button">
+              <Button outerClassName="card__button" labelText="Удалить">
                 <TrashIcon pathClassName="card__icon card__icon_act_delete" /> 
               </Button>
             ) : (
-              <Button outerClassName="card__button" onClick={handleCommonCardClick}>
+              <Button outerClassName="card__button" onClick={handleCommonCardClick} labelText="Сохранить">
                 <BookmarkIcon pathClassName={saveIconClassName} />
               </Button>
             )
