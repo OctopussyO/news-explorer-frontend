@@ -49,6 +49,24 @@ const Main = ({
     openInfoPopup();
   };
 
+  const [isCardListVisible, setCardListState] = useState(false);
+  const [isLoading, setLoadingState] = useState(true);
+  const [foundNews, setFoundNews] = useState([]);
+  // ДЛЯ ПРОВЕРКИ ВИДА ОШИБКИ ПОМЕНЯТЬ ЗНАЧЕНИЕ test на false
+  const test = true;
+  // TODO -- это надо будет переписать
+  const handleSearchClick = async () => {
+    setLoadingState(true);
+    setCardListState(true);
+    await delay(500);
+    setLoadingState(false);
+    if (test) {
+      setFoundNews(сards);
+    } else {
+      setFoundNews([]);
+    }
+  };
+
   // СТИЛИ
   const { robotoText, robotoSlabText } = useContext(CommonPageStylesContext);
 
@@ -68,10 +86,12 @@ const Main = ({
               Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.
             </p>
           </div>
-          <SearchForm outerClassName="cover__search-form" />
+          <SearchForm outerClassName="cover__search-form" onSearchClick={handleSearchClick} />
         </div>
       </section>
-      <NewsCardList cards={сards} isVisible={true} />
+      { isCardListVisible &&
+        <NewsCardList cards={foundNews} isLoading={isLoading} />
+      }
       <About />
       <PopupLogin
         isOpen={isLoginPopupOpen}

@@ -1,15 +1,15 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import joinCN from '../../utils/joinClassNames';
 import Button from '../Button/Button';
 import Logo from '../Logo/Logo';
 import LogoutIcon from '../svg/LogoutIcon';
 import Navigation from '../Navigation/Navigation';
-import './Header.css';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import MenuIcon from '../svg/MenuIcon';
 import CloseIcon from '../svg/CloseIcon';
 import throttle from '../../utils/throttle';
+import './Header.css';
 
 const Header = ({
   isMainPage = false,

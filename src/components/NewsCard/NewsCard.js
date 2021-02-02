@@ -46,9 +46,6 @@ const NewsCard = ({
   });
   const dateClassName = joinCN({ basic: ['card__date', sourceSansText] });
   const titleClassName = joinCN({ basic: ['card__title', robotoSlabText] });
-  // TODO --- подумать, как расставлять классы. сейчас работает немного не так, как нужно
-  // либо truncated  перенести в стили основные, а расставлять только модификаторы,
-  // либо продумать правильно условия
   const textClassName = joinCN({
     basic: ['card__text', robotoText],
     condition: {

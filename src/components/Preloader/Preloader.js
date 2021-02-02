@@ -1,8 +1,12 @@
+import joinCN from '../../utils/joinClassNames';
 import './Preloader.css';
 
-const Preloader = () => {
+const Preloader = ({
+  outerClassName = '',
+}) => {
+  const preloadeClassName = joinCN({ basic: ['circle-preloader', outerClassName] });
   return (
-    <i class="circle-preloader" />
+    <i className={preloadeClassName} />
   );
 }
 
