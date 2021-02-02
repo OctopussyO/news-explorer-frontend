@@ -76,3 +76,28 @@
     margin-top: 32px;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .news-cards_type_search {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+
+  .news-cards_type_saved {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .news-cards__list {
+    gap: 10px;
+  }
+  
+    .news-cards__title {
+      margin-bottom: 24px;
+    }
+
+  .news-cards__button {
+    min-width: 288px;
+    margin-top: 16px;
+  }
+}

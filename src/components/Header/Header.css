@@ -151,6 +151,17 @@
     height: 100vh;
     background-color: #00000050;
     z-index: -1;
+    transition: .3s ease-out;
+  }
+
+  .overlay_visible {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .overlay_hidden {
+    visibility: hidden;
+    opacity: 0;
   }
 
   .header__control_mobile_closed {
@@ -179,5 +190,6 @@
     display: flex;
     background-color: transparent;
     border: none;
+    padding-right: 0;
   }
 }

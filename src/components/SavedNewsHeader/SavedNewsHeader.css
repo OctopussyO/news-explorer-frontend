@@ -58,5 +58,19 @@
 }
 
 @media screen and (max-width: 600px) {
-  
+  .saved-news-header {
+    padding-top: 8px;
+  }
+
+  .saved-news-header__title {
+    font-size: 12px;
+  }
+
+  .saved-news-header__subtitle {
+    max-width: 100%;
+  }
+
+  .saved-news-header__keywords {
+    font-size: 18px;
+  }
 }

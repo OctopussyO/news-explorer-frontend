@@ -60,12 +60,14 @@ const Main = ({
       <section className="cover">
         <Header isMainPage={true} onLogoutClick={handleLogout} onLoginClick={openLoginPopup} />
         <div className="cover__content">
-          <h2 className={titleClassName}>
-            Что творится в мире?
-          </h2>
-          <p className={subtitleClassName}>
-            Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.
-          </p>
+          <div className="cover__text">
+            <h2 className={titleClassName}>
+              Что творится в мире?
+            </h2>
+            <p className={subtitleClassName}>
+              Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.
+            </p>
+          </div>
           <SearchForm outerClassName="cover__search-form" />
         </div>
       </section>

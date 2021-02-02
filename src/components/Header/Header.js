@@ -9,6 +9,7 @@ import './Header.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import MenuIcon from '../svg/MenuIcon';
 import CloseIcon from '../svg/CloseIcon';
+import throttle from '../../utils/throttle';
 
 const Header = ({
   isMainPage = false,
@@ -32,16 +33,17 @@ const Header = ({
   };
 
   const reduceHeader = useCallback(() => {
-    console.log(window.scrollY)
     if (window.scrollY > 0) {
       setMenuState(false);
     }
   }, []);
 
+  const throttledReduceHeader = throttle(reduceHeader, 1000);
+
   useEffect(() => {
-    window.addEventListener('scroll', reduceHeader);
-    return () => window.removeEventListener('scroll', reduceHeader);
-  }, [reduceHeader]);
+    window.addEventListener('scroll', throttledReduceHeader);
+    return () => window.removeEventListener('scroll', throttledReduceHeader);
+  }, []);
 
   // СТИЛИ
   const { pageNarrowClassName, robotoText } = useContext(CommonPageStylesContext);
@@ -70,6 +72,13 @@ const Header = ({
       'header__control_mobile_closed': !isMenuOpen,
     },
   });
+  const overlayClassName = joinCN({
+    basic: ['overlay'],
+    condition: {
+      'overlay_visible': isMenuOpen,
+      'overlay_hidden':!isMenuOpen,
+    },
+  });
 
   return (
     <header className={headerClassName}>
@@ -81,7 +90,7 @@ const Header = ({
         }
       </Button>
       { isMenuOpen && (
-        <div className="overlay" />
+        <div className={overlayClassName} />
       )}
       <div className={headerControlClassName}>
         <Navigation
