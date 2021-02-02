@@ -32,6 +32,12 @@ const Header = ({
     onLogoutClick();
   };
 
+  const handleOverlayClick = (e) => {
+    if (!e.target.closest('.header__control')) {
+      setMenuState(false);
+    } 
+  };
+
   const reduceHeader = useCallback(() => {
     if (window.scrollY > 0) {
       setMenuState(false);
@@ -94,7 +100,7 @@ const Header = ({
         }
       </Button>
       { isMenuOpen && (
-        <div className={overlayClassName} />
+        <div className={overlayClassName} onClick={handleOverlayClick} />
       )}
       <div className={headerControlClassName}>
         <Navigation

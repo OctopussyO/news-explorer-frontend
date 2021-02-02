@@ -19,13 +19,7 @@ const FormInput = ({
 }) => {
   const { interText } = useContext(CommonPageStylesContext);
   
-  const inputClassName = joinCN({
-    basic: ['input-group__input', interText],
-    condition: {
-      'input-group__input-valid': !error,
-      'input-group__input-invalid': error,
-    },
-  });
+  const inputClassName = joinCN({ basic: ['input-group__input', interText] });
   const labelClassName = joinCN({ basic: ['input-group__label', interText] });
   const errorClassName = joinCN({ basic: ['input-group__error', interText] });
 

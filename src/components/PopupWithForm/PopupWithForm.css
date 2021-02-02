@@ -18,6 +18,7 @@
   color: #FF0000;
   font-size: 12px;
   line-height: 15px;
+  font-weight: 400;
   text-align: center;
 }
 
@@ -32,7 +33,7 @@
   margin: 0;
   color: #1A1B22;
   font-size: 14px;
-  line-height: 1.2;
+  line-height: 17px;
 }
 
 .form__link-button {

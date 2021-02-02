@@ -139,6 +139,7 @@
   color: #B6BCBF;
   font-size: 18px;
   line-height: 24px;
+  font-weight: 400;
 }
 
 .card__title {
@@ -193,10 +194,6 @@
 .card__text_truncate_max {
   line-clamp: 4;
   -webkit-line-clamp: 4;
-}
-
-.card__link {
-
 }
 
 .card__link_content_source {
