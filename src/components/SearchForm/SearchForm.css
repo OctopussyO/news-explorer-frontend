@@ -8,8 +8,17 @@
   align-items: center;
   background-color: #fff;
   box-sizing: border-box;
-  border: 1px solid #D1D2D6;  
+  border-width: 1px;
+  border-style: solid;
   border-radius: 100px;
+}
+
+.search-form_unfocused {
+  border-color: #D1D2D6;
+}
+
+.search-form_focused {
+  border-color: #2F71E595;
 }
 
 .search-form__input {
@@ -64,6 +73,5 @@
     width: 100%;
     top: calc(100% + 16px);
     right: 0;
-    
   }
 }
