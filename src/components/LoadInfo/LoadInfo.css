@@ -1,0 +1,30 @@
+.info {
+  max-width: 356px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info__image {
+  margin: 0 auto 24px;
+}
+
+.info__title {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #1A1B22;
+  font-size: 26px;
+  line-height: 30px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.info__text {
+  margin: 0 auto;
+  color: #B6BCBF;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  text-align: center;
+}

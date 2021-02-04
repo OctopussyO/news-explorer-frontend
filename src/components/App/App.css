@@ -1,0 +1,57 @@
+@import url(../../vendor/fonts/fonts.css);
+
+.page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.page__content {
+  position: relative;
+  flex: 1 0 auto;
+}
+
+.page__narrow {
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding-left: calc((100% - 1232px)/2);
+  padding-right: calc((100% - 1232px)/2);
+}
+
+.page__list {
+  list-style-type: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+.roboto-text {
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+}
+
+.roboto-slab-text {
+  font-family: 'Roboto Slab', Georgia, 'Times New Roman', Times, serif;
+}
+
+.inter-text {
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+}
+
+.source-sans-text {
+  font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+}
+
+@media screen and (max-width: 1280px) {
+  .page__narrow {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .page__narrow {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
