@@ -1,7 +1,7 @@
 import { MAIN_API_BASE_URL } from "../configs/api";
 
 class MainApi {
-  constructor({ baseUrl }) {
+  constructor(baseUrl) {
     this._baseUrl = baseUrl;
   }
 
@@ -69,4 +69,6 @@ class MainApi {
   }
 };
 
-export const mainApi = new MainApi(MAIN_API_BASE_URL);
+const mainApi = new MainApi(MAIN_API_BASE_URL);
+
+export default mainApi;

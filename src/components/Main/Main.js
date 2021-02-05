@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { сards } from '../../utils/testCards';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
+import delay from '../../utils/delay';
 import joinCN from '../../utils/joinClassNames';
 import About from '../About/About';
 import Header from '../Header/Header';
@@ -10,15 +12,12 @@ import PopupLogin from '../PopupLogin/PopupLogin';
 import PopupRegister from '../PopupRegister/PopupRegister';
 import PopupInfo from '../PopupInfo/PopupInfo';
 import { SUCCESS_REGISTRATION_MESSAGE } from '../../utils/constants';
-import delay from '../../utils/delay';
 import './Main.css';
-import { useHistory } from 'react-router-dom';
 
 const Main = ({
   onLogout,
   onLogin,
   onRegister,
-  location,
 }) => {
   const [isLoginPopupOpen, setLoginPopupState] = useState(false);
   const [isRegisterPopupOpen, setRegisterPopupState] = useState(false);
@@ -34,21 +33,25 @@ const Main = ({
     setInfoPopupState(false);
   };
 
-  const handleLogin = () => {
-    onLogin();
-    closeAllPopups();
+  const handleRegister = (data) => {
+    return onRegister(data)
+      .then(async () => {
+        closeAllPopups();
+        await delay(500);
+        openInfoPopup();
+      });
+  };
+
+  const handleLogin = (data) => {
+    return onLogin(data)
+      .then(() => {
+        closeAllPopups();
+      });
   };
 
   const handleLogout = () => {
     onLogout();
     closeAllPopups();
-  };
-
-  const handleRegister = async () => {
-    onRegister();
-    closeAllPopups();
-    await delay(500);
-    openInfoPopup();
   };
 
   const [isCardListVisible, setCardListState] = useState(false);

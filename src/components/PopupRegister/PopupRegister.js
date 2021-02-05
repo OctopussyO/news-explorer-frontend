@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import useFormValidation from '../../hooks/useFormWithValidation';
+import handleErrorMessage from '../../utils/handleErrorMessage';
 import setCustomValidity from '../../utils/setCustomValidity';
 import FormInput from '../FormInput/FormInput';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
@@ -18,21 +20,41 @@ const PopupRegister = ({
     resetForm,
   } = useFormValidation(setCustomValidity);
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const handleRegister = () => {
-    onRegister();
+    onRegister(values)
+      .then(() => {
+        resetForm();
+        setErrorMessage('');
+      })
+      .catch((err) => {
+        handleErrorMessage(err.status, setErrorMessage);
+      });
+  };
+
+  const handleClose = () => {
+    onClose();
     resetForm();
+    setErrorMessage('');
+  };
+
+  const handleInputChange = (e) => {
+    handleChange(e);
+    setErrorMessage('');
   };
 
   return (
     <PopupWithForm
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       isSubmitActive={isFormValid}
       onSubmit={handleRegister}
       formTitle = "Регистрация"
       submitTitle = "Зарегистрироваться"
       linkBtnTitle = "Войти"
       onBtnClick={onChangePopup}
+      serverErrorMessage={errorMessage}
     >
       <FormInput
         id="email-register"
@@ -44,7 +66,7 @@ const PopupRegister = ({
         type="email"
         pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
         required={true}
-        onChange={handleChange}
+        onChange={handleInputChange}
       />
       <FormInput
         id="password-register"
@@ -56,7 +78,7 @@ const PopupRegister = ({
         type="password"
         minLength="6"
         required={true}
-        onChange={handleChange}
+        onChange={handleInputChange}
       />
       <FormInput
         name="name"
@@ -69,7 +91,7 @@ const PopupRegister = ({
         maxLength="30"
         pattern="^[A-Za-zА-Яа-яёЁ\s\-]+$"
         required={true}
-        onChange={handleChange}
+        onChange={handleInputChange}
       />
     </PopupWithForm>
   );

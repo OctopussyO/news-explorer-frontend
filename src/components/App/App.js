@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import mainApi from '../../utils/mainApi';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -11,21 +12,60 @@ import './App.css';
 const App = () => {
   const [currentUser, setCurrentUser] = useState({
     isLoggedIn: false,
-    name: 'Грета',
+    name: '',
   });
 
-  const handleRegister = () => {
-    console.log('Зарегистрирован!');
+  const handleRegister = (data) => {
+    return mainApi.register(data)
   };
 
-  const handleLogin = () => {
-    setCurrentUser({ ...currentUser, isLoggedIn: true });
+  const handleLogin = (data) => {
+    return mainApi.login(data)
+      .then((res) => {
+        setCurrentUser({ 
+          ...currentUser,
+          isLoggedIn: true,
+        });
+        localStorage.setItem('token', res.token);
+      });
   };
 
   const handleLogout = () => {
-    setCurrentUser({ ...currentUser, isLoggedIn: false });
+    setCurrentUser({
+      isLoggedIn: false,
+      name: '',
+    });
+    localStorage.removeItem('token');
   };
 
+  const tokenCheck = () => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      mainApi.getOwnerInfo(token)
+        .then((data) => {
+          console.log(data)
+          setCurrentUser({
+            isLoggedIn: true,
+            name: data.name,
+          });
+        })
+        .catch((err) => {
+          // Здесь ошибку пользователю не выводим, потому что в редких случаях она ему что-то даст.
+          // Тот, кому это необходимо, найдёт её в консоли.
+          // Вывод ошибки здесь выглядит странно, потому что пользователь даже не поймёт, в чём дело
+          // -- зашёл на сайт, ещё ничего не сделал, а уже ошибка.
+          console.error(err);
+        });
+    }
+  };
+
+  // При загрузке страницы сразу проверяем, авторизован ли пользователь
+  useEffect(() => {
+    tokenCheck();
+  }, [currentUser.isLoggedIn]);
+
+  // СТИЛИ
   const commonPageStyles = {
     pageNarrowClassName: 'page__narrow',
     pageListClassName: 'page__list',

@@ -16,18 +16,12 @@ const PopupWithForm = ({
   linkBtnTitle = '',
   isSubmitActive,
   onBtnClick,
+  serverErrorMessage,
 }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit();
   };
-
-  const [errorMessage, setErrorMessage] = useState('');
-
-  // ДЛЯ ПРОВЕРКИ СТИЛЕЙ ОШИБКИ РАСКОММЕНТИРОВАТЬ:
-  // useEffect(() => {
-  //   setErrorMessage('Такой пользователь уже есть');
-  // }, []);
 
   const handleBtnClick = async () => {
     onClose();
@@ -51,7 +45,7 @@ const PopupWithForm = ({
           {formTitle}
         </h3>
         {children}
-        <span className={errorClassname}>{errorMessage}</span>
+        <span className={errorClassname}>{serverErrorMessage}</span>
         <Button isSubmit={true} isActive={isSubmitActive} outerClassName={submitClassName}>
           {submitTitle}
         </Button>

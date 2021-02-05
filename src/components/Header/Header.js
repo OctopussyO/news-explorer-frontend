@@ -16,8 +16,7 @@ const Header = ({
   onLogoutClick,
   onLoginClick,
 }) => {
-  const { isLoggedIn } = useContext(CurrentUserContext);
-
+  const { isLoggedIn, name } = useContext(CurrentUserContext);
   const [isMenuOpen, setMenuState] = useState(false);
 
   const handleMenuClick = () => setMenuState(!isMenuOpen);
@@ -111,7 +110,7 @@ const Header = ({
         { isLoggedIn
           ? (
             <Button outerClassName={headerButtonClassName} onClick={handleLogoutClick} labelText="Выйти">
-              Грета <LogoutIcon className="header__logout-icon" fill={isMainPage ? "#fff" : "#1A1B22"} />
+              {name} <LogoutIcon className="header__logout-icon" fill={isMainPage ? "#fff" : "#1A1B22"} />
             </Button>
           ) : (
             <Button outerClassName={headerButtonClassName} onClick={handleLoginClick}>
