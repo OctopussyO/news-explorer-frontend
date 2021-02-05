@@ -18,7 +18,8 @@
 }
 
 .search-form_focused {
-  border-color: #2F71E595;
+  border-color: #2F71E535;
+  box-shadow: 0px 0px 10px 10px #2F71E535;
 }
 
 .search-form__input {
