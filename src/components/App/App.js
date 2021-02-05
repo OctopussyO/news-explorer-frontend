@@ -10,7 +10,7 @@ import './App.css';
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState({
-    isLoggedIn: true,
+    isLoggedIn: false,
     name: 'Грета',
   });
 
@@ -51,7 +51,7 @@ const App = () => {
                 onLogout={handleLogout}
               />
               <Route>
-                <Redirect to="/" />
+                <Redirect to={{ pathname: "/", state: {noAuthRedirected: true} }} />
               </Route>
             </Switch>
           </div>

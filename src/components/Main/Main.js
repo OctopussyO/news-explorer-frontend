@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { сards } from '../../utils/testCards';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import joinCN from '../../utils/joinClassNames';
@@ -12,11 +12,13 @@ import PopupInfo from '../PopupInfo/PopupInfo';
 import { SUCCESS_REGISTRATION_MESSAGE } from '../../utils/constants';
 import delay from '../../utils/delay';
 import './Main.css';
+import { useHistory } from 'react-router-dom';
 
 const Main = ({
   onLogout,
   onLogin,
   onRegister,
+  location,
 }) => {
   const [isLoginPopupOpen, setLoginPopupState] = useState(false);
   const [isRegisterPopupOpen, setRegisterPopupState] = useState(false);
@@ -66,6 +68,15 @@ const Main = ({
       setFoundNews([]);
     }
   };
+
+  // Чтобы при переадресации неавторизованного пользователя на главную открывался попап авторизации
+  const history = useHistory();
+
+  useEffect(() => {
+    if (history.location.state && history.action === 'REPLACE') {
+      openLoginPopup();
+    }
+  }, []);
 
   // СТИЛИ
   const { robotoText, robotoSlabText } = useContext(CommonPageStylesContext);
