@@ -11,7 +11,7 @@ import './App.css';
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState({
-    isLoggedIn: false,
+    isLoggedIn: null,
     name: '',
   });
 
@@ -44,7 +44,6 @@ const App = () => {
     if (token) {
       mainApi.getOwnerInfo(token)
         .then((data) => {
-          console.log(data)
           setCurrentUser({
             isLoggedIn: true,
             name: data.name,
@@ -57,6 +56,11 @@ const App = () => {
           // -- зашёл на сайт, ещё ничего не сделал, а уже ошибка.
           console.error(err);
         });
+    } else {
+      setCurrentUser({
+        isLoggedIn: false,
+        name: '',
+      });
     }
   };
 
