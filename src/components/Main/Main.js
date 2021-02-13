@@ -13,12 +13,12 @@ import PopupRegister from '../PopupRegister/PopupRegister';
 import PopupInfo from '../PopupInfo/PopupInfo';
 import { SUCCESS_REGISTRATION_MESSAGE } from '../../utils/constants';
 import './Main.css';
-import newsApi from '../../utils/newsApi';
 
 const Main = ({
   onLogout,
   onLogin,
   onRegister,
+  onSearch,
 }) => {
   const [isLoginPopupOpen, setLoginPopupState] = useState(false);
   const [isRegisterPopupOpen, setRegisterPopupState] = useState(false);
@@ -58,21 +58,35 @@ const Main = ({
   const [isCardListVisible, setCardListState] = useState(false);
   const [isLoading, setLoadingState] = useState(true);
   const [foundNews, setFoundNews] = useState([]);
+  const [keyword, setKeyword] =useState('');
   // ДЛЯ ПРОВЕРКИ ВИДА ОШИБКИ ПОМЕНЯТЬ ЗНАЧЕНИЕ test на false
   const test = true;
+
   // TODO -- это надо будет переписать
-  const handleSearchClick = async () => {
+  const handleSearchClick = async (keyword) => {
+    setKeyword(keyword);
     setLoadingState(true);
     setCardListState(true);
     await delay(500);
-    setLoadingState(false);
-    if (test) {
-      setFoundNews(сards);
-    } else {
-      setFoundNews([]);
-    }
+    onSearch(keyword).then((data) => {
+      if (data) {
+        setFoundNews(data.articles.map((article) => {
+          return {
+            title: article.title,
+            text: article.description,
+            date: article.publishedAt,
+            source: article.source.name,
+            link: article.url,
+            image: article.urlToImage,
+          };
+        }));
+      } else {
+        setFoundNews([]);
+      }
+      setLoadingState(false);
+    })
   };
-
+  
   // Чтобы при переадресации неавторизованного пользователя на главную открывался попап авторизации
   const history = useHistory();
 

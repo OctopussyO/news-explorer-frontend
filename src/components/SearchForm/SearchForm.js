@@ -22,11 +22,17 @@ const SearchForm = ({
     resetForm,
   } = useFormValidation(setCustomValidity);
 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isFormValid) {
-      onSearchClick();
+      onSearchClick(values.search);
       resetForm();
+    } else {
+      const event = {
+        target: Array.from(e.target.childNodes).find((node) => node.nodeName === 'INPUT'),
+      };
+      handleChange(event);
     }
   };
   

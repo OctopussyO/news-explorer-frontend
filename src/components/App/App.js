@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { formatDateToNums, takeWeekAgoDate } from '../../utils/date';
 import mainApi from '../../utils/mainApi';
+import newsApi from '../../utils/newsApi';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -69,7 +71,13 @@ const App = () => {
     tokenCheck();
   }, [currentUser.isLoggedIn]);
 
-  
+  const today = new Date();
+  const dateNow = formatDateToNums(today);
+  const dateWeekAgo = formatDateToNums(takeWeekAgoDate(today));
+
+  const handleSearch = (keyword) => {
+    return newsApi.getData({keyword: keyword, from:dateWeekAgo, to:dateNow});
+  }
 
   // СТИЛИ
   const commonPageStyles = {
@@ -90,7 +98,12 @@ const App = () => {
           <div className="page__content">
             <Switch>
               <Route exact path="/">
-                <Main onLogin={handleLogin} onLogout={handleLogout} onRegister={handleRegister} />
+                <Main
+                  onLogin={handleLogin}
+                  onLogout={handleLogout}
+                  onRegister={handleRegister}
+                  onSearch={handleSearch}
+                />
               </Route>
               <ProtectedRoute
                 path="/saved-news"

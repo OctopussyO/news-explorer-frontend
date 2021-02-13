@@ -61,7 +61,7 @@ const NewsCardList = ({
                 </h2>
                 <ul className={listClassName}>
                   { cards.slice(0, renderingAmount).map((card) => (
-                    <li className="news-cards__list-item" key={card.id} >
+                    <li className="news-cards__list-item" key={card.title} >
                       <NewsCard card={card} isOwn={false} />
                     </li>
                   )) }

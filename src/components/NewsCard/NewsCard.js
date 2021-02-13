@@ -8,6 +8,7 @@ import TrashIcon from "../svg/TrashIcon";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import useCardTextTruncate from "../../hooks/useCardTextTruncate";
 import './NewsCard.css';
+import { formatDateToStr } from "../../utils/date";
 
 const NewsCard = ({
   card,
@@ -27,12 +28,12 @@ const NewsCard = ({
 
   const [isDeleted, setDeletedState] = useState(false);
   const handleDeleteCardClick = () => {
-    console.log('hi', typeof disappearAnimation)
     setDeletedState(true);
   };
 
   const altText = `${card.keyword}, фотография`;
   const linkTitle = card.source.toUpperCase();
+  const date = formatDateToStr(new Date(card.date));
 
   const titleRef = useRef(null);
   const textRef = useRef(null);
@@ -122,7 +123,7 @@ const NewsCard = ({
       <img className="card__image" src={card.image} alt={altText} />
       <figcaption className=" card__text-content">
         <p className={dateClassName}>
-          {card.date}
+          {date}
         </p>
         <div className="card__description">
           <h3 className={titleClassName} ref={titleRef}>

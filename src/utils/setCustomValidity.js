@@ -3,7 +3,9 @@ const setCustomValidity = (target) => {
   target.setCustomValidity('');
 
   if (!target.validity.valid){
-    if (target.validity.valueMissing) {
+    if (target.name === 'search' & target.validity.valueMissing) {
+      target.setCustomValidity('Нужно ввести ключевое слово');
+    } else if (target.validity.valueMissing) {
       target.setCustomValidity('Это поле обязательно');
     } else if (target.name === 'name' & target.validity.patternMismatch) {
       target.setCustomValidity('Имя может содержать только буквы')
