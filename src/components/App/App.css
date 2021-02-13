@@ -1,5 +1,28 @@
 @import url(../../vendor/fonts/fonts.css);
 
+@keyframes appear {
+  from {
+    opacity: 0;
+    visibility: visible;
+  }
+  to {
+    opacity: 1;
+    visibility: hidden;
+  }
+}
+
+.appear-animation {
+  animation: appear .5s linear;
+  animation-fill-mode: forwards;
+}
+
+.disappear-animation {
+  animation: appear .5s linear;
+  animation-delay: .2s;
+  animation-direction: reverse;
+  animation-fill-mode: forwards;
+}
+
 .page {
   height: 100%;
   display: flex;

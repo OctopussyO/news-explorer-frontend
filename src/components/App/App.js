@@ -77,6 +77,8 @@ const App = () => {
     robotoSlabText: 'roboto-slab-text',
     interText: 'inter-text',
     sourceSansText: 'source-sans-text',
+    appearAnimation: 'appear-animation',
+    disappearAnimation: 'disappear-animation',
   };
   
   return (

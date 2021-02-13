@@ -34,57 +34,51 @@ const NewsCardList = ({
   const listClassName = joinCN({ basic: ['news-cards__list', pageListClassName] });  
 
   return (
-    <>
-    {/* Сохранённые карточки */}
-      {
-        Boolean(isOwn & cards.length > 0) && (
-          <section className={sectionClassName}>
-            <ul className={listClassName}>
-              { cards.map((card) => (
-                <li className="news-cards__list-item" key={card.id}>
-                  <NewsCard card={card} isOwn={true} />
-                </li>
-              )) }
-            </ul>
-          </section>
+    <section className={sectionClassName}>
+      { isLoading
+        ? (
+          <LoadInfo isLoading={true} />
+        ) : (
+          Boolean(isOwn) ? (
+            Boolean(cards.length > 0)
+            ? (
+              <ul className={listClassName}>
+                { cards.map((card) => (
+                  <li className="news-cards__list-item" key={card.id}>
+                    <NewsCard card={card} isOwn={true} />
+                  </li>
+                )) }
+              </ul>
+            ) : (
+              <LoadInfo isEmpty={true} />
+            )
+          ) : (
+            Boolean(cards.length > 0)
+            ? (
+              <>
+                <h2 className={titleClassName}>
+                  Результаты поиска
+                </h2>
+                <ul className={listClassName}>
+                  { cards.slice(0, renderingAmount).map((card) => (
+                    <li className="news-cards__list-item" key={card.id} >
+                      <NewsCard card={card} isOwn={false} />
+                    </li>
+                  )) }
+                </ul>
+                { Boolean(renderingAmount !== null & renderingAmount < cards.length) &&
+                  <Button outerClassName={loadButtonClassName} onClick={handleLoadMoreClick}>
+                    Показать ещё
+                  </Button>
+                }
+              </>
+            ) : (
+              <LoadInfo isNotFound={true} />
+            )
+          )
         )
       }
-      {/* Найденные карточки */}
-      {
-        Boolean(!isOwn) && (
-          <section className={sectionClassName}>
-            { isLoading
-              ? (
-                <LoadInfo isLoading={true} />
-              ) : (
-                Boolean(cards.length > 0)
-                ? (
-                  <>
-                    <h2 className={titleClassName}>
-                      Результаты поиска
-                    </h2>
-                    <ul className={listClassName}>
-                      { cards.slice(0, renderingAmount).map((card) => (
-                        <li className="news-cards__list-item" key={card.id} >
-                          <NewsCard card={card} isOwn={false} />
-                        </li>
-                      )) }
-                    </ul>
-                    { Boolean(renderingAmount !== null & renderingAmount < cards.length) &&
-                      <Button outerClassName={loadButtonClassName} onClick={handleLoadMoreClick}>
-                        Показать ещё
-                      </Button>
-                    }
-                  </>
-                ) : (
-                  <LoadInfo isNotFound={true} />
-                )
-              )
-            }
-          </section>
-        )
-      }
-    </>
+    </section>
   );
 };
 

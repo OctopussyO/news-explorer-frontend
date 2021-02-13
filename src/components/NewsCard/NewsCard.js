@@ -25,6 +25,12 @@ const NewsCard = ({
     }
   };
 
+  const [isDeleted, setDeletedState] = useState(false);
+  const handleDeleteCardClick = () => {
+    console.log('hi', typeof disappearAnimation)
+    setDeletedState(true);
+  };
+
   const altText = `${card.keyword}, фотография`;
   const linkTitle = card.source.toUpperCase();
 
@@ -34,7 +40,18 @@ const NewsCard = ({
   const { titleLinesAmount, isTextTruncateNeeded } = useCardTextTruncate(titleRef, textRef);
 
   // СТИЛИ
-  const { robotoText, robotoSlabText, sourceSansText } = useContext(CommonPageStylesContext);
+  const {
+    robotoText,
+    robotoSlabText,
+    sourceSansText,
+    disappearAnimation,
+  } = useContext(CommonPageStylesContext);
+  const cardClassName = joinCN({
+    basic: ['card'],
+    condition: {
+      [disappearAnimation]: isDeleted,
+    },
+  });
   const keywordClassName = joinCN({ basic: ['card__keyword', robotoText] });
   const tooltipClassName = joinCN({
     basic: ['card__tooltip', robotoText],
@@ -42,7 +59,7 @@ const NewsCard = ({
       'card__tooltip_for_delete': isOwn,
       'card__tooltip_for_auth': !isOwn,
       'card__tooltip_visible': isTooltipVisible,
-    }
+    },
   });
   const dateClassName = joinCN({ basic: ['card__date', sourceSansText] });
   const titleClassName = joinCN({ basic: ['card__title', robotoSlabText] });
@@ -70,7 +87,7 @@ const NewsCard = ({
   });
 
   return (
-    <figure className="card">
+    <figure className={cardClassName}>
       <div className="card__over-elements">
         <div
           className="card__control"
@@ -79,7 +96,7 @@ const NewsCard = ({
         >
           { isOwn 
             ? (
-              <Button outerClassName="card__button" labelText="Удалить">
+              <Button outerClassName="card__button" onClick={handleDeleteCardClick} labelText="Удалить">
                 <TrashIcon pathClassName="card__icon card__icon_act_delete" /> 
               </Button>
             ) : (
