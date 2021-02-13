@@ -13,6 +13,7 @@ import PopupRegister from '../PopupRegister/PopupRegister';
 import PopupInfo from '../PopupInfo/PopupInfo';
 import { SUCCESS_REGISTRATION_MESSAGE } from '../../utils/constants';
 import './Main.css';
+import newsApi from '../../utils/newsApi';
 
 const Main = ({
   onLogout,

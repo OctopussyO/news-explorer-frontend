@@ -69,6 +69,8 @@ const App = () => {
     tokenCheck();
   }, [currentUser.isLoggedIn]);
 
+  
+
   // СТИЛИ
   const commonPageStyles = {
     pageNarrowClassName: 'page__narrow',
