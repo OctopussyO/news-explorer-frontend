@@ -80,7 +80,7 @@ const Main = ({
       })
       .catch((err) => {
         console.log(err);
-        setFoundNews([]);
+        setFoundNews(null);
       })
       .finally(() => setLoadingState(false));
   };

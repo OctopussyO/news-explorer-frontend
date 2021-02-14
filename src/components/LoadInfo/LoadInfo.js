@@ -8,6 +8,8 @@ import './LoadInfo.css';
 const LoadInfo = ({
   isLoading = false,
   isNotFound = false,
+  isError = false,
+  isEmpty = false,
 }) => {
   const { robotoSlabText, robotoText } = useContext(CommonPageStylesContext);
   const titleClassName = joinCN({ basic: ['info__title', robotoSlabText] });
@@ -29,7 +31,20 @@ const LoadInfo = ({
             Ничего не найдено
           </h4>
           <p className={textClassName}>
-            К сожалению по вашему запросу ничего не найдено.
+            К сожалению, по вашему запросу ничего не&nbsp;найдено.
+          </p>
+        </>
+      )}
+      { isError && (
+        <>
+          <p className={textClassName}>
+            Во&nbsp;время запроса произошла ошибка. 
+          </p>
+          <p className={textClassName}>
+            Возможно, проблема с соединением или&nbsp;сервер недоступен.
+          </p>
+          <p className={textClassName}>
+            Подождите немного и попробуйте ещё&nbsp;раз.
           </p>
         </>
       )}

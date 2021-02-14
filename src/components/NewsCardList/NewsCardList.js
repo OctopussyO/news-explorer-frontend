@@ -43,40 +43,40 @@ const NewsCardList = ({
           <LoadInfo isLoading={true} />
         ) : (
           Boolean(isOwn) ? (
-            Boolean(cards.length > 0)
-            ? (
-              <ul className={listClassName}>
-                { cards.map((card) => (
-                  <li className="news-cards__list-item" key={card.id}>
-                    <NewsCard card={card} isOwn={true} />
-                  </li>
-                )) }
-              </ul>
-            ) : (
-              <LoadInfo isEmpty={true} />
-            )
+            <ul className={listClassName}>
+              { cards.map((card) => (
+                <li className="news-cards__list-item" key={card.id}>
+                  <NewsCard card={card} isOwn={true} />
+                </li>
+              )) }
+            </ul>
           ) : (
-            Boolean(cards.length > 0)
+            Boolean(cards === null)
             ? (
-              <>
-                <h2 className={titleClassName}>
-                  Результаты поиска
-                </h2>
-                <ul className={listClassName}>
-                  { cards.slice(0, renderingAmount).map((card) => (
-                    <li className="news-cards__list-item" key={card.title} >
-                      <NewsCard card={card} isOwn={false} />
-                    </li>
-                  )) }
-                </ul>
-                { Boolean(renderingAmount !== null & renderingAmount < cards.length) &&
-                  <Button outerClassName={loadButtonClassName} onClick={handleLoadMoreClick}>
-                    Показать ещё
-                  </Button>
-                }
-              </>
+              <LoadInfo isError={true} />
             ) : (
-              <LoadInfo isNotFound={true} />
+              Boolean(cards.length > 0)
+              ? (
+                <>
+                  <h2 className={titleClassName}>
+                    Результаты поиска
+                  </h2>
+                  <ul className={listClassName}>
+                    { cards.slice(0, renderingAmount).map((card) => (
+                      <li className="news-cards__list-item" key={card.title} >
+                        <NewsCard card={card} isOwn={false} />
+                      </li>
+                    )) }
+                  </ul>
+                  { Boolean(renderingAmount !== null & renderingAmount < cards.length) &&
+                    <Button outerClassName={loadButtonClassName} onClick={handleLoadMoreClick}>
+                      Показать ещё
+                    </Button>
+                  }
+                </>
+              ) : (
+                <LoadInfo isNotFound={true} />
+              )
             )
           )
         )
