@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import joinCN from '../../utils/joinClassNames';
 import Button from '../Button/Button';
@@ -12,6 +12,9 @@ const NewsCardList = ({
   isLoading,
 }) => {
   const [renderingAmount, setRenderingAmount] = useState(isOwn ? null : 3);
+  useEffect(() => {
+    setRenderingAmount(3);
+  }, [cards]);
 
   const handleLoadMoreClick = () => setRenderingAmount(renderingAmount + 3);
   

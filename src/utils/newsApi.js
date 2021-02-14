@@ -13,7 +13,7 @@ class NewsApi {
   getData({ keyword, from, to }) {
     return fetch(
       `${this._baseUrl}/everything?q=${keyword}&apiKey=${this._apiKey}` +
-      `&from=${from}&to=${to}&pageSize=100`,
+      `&from=${from}&to=${to}&pageSize=100&language=ru&sortBy=popularity`,
       {
         headers: {
           "Content-Type": "application/json",

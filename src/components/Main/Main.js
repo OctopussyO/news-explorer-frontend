@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { сards } from '../../utils/testCards';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import delay from '../../utils/delay';
 import joinCN from '../../utils/joinClassNames';
@@ -59,34 +58,33 @@ const Main = ({
   const [isLoading, setLoadingState] = useState(true);
   const [foundNews, setFoundNews] = useState([]);
   const [keyword, setKeyword] =useState('');
-  // ДЛЯ ПРОВЕРКИ ВИДА ОШИБКИ ПОМЕНЯТЬ ЗНАЧЕНИЕ test на false
-  const test = true;
 
-  // TODO -- это надо будет переписать
-  const handleSearchClick = async (keyword) => {
+  const handleSearchClick = (keyword) => {
     setKeyword(keyword);
     setLoadingState(true);
     setCardListState(true);
-    await delay(500);
-    onSearch(keyword).then((data) => {
-      if (data) {
-        setFoundNews(data.articles.map((article) => {
-          return {
-            title: article.title,
-            text: article.description,
-            date: article.publishedAt,
-            source: article.source.name,
-            link: article.url,
-            image: article.urlToImage,
-          };
-        }));
-      } else {
+    onSearch(keyword)
+      .then((data) => {
+        if (data) {
+          setFoundNews(data.articles.map((article) => {
+            return {
+              title: article.title,
+              text: article.description,
+              date: article.publishedAt,
+              source: article.source.name,
+              link: article.url,
+              image: article.urlToImage,
+            };
+          }));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
         setFoundNews([]);
-      }
-      setLoadingState(false);
-    })
+      })
+      .finally(() => setLoadingState(false));
   };
-  
+
   // Чтобы при переадресации неавторизованного пользователя на главную открывался попап авторизации
   const history = useHistory();
 

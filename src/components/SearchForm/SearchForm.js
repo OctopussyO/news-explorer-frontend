@@ -29,9 +29,9 @@ const SearchForm = ({
       onSearchClick(values.search);
       resetForm();
     } else {
-      const event = {
-        target: Array.from(e.target.childNodes).find((node) => node.nodeName === 'INPUT'),
-      };
+      const event = new Event('change');
+      const inputElement = Array.from(e.target.childNodes).find((node) => node.nodeName === 'INPUT');
+      inputElement.dispatchEvent(event);
       handleChange(event);
     }
   };
