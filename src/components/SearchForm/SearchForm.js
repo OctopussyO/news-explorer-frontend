@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import useFormValidation from '../../hooks/useFormWithValidation';
 import joinCN from '../../utils/joinClassNames';
@@ -9,6 +9,7 @@ import './SearchForm.css';
 const SearchForm = ({
   outerClassName,
   onSearchClick,
+  lastKeyword = '',
 }) => {
   const [isFormFocus, setFormFocus] = useState(false);
   const handleFocus = () => setFormFocus(true);
@@ -19,22 +20,32 @@ const SearchForm = ({
     errors,
     isFormValid,
     handleChange,
-    resetForm,
   } = useFormValidation(setCustomValidity);
 
   
   const handleSubmit = (e) => {
     e.preventDefault();
+    const inputElement = Array.from(e.target.childNodes).find((node) => node.nodeName === 'INPUT');
     if (isFormValid) {
       onSearchClick(values.search);
-      resetForm();
+      inputElement.blur();
     } else {
       const event = new Event('change');
-      const inputElement = Array.from(e.target.childNodes).find((node) => node.nodeName === 'INPUT');
       inputElement.dispatchEvent(event);
-      handleChange(event);
+      handleInputChange(event);
     }
   };
+
+  const [inputLastKeyword, setInputLastKeyword] = useState(lastKeyword);
+
+  const handleInputChange = (e) => {
+    setInputLastKeyword('');
+    handleChange(e);
+  };
+
+  useEffect(() => {
+    setInputLastKeyword(lastKeyword);
+  }, [lastKeyword]);
   
   // СТИЛИ
   const { robotoText } = useContext(CommonPageStylesContext);
@@ -61,8 +72,8 @@ const SearchForm = ({
         aria-label="Ключевое слово для поиска"
         onFocus={handleFocus}
         onBlur={handleBlur}
-        onChange={handleChange}
-        value={values.search || ""}
+        onChange={handleInputChange}
+        value={values.search || inputLastKeyword || ""}
       />
       <Button isSubmit={true} outerClassName={buttonClassName}>
         Искать

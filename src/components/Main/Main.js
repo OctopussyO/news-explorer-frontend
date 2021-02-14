@@ -18,6 +18,9 @@ const Main = ({
   onLogin,
   onRegister,
   onSearch,
+  cards = [],
+  lastKeyword ='',
+  isLoading = false,
 }) => {
   const [isLoginPopupOpen, setLoginPopupState] = useState(false);
   const [isRegisterPopupOpen, setRegisterPopupState] = useState(false);
@@ -55,34 +58,16 @@ const Main = ({
   };
 
   const [isCardListVisible, setCardListState] = useState(false);
-  const [isLoading, setLoadingState] = useState(true);
-  const [foundNews, setFoundNews] = useState([]);
-  const [keyword, setKeyword] =useState('');
+
+  useEffect(() => {
+    if (!!lastKeyword) {
+      setCardListState(true);
+    }
+  }, [lastKeyword]);
 
   const handleSearchClick = (keyword) => {
-    setKeyword(keyword);
-    setLoadingState(true);
     setCardListState(true);
-    onSearch(keyword)
-      .then((data) => {
-        if (data) {
-          setFoundNews(data.articles.map((article) => {
-            return {
-              title: article.title,
-              text: article.description,
-              date: article.publishedAt,
-              source: article.source.name,
-              link: article.url,
-              image: article.urlToImage,
-            };
-          }));
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setFoundNews(null);
-      })
-      .finally(() => setLoadingState(false));
+    onSearch(keyword);
   };
 
   // Чтобы при переадресации неавторизованного пользователя на главную открывался попап авторизации
@@ -113,11 +98,15 @@ const Main = ({
               Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.
             </p>
           </div>
-          <SearchForm outerClassName="cover__search-form" onSearchClick={handleSearchClick} />
+          <SearchForm
+            outerClassName="cover__search-form"
+            onSearchClick={handleSearchClick}
+            lastKeyword={lastKeyword}
+          />
         </div>
       </section>
       { isCardListVisible &&
-        <NewsCardList cards={foundNews} isLoading={isLoading} />
+        <NewsCardList cards={cards} isLoading={isLoading} />
       }
       <About />
       <PopupLogin

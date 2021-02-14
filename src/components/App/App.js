@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { formatDateToNums, takeWeekAgoDate } from '../../utils/date';
+import delay from '../../utils/delay';
 import mainApi from '../../utils/mainApi';
 import newsApi from '../../utils/newsApi';
 import Footer from '../Footer/Footer';
@@ -17,6 +18,11 @@ const App = () => {
     name: '',
   });
 
+  const clearLastSearch = () => {
+    localStorage.removeItem('lastKeyword');
+    localStorage.removeItem('lastFoundNews');
+  };
+
   const handleRegister = (data) => {
     return mainApi.register(data)
   };
@@ -29,6 +35,8 @@ const App = () => {
           isLoggedIn: true,
         });
         localStorage.setItem('token', res.token);
+        // TODO -- уточнить, точно ли надо очищать поля в этом случае
+        // clearLastSearch();
       });
   };
 
@@ -38,6 +46,7 @@ const App = () => {
       name: '',
     });
     localStorage.removeItem('token');
+    clearLastSearch();
   };
 
   const tokenCheck = () => {
@@ -66,18 +75,72 @@ const App = () => {
     }
   };
 
-  // При загрузке страницы сразу проверяем, авторизован ли пользователь
+  // При загрузке страницы проверяем, авторизован ли пользователь
   useEffect(() => {
     tokenCheck();
   }, [currentUser.isLoggedIn]);
 
+  // Новости
+  const [foundNews, setFoundNews] = useState([]);
+  const [keyword, setKeyword] =useState('');
+  
+  // При загрузке страницы достаём из localStorage данные
+  useEffect(() => {
+    const lastKeyword = localStorage.getItem('lastKeyword');
+    const lastFoundNews = localStorage.getItem('lastFoundNews');
+    if (!!lastKeyword & !!lastFoundNews) {
+      const emitLoading = async () => {
+        await delay(500);
+        setLoadingState(false);
+      }
+
+      setKeyword(lastKeyword);
+      setFoundNews(JSON.parse(lastFoundNews));
+      emitLoading();
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('lastKeyword', keyword);
+    localStorage.setItem('lastFoundNews', JSON.stringify(foundNews));
+  }, [keyword, foundNews]);
+  
+  // Поиск новостей
+  const [isLoading, setLoadingState] = useState(true);
+  
   const today = new Date();
   const dateNow = formatDateToNums(today);
   const dateWeekAgo = formatDateToNums(takeWeekAgoDate(today));
 
   const handleSearch = (keyword) => {
-    return newsApi.getData({keyword: keyword, from:dateWeekAgo, to:dateNow});
-  }
+    setKeyword(keyword);
+    setLoadingState(true);
+    newsApi.getData({keyword: keyword, from:dateWeekAgo, to:dateNow})
+    .then((data) => {
+      const foundArticles = data.articles;
+      if (foundArticles) {
+        setFoundNews(data.articles.map((article) => {
+          return {
+            title: article.title,
+            text: article.description,
+            date: article.publishedAt,
+            source: article.source.name,
+            link: article.url,
+            image: article.urlToImage,
+          };
+        }));
+      } else {
+        setFoundNews([]);
+        clearLastSearch();
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      setFoundNews(null);
+      clearLastSearch();
+    })
+    .finally(() => setLoadingState(false));
+  };
 
   // СТИЛИ
   const commonPageStyles = {
@@ -103,6 +166,9 @@ const App = () => {
                   onLogout={handleLogout}
                   onRegister={handleRegister}
                   onSearch={handleSearch}
+                  cards={foundNews}
+                  lastKeyword={keyword}
+                  isLoading={isLoading}
                 />
               </Route>
               <ProtectedRoute
