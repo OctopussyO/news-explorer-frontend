@@ -3,7 +3,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { formatDateToNums, takeWeekAgoDate } from '../../utils/date';
-import delay from '../../utils/delay';
 import mainApi from '../../utils/mainApi';
 import newsApi from '../../utils/newsApi';
 import Footer from '../Footer/Footer';

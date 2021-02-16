@@ -12,6 +12,7 @@ const NewsCardList = ({
   isLoading,
   onSaveClick,
   onDeleteClick,
+  onUnauthSaveClick,
   newSearchTrigger,
 }) => {
   const [renderingAmount, setRenderingAmount] = useState(isOwn ? null : 3);
@@ -72,6 +73,7 @@ const NewsCardList = ({
                           isOwn={false}
                           onSaveClick={onSaveClick}
                           onDeleteClick={onDeleteClick}
+                          onUnauthSaveClick={onUnauthSaveClick}
                         />
                       </li>
                     )) }

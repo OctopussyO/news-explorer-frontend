@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { CommonPageStylesContext } from "../../contexts/CommonPageStylesContext";
 import joinCN from "../../utils/joinClassNames";
 import BookmarkIcon from "../svg/BookmarkIcon";
@@ -16,6 +16,7 @@ const NewsCard = ({
   isOwn = false,
   onSaveClick,
   onDeleteClick,
+  onUnauthSaveClick,
 }) => {
   const { isLoggedIn, savedNews } = useContext(CurrentUserContext);
 
@@ -39,7 +40,7 @@ const NewsCard = ({
         onDeleteClick(card._id);
         card._id = null;
       }
-    }
+    } else onUnauthSaveClick();
   };
 
   // Для плавного исчезновения карточки при удалении
