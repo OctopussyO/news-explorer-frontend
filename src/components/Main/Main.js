@@ -113,6 +113,7 @@ const Main = ({
           isLoading={isLoading}
           onSaveClick={onSaveClick}
           onDeleteClick={onDeleteClick}
+          newSearchTrigger={lastKeyword}
         />
       }
       <About />

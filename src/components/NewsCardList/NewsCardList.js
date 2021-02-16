@@ -12,11 +12,12 @@ const NewsCardList = ({
   isLoading,
   onSaveClick,
   onDeleteClick,
+  newSearchTrigger,
 }) => {
   const [renderingAmount, setRenderingAmount] = useState(isOwn ? null : 3);
   useEffect(() => {
     setRenderingAmount(3);
-  }, [cards]);
+  }, [newSearchTrigger]);
 
   const handleLoadMoreClick = () => setRenderingAmount(renderingAmount + 3);
   

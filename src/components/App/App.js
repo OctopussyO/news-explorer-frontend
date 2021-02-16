@@ -70,13 +70,12 @@ const App = () => {
     if (token) {
       Promise.all([mainApi.getOwnerInfo(token), mainApi.getOwnerData(token)])
         .then(([userInfo, userData]) => {
-          console.log(!!userData, !!userInfo)
           if (!!userInfo & !!userData) {
+            setSavedNews(userData);
             setCurrentUser({
               isLoggedIn: true,
               name: userInfo.name,
             });
-            setSavedNews(userData);
           }
         })
         .catch((err) => {
@@ -85,7 +84,6 @@ const App = () => {
             // setRateState(true);
             console.log('Превышен лимит');
           }
-          console.log('WHAT')
           setCurrentUser({
             isLoggedIn: false,
             name: '',
@@ -100,21 +98,20 @@ const App = () => {
         isLoggedIn: false,
         name: '',
       });
-      console.log('???e')
-      // setSavedNews([]);
     }
   };
 
   // При загрузке страницы проверяем, авторизован ли пользователь
   useEffect(() => {
     tokenCheck();
+    const lastKeyword = localStorage.getItem('lastKeyword');
+    if (lastKeyword) handleSearch(lastKeyword);
+
   }, [currentUser.isLoggedIn]);
   
   // При загрузке страницы достаём из localStorage данные
   useEffect(() => {
-    const lastKeyword = localStorage.getItem('lastKeyword');
-    if (lastKeyword) handleSearch(lastKeyword);
-  }, []);
+  }, [currentUser.isLoggedIn]);
 
   useEffect(() => {
     localStorage.setItem('lastKeyword', keyword);
@@ -123,15 +120,13 @@ const App = () => {
   // Поиск новостей
   // Проверка найденных новостей на "сохранённость"
   const checkNewsMatch = (foundNews, savedNews) => {
-    return foundNews.map((foundItem) => {
-      console.log(savedNews)
+    const checkedFoundNews = foundNews.map((foundItem) => {
       const match = savedNews.find((savedItem) => {
         return foundItem.link === savedItem.link
-        //  & foundItem.source === savedItem.source;
       });
-      console.log(match)
       return !!match ? {...foundItem, _id: match._id} : {...foundItem, _id: null};
     });
+    setFoundNews(checkedFoundNews);
   };
 
   const handleSearch = (keyword) => {
@@ -141,7 +136,6 @@ const App = () => {
     .then((data) => {
       const foundNews = data.articles.map((article) => {
         return {
-          _id: article._id,
           title: article.title,
           text: article.description,
           date: article.publishedAt,
@@ -150,8 +144,7 @@ const App = () => {
           image: article.urlToImage,
         };
       });
-      console.log(savedNews)
-      setFoundNews(checkNewsMatch(foundNews, savedNews));
+      checkNewsMatch(foundNews, savedNews);
     })
     .catch((err) => {
       console.error(err);
@@ -165,6 +158,7 @@ const App = () => {
     mainApi.getOwnerData(token)
       .then((data) => {
         setSavedNews(data);
+        checkNewsMatch(foundNews, data)
       })
       .catch((err) => {
         // TODO -- дорисовать попап с ошибкой
@@ -173,29 +167,29 @@ const App = () => {
   };
 
   const handleSaveCard = (data) => {
-    return mainApi.saveItem(token, {...data, keyword})
+    mainApi.saveItem(token, {...data, keyword})
       .then(async () => {
         // TODO -- дорисовать прелоадер какой-нибудь
         updateSavedCards();
-        // setFoundNews(checkNewsMatch(foundNews, savedNews));
-      });
+      })
+      .catch((err) => console.log(err));
   };
-
-  useEffect(() => {
-    setFoundNews(checkNewsMatch(foundNews, savedNews));
-    console.log(savedNews)
-  }, [savedNews]);
 
   // Функция для удаления карточки, принимает ассинхронных коллбэк для эффекта при удалении
   const handleDeleteCard = (id, callback) => {
-    return mainApi.deleteItem(token, id)
+    mainApi.deleteItem(token, id)
       .then(async() => {
         if (callback) {
           await callback();
         }
         updateSavedCards();
-      });
+      })
+      .catch((err) => console.log(err));
   };
+  
+  useEffect(() => {
+    checkNewsMatch(foundNews, savedNews);
+  }, [savedNews]);
 
   // СТИЛИ
   const commonPageStyles = {

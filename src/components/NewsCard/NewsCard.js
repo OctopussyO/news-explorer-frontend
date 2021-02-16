@@ -28,7 +28,7 @@ const NewsCard = ({
       if (!isSaved) {
         const temp = {...card};
         delete temp._id;
-        onSaveClick(temp).catch((err) => console.log(err));
+        onSaveClick(temp);
       } else {
         onDeleteClick(card._id);
         card._id = null;
@@ -37,15 +37,14 @@ const NewsCard = ({
   };
 
   // Для плавного исчезновения карточки при удалении
-  // const [isDeleted, setDeletedState] = useState(false);
-  // const disappear = async () => {
-  //   setDeletedState(true);
-  //   await delay(500);
-  // };
+  const [isDeleted, setDeletedState] = useState(false);
+  const disappear = async () => {
+    setDeletedState(true);
+    await delay(300);
+  };
 
   const handleDeleteCardClick = () => {
-    console.log(card._id)
-    onDeleteClick(card._id).catch((err) => console.error(err));
+    onDeleteClick(card._id, disappear);
   };
 
   const altText = `${card.keyword}, фотография`;
@@ -63,12 +62,19 @@ const NewsCard = ({
     robotoSlabText,
     sourceSansText,
     disappearAnimation,
+    appearAnimation,
   } = useContext(CommonPageStylesContext);
   const cardClassName = joinCN({
-    basic: ['card'],
-    // condition: {
-    //   [disappearAnimation]: isDeleted,
-    // },
+    basic: ['card', appearAnimation],
+    condition: {
+      [disappearAnimation]: isDeleted,
+    },
+  });
+  const saveIconClassName = joinCN({
+    basic: ['card__icon', 'card__icon_act_save'],
+    condition: {
+      'card__icon_marked': isSaved,
+    },
   });
   const keywordClassName = joinCN({ basic: ['card__keyword', robotoText] });
   const tooltipClassName = joinCN({
@@ -97,12 +103,7 @@ const NewsCard = ({
   const titleLinkClassName = joinCN({
     basic: ['card__link', 'card__link_content_title', robotoSlabText],
   });
-  const saveIconClassName = joinCN({
-    basic: ['card__icon', 'card__icon_act_save'],
-    condition: {
-      'card__icon_marked': isSaved,
-    },
-  });
+  
 
   return (
     <figure className={cardClassName}>
