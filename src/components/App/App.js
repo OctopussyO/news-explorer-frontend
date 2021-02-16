@@ -16,13 +16,13 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState({
     isLoggedIn: null,
     name: '',
+    savedNews: [],
   });
   const [token, setToken] = useState('');
 
   const [isRateLimited, setRateState] = useState(false);
 
   // Новости
-  const [savedNews, setSavedNews] = useState([]);
   const [foundNews, setFoundNews] = useState([]);
   const [keyword, setKeyword] =useState('');
 
@@ -56,6 +56,7 @@ const App = () => {
     setCurrentUser({
       isLoggedIn: false,
       name: '',
+      savedNews: [],
     });
     localStorage.removeItem('token');
     setToken('');
@@ -71,10 +72,10 @@ const App = () => {
       Promise.all([mainApi.getOwnerInfo(token), mainApi.getOwnerData(token)])
         .then(([userInfo, userData]) => {
           if (!!userInfo & !!userData) {
-            setSavedNews(userData);
             setCurrentUser({
               isLoggedIn: true,
               name: userInfo.name,
+              savedNews: userData,
             });
           }
         })
@@ -87,6 +88,7 @@ const App = () => {
           setCurrentUser({
             isLoggedIn: false,
             name: '',
+            savedNews: [],
           });
           console.log(err);
         })
@@ -97,6 +99,7 @@ const App = () => {
       setCurrentUser({
         isLoggedIn: false,
         name: '',
+        savedNews: [],
       });
     }
   };
@@ -116,18 +119,6 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem('lastKeyword', keyword);
   }, [keyword, foundNews]);
-  
-  // Поиск новостей
-  // Проверка найденных новостей на "сохранённость"
-  const checkNewsMatch = (foundNews, savedNews) => {
-    const checkedFoundNews = foundNews.map((foundItem) => {
-      const match = savedNews.find((savedItem) => {
-        return foundItem.link === savedItem.link
-      });
-      return !!match ? {...foundItem, _id: match._id} : {...foundItem, _id: null};
-    });
-    setFoundNews(checkedFoundNews);
-  };
 
   const handleSearch = (keyword) => {
     setKeyword(keyword);
@@ -144,7 +135,7 @@ const App = () => {
           image: article.urlToImage,
         };
       });
-      checkNewsMatch(foundNews, savedNews);
+      setFoundNews(foundNews);
     })
     .catch((err) => {
       console.error(err);
@@ -157,8 +148,10 @@ const App = () => {
   const updateSavedCards = () => {
     mainApi.getOwnerData(token)
       .then((data) => {
-        setSavedNews(data);
-        checkNewsMatch(foundNews, data)
+        setCurrentUser({
+          ...currentUser,
+          savedNews: data,
+        });
       })
       .catch((err) => {
         // TODO -- дорисовать попап с ошибкой
@@ -186,10 +179,6 @@ const App = () => {
       })
       .catch((err) => console.log(err));
   };
-  
-  useEffect(() => {
-    checkNewsMatch(foundNews, savedNews);
-  }, [savedNews]);
 
   // СТИЛИ
   const commonPageStyles = {
@@ -226,7 +215,7 @@ const App = () => {
                 path="/saved-news"
                 loggedIn={currentUser.isLoggedIn}
                 component={SavedNews}
-                cards={savedNews}
+                // cards={savedNews}
                 onLogout={handleLogout}
                 onDeleteClick={handleDeleteCard}
               />

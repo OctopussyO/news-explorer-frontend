@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { CommonPageStylesContext } from "../../contexts/CommonPageStylesContext";
 import joinCN from "../../utils/joinClassNames";
 import BookmarkIcon from "../svg/BookmarkIcon";
@@ -8,8 +8,8 @@ import TrashIcon from "../svg/TrashIcon";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import useCardTextTruncate from "../../hooks/useCardTextTruncate";
 import { formatDateToStr } from "../../utils/date";
-import './NewsCard.css';
 import delay from "../../utils/delay";
+import './NewsCard.css';
 
 const NewsCard = ({
   card,
@@ -17,15 +17,21 @@ const NewsCard = ({
   onSaveClick,
   onDeleteClick,
 }) => {
-  const { isLoggedIn } = useContext(CurrentUserContext);
+  const { isLoggedIn, savedNews } = useContext(CurrentUserContext);
 
   const [isTooltipVisible, setTooltipState] = useState(false);
   const handleButtonHover = () => setTooltipState(!isTooltipVisible);
 
-  const isSaved = !!card._id;
+  
+  const matched = savedNews.find((item) => item.link === card.link);
+  card._id = matched ? matched._id : null;
+    
+
+  // const isSaved = card._id
+
   const handleCommonCardClick = async () => {
     if (isLoggedIn) {
-      if (!isSaved) {
+      if (!card._id) {
         const temp = {...card};
         delete temp._id;
         onSaveClick(temp);
@@ -73,7 +79,7 @@ const NewsCard = ({
   const saveIconClassName = joinCN({
     basic: ['card__icon', 'card__icon_act_save'],
     condition: {
-      'card__icon_marked': isSaved,
+      'card__icon_marked': card._id,
     },
   });
   const keywordClassName = joinCN({ basic: ['card__keyword', robotoText] });
