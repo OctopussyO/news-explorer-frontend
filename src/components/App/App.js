@@ -17,10 +17,23 @@ const App = () => {
     isLoggedIn: null,
     name: '',
   });
+  const [token, setToken] = useState('');
+
+  const [isRateLimited, setRateState] = useState(false);
+
+  // Новости
+  const [savedNews, setSavedNews] = useState([]);
+  const [foundNews, setFoundNews] = useState([]);
+  const [keyword, setKeyword] =useState('');
+
+  const [isLoading, setLoadingState] = useState(true);
+  
+  const today = new Date();
+  const dateNow = formatDateToNums(today);
+  const dateWeekAgo = formatDateToNums(takeWeekAgoDate(today));
 
   const clearLastSearch = () => {
     localStorage.removeItem('lastKeyword');
-    localStorage.removeItem('lastFoundNews');
   };
 
   const handleRegister = (data) => {
@@ -35,8 +48,7 @@ const App = () => {
           isLoggedIn: true,
         });
         localStorage.setItem('token', res.token);
-        // TODO -- уточнить, точно ли надо очищать поля в этом случае
-        // clearLastSearch();
+        setToken(res.token);
       });
   };
 
@@ -46,32 +58,50 @@ const App = () => {
       name: '',
     });
     localStorage.removeItem('token');
+    setToken('');
     clearLastSearch();
   };
 
   const tokenCheck = () => {
     const token = localStorage.getItem('token');
-
+    setToken(token);
+    // TODO -- Запустить прелоадер
+    setRateState(false);
     if (token) {
-      mainApi.getOwnerInfo(token)
-        .then((data) => {
-          setCurrentUser({
-            isLoggedIn: true,
-            name: data.name,
-          });
+      Promise.all([mainApi.getOwnerInfo(token), mainApi.getOwnerData(token)])
+        .then(([userInfo, userData]) => {
+          console.log(!!userData, !!userInfo)
+          if (!!userInfo & !!userData) {
+            setCurrentUser({
+              isLoggedIn: true,
+              name: userInfo.name,
+            });
+            setSavedNews(userData);
+          }
         })
         .catch((err) => {
-          // Здесь ошибку пользователю не выводим, потому что в редких случаях она ему что-то даст.
-          // Тот, кому это необходимо, найдёт её в консоли.
-          // Вывод ошибки здесь выглядит странно, потому что пользователь даже не поймёт, в чём дело
-          // -- зашёл на сайт, ещё ничего не сделал, а уже ошибка.
-          console.error(err);
+          if (err.name === 'TypeError') {
+            // TODO -- сделать заглушку на этот случай и увеличить количество запросов на бэке
+            // setRateState(true);
+            console.log('Превышен лимит');
+          }
+          console.log('WHAT')
+          setCurrentUser({
+            isLoggedIn: false,
+            name: '',
+          });
+          console.log(err);
+        })
+        .finally(() => {
+          // TODO -- Остановить прелоадер
         });
     } else {
       setCurrentUser({
         isLoggedIn: false,
         name: '',
       });
+      console.log('???e')
+      // setSavedNews([]);
     }
   };
 
@@ -79,60 +109,49 @@ const App = () => {
   useEffect(() => {
     tokenCheck();
   }, [currentUser.isLoggedIn]);
-
-  // Новости
-  const [foundNews, setFoundNews] = useState([]);
-  const [keyword, setKeyword] =useState('');
   
   // При загрузке страницы достаём из localStorage данные
   useEffect(() => {
     const lastKeyword = localStorage.getItem('lastKeyword');
-    const lastFoundNews = localStorage.getItem('lastFoundNews');
-    if (!!lastKeyword & !!lastFoundNews) {
-      const emitLoading = async () => {
-        await delay(500);
-        setLoadingState(false);
-      }
-
-      setKeyword(lastKeyword);
-      setFoundNews(JSON.parse(lastFoundNews));
-      emitLoading();
-    }
+    if (lastKeyword) handleSearch(lastKeyword);
   }, []);
 
   useEffect(() => {
     localStorage.setItem('lastKeyword', keyword);
-    localStorage.setItem('lastFoundNews', JSON.stringify(foundNews));
   }, [keyword, foundNews]);
   
   // Поиск новостей
-  const [isLoading, setLoadingState] = useState(true);
-  
-  const today = new Date();
-  const dateNow = formatDateToNums(today);
-  const dateWeekAgo = formatDateToNums(takeWeekAgoDate(today));
+  // Проверка найденных новостей на "сохранённость"
+  const checkNewsMatch = (foundNews, savedNews) => {
+    return foundNews.map((foundItem) => {
+      console.log(savedNews)
+      const match = savedNews.find((savedItem) => {
+        return foundItem.link === savedItem.link
+        //  & foundItem.source === savedItem.source;
+      });
+      console.log(match)
+      return !!match ? {...foundItem, _id: match._id} : {...foundItem, _id: null};
+    });
+  };
 
   const handleSearch = (keyword) => {
     setKeyword(keyword);
     setLoadingState(true);
     newsApi.getData({keyword: keyword, from:dateWeekAgo, to:dateNow})
     .then((data) => {
-      const foundArticles = data.articles;
-      if (foundArticles) {
-        setFoundNews(data.articles.map((article) => {
-          return {
-            title: article.title,
-            text: article.description,
-            date: article.publishedAt,
-            source: article.source.name,
-            link: article.url,
-            image: article.urlToImage,
-          };
-        }));
-      } else {
-        setFoundNews([]);
-        clearLastSearch();
-      }
+      const foundNews = data.articles.map((article) => {
+        return {
+          _id: article._id,
+          title: article.title,
+          text: article.description,
+          date: article.publishedAt,
+          source: article.source.name,
+          link: article.url,
+          image: article.urlToImage,
+        };
+      });
+      console.log(savedNews)
+      setFoundNews(checkNewsMatch(foundNews, savedNews));
     })
     .catch((err) => {
       console.error(err);
@@ -140,6 +159,42 @@ const App = () => {
       clearLastSearch();
     })
     .finally(() => setLoadingState(false));
+  };
+  
+  const updateSavedCards = () => {
+    mainApi.getOwnerData(token)
+      .then((data) => {
+        setSavedNews(data);
+      })
+      .catch((err) => {
+        // TODO -- дорисовать попап с ошибкой
+        console.error(err)
+      });
+  };
+
+  const handleSaveCard = (data) => {
+    return mainApi.saveItem(token, {...data, keyword})
+      .then(async () => {
+        // TODO -- дорисовать прелоадер какой-нибудь
+        updateSavedCards();
+        // setFoundNews(checkNewsMatch(foundNews, savedNews));
+      });
+  };
+
+  useEffect(() => {
+    setFoundNews(checkNewsMatch(foundNews, savedNews));
+    console.log(savedNews)
+  }, [savedNews]);
+
+  // Функция для удаления карточки, принимает ассинхронных коллбэк для эффекта при удалении
+  const handleDeleteCard = (id, callback) => {
+    return mainApi.deleteItem(token, id)
+      .then(async() => {
+        if (callback) {
+          await callback();
+        }
+        updateSavedCards();
+      });
   };
 
   // СТИЛИ
@@ -169,13 +224,17 @@ const App = () => {
                   cards={foundNews}
                   lastKeyword={keyword}
                   isLoading={isLoading}
+                  onSaveClick={handleSaveCard}
+                  onDeleteClick={handleDeleteCard}
                 />
               </Route>
               <ProtectedRoute
                 path="/saved-news"
                 loggedIn={currentUser.isLoggedIn}
                 component={SavedNews}
+                cards={savedNews}
                 onLogout={handleLogout}
+                onDeleteClick={handleDeleteCard}
               />
               <Route>
                 <Redirect to={{ pathname: "/", state: {noAuthRedirected: true} }} />

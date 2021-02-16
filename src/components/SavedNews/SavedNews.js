@@ -1,16 +1,21 @@
 import Header from '../Header/Header';
 import NewsCardList from '../NewsCardList/NewsCardList';
-import { savedCards } from '../../utils/testCards';
 import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
 
 const SavedNews = ({
+  cards,
   onLogout,
+  onDeleteClick,
 }) => {
   return (
     <>
       <Header isMainPage={false} onLogoutClick={onLogout} />
       <SavedNewsHeader />
-      <NewsCardList cards={savedCards} isOwn={true} />
+      <NewsCardList
+        cards={cards}
+        isOwn={true}
+        onDeleteClick={onDeleteClick}
+      />
     </>
   );
 };

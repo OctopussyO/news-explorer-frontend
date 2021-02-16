@@ -21,6 +21,8 @@ const Main = ({
   cards = [],
   lastKeyword ='',
   isLoading = false,
+  onSaveClick,
+  onDeleteClick,
 }) => {
   const [isLoginPopupOpen, setLoginPopupState] = useState(false);
   const [isRegisterPopupOpen, setRegisterPopupState] = useState(false);
@@ -106,7 +108,12 @@ const Main = ({
         </div>
       </section>
       { isCardListVisible &&
-        <NewsCardList cards={cards} isLoading={isLoading} />
+          <NewsCardList
+          cards={cards}
+          isLoading={isLoading}
+          onSaveClick={onSaveClick}
+          onDeleteClick={onDeleteClick}
+        />
       }
       <About />
       <PopupLogin

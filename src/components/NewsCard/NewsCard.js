@@ -7,28 +7,45 @@ import Link from "../Link/Link";
 import TrashIcon from "../svg/TrashIcon";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import useCardTextTruncate from "../../hooks/useCardTextTruncate";
-import './NewsCard.css';
 import { formatDateToStr } from "../../utils/date";
+import './NewsCard.css';
+import delay from "../../utils/delay";
 
 const NewsCard = ({
   card,
   isOwn = false,
+  onSaveClick,
+  onDeleteClick,
 }) => {
   const { isLoggedIn } = useContext(CurrentUserContext);
 
   const [isTooltipVisible, setTooltipState] = useState(false);
   const handleButtonHover = () => setTooltipState(!isTooltipVisible);
 
-  const [isSaved, setSavedState] = useState(false);
-  const handleCommonCardClick = () => {
+  const isSaved = !!card._id;
+  const handleCommonCardClick = async () => {
     if (isLoggedIn) {
-      setSavedState(!isSaved);
+      if (!isSaved) {
+        const temp = {...card};
+        delete temp._id;
+        onSaveClick(temp).catch((err) => console.log(err));
+      } else {
+        onDeleteClick(card._id);
+        card._id = null;
+      }
     }
   };
 
-  const [isDeleted, setDeletedState] = useState(false);
+  // Для плавного исчезновения карточки при удалении
+  // const [isDeleted, setDeletedState] = useState(false);
+  // const disappear = async () => {
+  //   setDeletedState(true);
+  //   await delay(500);
+  // };
+
   const handleDeleteCardClick = () => {
-    setDeletedState(true);
+    console.log(card._id)
+    onDeleteClick(card._id).catch((err) => console.error(err));
   };
 
   const altText = `${card.keyword}, фотография`;
@@ -49,9 +66,9 @@ const NewsCard = ({
   } = useContext(CommonPageStylesContext);
   const cardClassName = joinCN({
     basic: ['card'],
-    condition: {
-      [disappearAnimation]: isDeleted,
-    },
+    // condition: {
+    //   [disappearAnimation]: isDeleted,
+    // },
   });
   const keywordClassName = joinCN({ basic: ['card__keyword', robotoText] });
   const tooltipClassName = joinCN({

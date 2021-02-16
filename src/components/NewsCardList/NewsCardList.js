@@ -10,6 +10,8 @@ const NewsCardList = ({
   cards = [],
   isOwn = false,
   isLoading,
+  onSaveClick,
+  onDeleteClick,
 }) => {
   const [renderingAmount, setRenderingAmount] = useState(isOwn ? null : 3);
   useEffect(() => {
@@ -45,8 +47,8 @@ const NewsCardList = ({
           Boolean(isOwn) ? (
             <ul className={listClassName}>
               { cards.map((card) => (
-                <li className="news-cards__list-item" key={card.id}>
-                  <NewsCard card={card} isOwn={true} />
+                <li className="news-cards__list-item" key={card._id}>
+                  <NewsCard card={card} isOwn={true} onDeleteClick={onDeleteClick} />
                 </li>
               )) }
             </ul>
@@ -64,7 +66,12 @@ const NewsCardList = ({
                   <ul className={listClassName}>
                     { cards.slice(0, renderingAmount).map((card) => (
                       <li className="news-cards__list-item" key={card.title} >
-                        <NewsCard card={card} isOwn={false} />
+                        <NewsCard
+                          card={card}
+                          isOwn={false}
+                          onSaveClick={onSaveClick}
+                          onDeleteClick={onDeleteClick}
+                        />
                       </li>
                     )) }
                   </ul>

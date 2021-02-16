@@ -10,6 +10,8 @@ function ProtectedRoute ({ component: Component, path, ...props }) {
             return <Component {...props} />
           } else if (props.loggedIn === false) {
             return <Redirect to={{ pathname: "/", state: {noAuthRedirected: true} }} />
+          } else {
+            return null;
           }
         }
       }
