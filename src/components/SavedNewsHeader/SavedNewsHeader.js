@@ -31,22 +31,6 @@ const SavedNewsHeader = () => {
       : []
     );
   }, [keywords]);
-
-  // const keywords = !!savedNews.length ? savedNews
-  //   .map((item) => item.keyword)
-  //   .reduce((prevVal, item) => {
-  //     if (!prevVal[item]) prevVal[item] = 1;
-  //     else prevVal[item]++;
-  //     return prevVal;
-  //   }, {})
-  //   : null;
-    
-  // const sortedKeywords = !!keywords ? Object.keys(keywords).sort((a, b) => {
-  //   return keywords[b] - keywords[a];
-  // })
-  // : null;
-
-  // const savedNewsNumber = savedNews.length;
     
   const renderSavedNewsNumber = () => {
     return !!savedNewsNumber ? savedNewsNumber : 'пока нет';
@@ -86,28 +70,25 @@ const SavedNewsHeader = () => {
   const renderKeywords = () => {
     if (!!sortedKeywords) {
       switch (sortedKeywords.length) {
-        case 1:
-          return (<>
-            {renderKeyword(sortedKeywords[0])}
-          </>);
-        case 2:
-          return (<>
-            {renderKeyword(sortedKeywords[0])} и {renderKeyword(sortedKeywords[1])}
-          </>);
-        case 3:
-          return (<>
-            {renderKeyword(sortedKeywords[0])}, {renderKeyword(sortedKeywords[1])}
-            {" и "}{renderKeyword(sortedKeywords[2])}
-          </>);
-        default:
-          return (<>
-            {renderKeyword(sortedKeywords[0])}, {renderKeyword(sortedKeywords[1])}
-            {" и "}{renderKeyword(renderRestKeywordsNumberWithEnding())}
-          </>);
+        case 1: return (<>
+          {renderKeyword(sortedKeywords[0])}
+        </>);
+        case 2: return (<>
+          {renderKeyword(sortedKeywords[0])} и {renderKeyword(sortedKeywords[1])}
+        </>);
+        case 3: return (<>
+          {renderKeyword(sortedKeywords[0])}, {renderKeyword(sortedKeywords[1])}
+          {" и "}{renderKeyword(sortedKeywords[2])}
+        </>);
+        default: return (<>
+          {renderKeyword(sortedKeywords[0])}, {renderKeyword(sortedKeywords[1])}
+          {" и "}{renderKeyword(renderRestKeywordsNumberWithEnding())}
+        </>);
       }
     } else return null;
   };
 
+  // СТИЛИ
   const { pageNarrowClassName, robotoText, robotoSlabText } = useContext(CommonPageStylesContext);
   const sectionClassName = joinCN({ basic: ['saved-news-header', pageNarrowClassName] });
   const titleClassName = joinCN({ basic: ['saved-news-header__title', robotoText] });

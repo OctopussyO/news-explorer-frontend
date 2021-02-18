@@ -14,7 +14,6 @@ const useCardTextTruncate = (titleRef, textRef) => {
   const [titleLinesAmount, setTitleLinesAmount] = useState(0);
   const [isTextTruncateNeeded, setTextTruncateState] = useState(false);
   
-  
   const handleTruncateText = () => {
     const titleElement = titleRef.current;
     const titleLineHeight = window.innerWidth <= WINDOW_MAX_WIDTH_M 

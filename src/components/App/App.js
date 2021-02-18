@@ -27,20 +27,25 @@ const App = () => {
   const [foundNews, setFoundNews] = useState([]);
   const [keyword, setKeyword] =useState('');
 
+  // Для обработки загрузки
   const [isLoading, setLoadingState] = useState(true);
   
+  // Для обработки дат при поиске
   const today = new Date();
   const dateNow = formatDateToNums(today);
   const dateWeekAgo = formatDateToNums(takeWeekAgoDate(today));
 
+  // Обнуляет последний поиск
   const clearLastSearch = () => {
     localStorage.removeItem('lastKeyword');
   };
 
+  // Обрабатывает регистрацию
   const handleRegister = (data) => {
-    return mainApi.register(data)
+    return mainApi.register(data);
   };
 
+  // Обрабатывает  "логин", обновляет стейт текущего пользователя, токен, последний поиск
   const handleLogin = (data) => {
     return mainApi.login(data)
       .then((res) => {
@@ -53,6 +58,7 @@ const App = () => {
       });
   };
 
+  // Обрабатывает  "выход", обнуляет стейт текущего пользователя, токен, последний поиск
   const handleLogout = () => {
     setCurrentUser({
       isLoggedIn: false,
@@ -63,39 +69,45 @@ const App = () => {
     setToken('');
     clearLastSearch();
   };
+  
+  // Получает данные пользователя с сервера и устанавливает результаты в стейт текущего пользователя
+  const getUserData = (token) => {
+    Promise.all([mainApi.getOwnerInfo(token), mainApi.getOwnerData(token)])
+    .then(([userInfo, userData]) => {
+      if (!!userInfo & !!userData) {
+        setCurrentUser({
+          isLoggedIn: true,
+          name: userInfo.name,
+          savedNews: userData,
+        });
+      }
+    })
+    .catch((err) => {
+      if (err.name === 'TypeError') {
+        // TODO -- сделать заглушку на этот случай и увеличить количество запросов на бэке
+        // setRateState(true);
+        console.log('Превышен лимит');
+      }
+      setCurrentUser({
+        isLoggedIn: false,
+        name: '',
+        savedNews: [],
+      });
+      console.log(err);
+    })
+    .finally(() => {
+      // TODO -- Остановить прелоадер
+    });
+  };
 
+  // Проверяет наличие токена и при необходимости запрашивает данные пользователя
   const tokenCheck = () => {
     const token = localStorage.getItem('token');
     setToken(token);
     // TODO -- Запустить прелоадер
     setRateState(false);
     if (token) {
-      Promise.all([mainApi.getOwnerInfo(token), mainApi.getOwnerData(token)])
-        .then(([userInfo, userData]) => {
-          if (!!userInfo & !!userData) {
-            setCurrentUser({
-              isLoggedIn: true,
-              name: userInfo.name,
-              savedNews: userData,
-            });
-          }
-        })
-        .catch((err) => {
-          if (err.name === 'TypeError') {
-            // TODO -- сделать заглушку на этот случай и увеличить количество запросов на бэке
-            // setRateState(true);
-            console.log('Превышен лимит');
-          }
-          setCurrentUser({
-            isLoggedIn: false,
-            name: '',
-            savedNews: [],
-          });
-          console.log(err);
-        })
-        .finally(() => {
-          // TODO -- Остановить прелоадер
-        });
+      getUserData(token);
     } else {
       setCurrentUser({
         isLoggedIn: false,
@@ -112,15 +124,15 @@ const App = () => {
     if (lastKeyword) handleSearch(lastKeyword);
   }, []);
 
-  
-  useEffect(() => {
-    if (currentUser.isLoggedIn) tokenCheck();
-  }, [currentUser.isLoggedIn]);
-  
-  // TODO -- закомментировать
+  // При новом поиске обновляем сохранённое ключевое слово
   useEffect(() => {
     localStorage.setItem('lastKeyword', keyword);
   }, [keyword, foundNews]);
+
+  // При логине запрашиваем данные пользователя
+  useEffect(() => {
+    if (currentUser.isLoggedIn && !!token) getUserData(token);
+  }, [currentUser.isLoggedIn, token]);
 
   const handleSearch = (keyword) => {
     setKeyword(keyword);
@@ -145,7 +157,7 @@ const App = () => {
     .catch((err) => {
       console.error(err);
       setFoundNews(null);
-      clearLastSearch();
+      // clearLastSearch();
     })
     .finally(() => setLoadingState(false));
   };
@@ -173,11 +185,11 @@ const App = () => {
       .catch((err) => console.log(err));
   };
 
-  // Функция для удаления карточки, принимает ассинхронных коллбэк для эффекта при удалении
+  // Обрабатывает удаление карточки, принимает ассинхронных коллбэк для эффекта при удалении
   const handleDeleteCard = (id, callback) => {
     mainApi.deleteItem(token, id)
       .then(async() => {
-        if (callback) {
+        if (!!callback) {
           await callback();
         }
         updateSavedCards();

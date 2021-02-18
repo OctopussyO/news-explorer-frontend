@@ -20,7 +20,7 @@
   animation: appear .4s linear;
   /* animation-delay: .2s; */
   animation-direction: reverse;
-  animation-fill-mode: forwards;
+  animation-fill-mode: backwards;
 }
 
 .page {

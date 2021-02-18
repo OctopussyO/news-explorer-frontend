@@ -48,7 +48,7 @@ const NewsCard = ({
   const [isDeleted, setDeletedState] = useState(false);
   const disappear = async () => {
     setDeletedState(true);
-    await delay(300);
+    await delay(30000);
   };
 
   const handleDeleteCardClick = () => {
@@ -73,8 +73,9 @@ const NewsCard = ({
     appearAnimation,
   } = useContext(CommonPageStylesContext);
   const cardClassName = joinCN({
-    basic: ['card', appearAnimation],
+    basic: ['card'],
     condition: {
+      [appearAnimation]: !isDeleted,
       [disappearAnimation]: isDeleted,
     },
   });

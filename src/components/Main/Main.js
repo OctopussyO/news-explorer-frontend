@@ -72,13 +72,11 @@ const Main = ({
     onSearch(keyword);
   };
 
-  // Чтобы при переадресации неавторизованного пользователя на главную открывался попап авторизации
   const history = useHistory();
 
+  // Открывает попап для "входа", если переход на страницу был в результате редиректа
   useEffect(() => {
-    if (history.location.state && history.action === 'REPLACE') {
-      openLoginPopup();
-    }
+    if (history.location.state && history.action === 'REPLACE') openLoginPopup();
   }, []);
 
   // СТИЛИ
