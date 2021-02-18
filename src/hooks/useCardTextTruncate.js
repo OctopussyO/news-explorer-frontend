@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
+import { 
+  TEXT_LINE_HEIGHT,
+  TITLE_LINE_HEIGHT_SM,
+  TITLE_LINE_HEIGHT_L,
+  MAX_LINES_IN_CARD_S,
+  MAX_LINES_IN_CARD_ML,
+  WINDOW_MAX_WIDTH_S,
+  WINDOW_MAX_WIDTH_M,
+} from '../utils/constants';
 import throttle from "../utils/throttle";
-
-// Данные величины устанавливаются исходя из прописанных в стилях значений
-const TEXT_LINE_HEIGHT = 22;
 
 const useCardTextTruncate = (titleRef, textRef) => {
   const [titleLinesAmount, setTitleLinesAmount] = useState(0);
@@ -11,9 +17,12 @@ const useCardTextTruncate = (titleRef, textRef) => {
   
   const handleTruncateText = () => {
     const titleElement = titleRef.current;
-    // Данные величины устанавливаются исходя из прописанных в стилях значений
-    const titleLineHeight = window.innerWidth <= 1024 ? 24 : 30;
-    const maxLinesInCard = window.innerWidth <= 600 ? 6 : 7;
+    const titleLineHeight = window.innerWidth <= WINDOW_MAX_WIDTH_M 
+      ? TITLE_LINE_HEIGHT_SM
+      : TITLE_LINE_HEIGHT_L;
+    const maxLinesInCard = window.innerWidth <= WINDOW_MAX_WIDTH_S
+      ? MAX_LINES_IN_CARD_S
+      : MAX_LINES_IN_CARD_ML;
     const textElement = textRef.current;
     const titleLines = Math.round(titleElement.offsetHeight / titleLineHeight);
     const textLines = Math.round(textElement.scrollHeight / TEXT_LINE_HEIGHT);

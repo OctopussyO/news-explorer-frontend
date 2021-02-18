@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
+import { RENDERING_AMOUNT } from '../../utils/constants';
 import joinCN from '../../utils/joinClassNames';
 import Button from '../Button/Button';
 import LoadInfo from '../LoadInfo/LoadInfo';
@@ -15,12 +16,12 @@ const NewsCardList = ({
   onUnauthSaveClick,
   newSearchTrigger,
 }) => {
-  const [renderingAmount, setRenderingAmount] = useState(isOwn ? null : 3);
+  const [renderingAmount, setRenderingAmount] = useState(isOwn ? null : RENDERING_AMOUNT);
   useEffect(() => {
-    setRenderingAmount(3);
+    setRenderingAmount(RENDERING_AMOUNT);
   }, [newSearchTrigger]);
 
-  const handleLoadMoreClick = () => setRenderingAmount(renderingAmount + 3);
+  const handleLoadMoreClick = () => setRenderingAmount(renderingAmount + RENDERING_AMOUNT);
   
   // СТИЛИ
   const {

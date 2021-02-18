@@ -110,13 +110,14 @@ const App = () => {
     tokenCheck();
     const lastKeyword = localStorage.getItem('lastKeyword');
     if (lastKeyword) handleSearch(lastKeyword);
+  }, []);
 
+  
+  useEffect(() => {
+    if (currentUser.isLoggedIn) tokenCheck();
   }, [currentUser.isLoggedIn]);
   
-  // При загрузке страницы достаём из localStorage данные
-  useEffect(() => {
-  }, [currentUser.isLoggedIn]);
-
+  // TODO -- закомментировать
   useEffect(() => {
     localStorage.setItem('lastKeyword', keyword);
   }, [keyword, foundNews]);
