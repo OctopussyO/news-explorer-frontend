@@ -41,6 +41,10 @@
   outline: none;
 }
 
+.search-form__input:disabled {
+  background-color: transparent;
+}
+
 .search-form__button {
   position: absolute;
   top: -1px;

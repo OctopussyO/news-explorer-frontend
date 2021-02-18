@@ -11,6 +11,8 @@ const SearchForm = ({
   onSearchClick,
   lastKeyword = '',
 }) => {
+  const [isDisabled, setDisabled] = useState(false);
+
   const [isFormFocus, setFormFocus] = useState(false);
   const handleFocus = () => setFormFocus(true);
   const handleBlur = () => setFormFocus(false);
@@ -23,12 +25,15 @@ const SearchForm = ({
   } = useFormValidation(setCustomValidity);
 
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const inputElement = Array.from(e.target.childNodes).find((node) => node.nodeName === 'INPUT');
     if (isFormValid) {
-      onSearchClick(values.search);
+      setDisabled(true);
       inputElement.blur();
+      await onSearchClick(values.search);
+      console.log('hi')
+      setDisabled(false);
     } else {
       const event = new Event('change');
       inputElement.dispatchEvent(event);
@@ -74,9 +79,10 @@ const SearchForm = ({
         onBlur={handleBlur}
         onChange={handleInputChange}
         value={values.search || inputLastKeyword || ""}
+        disabled={isDisabled}
       />
-      <Button isSubmit={true} outerClassName={buttonClassName}>
-        Искать
+      <Button isSubmit={true} outerClassName={buttonClassName} isActive={!isDisabled}>
+        {isDisabled ? "Поиск..." : "Искать"}
       </Button>
     </form>
   );

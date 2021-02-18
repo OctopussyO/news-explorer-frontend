@@ -48,7 +48,7 @@ const NewsCard = ({
   const [isDeleted, setDeletedState] = useState(false);
   const disappear = async () => {
     setDeletedState(true);
-    await delay(30000);
+    await delay(300);
   };
 
   const handleDeleteCardClick = () => {

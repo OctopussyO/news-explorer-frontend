@@ -67,9 +67,9 @@ const Main = ({
     }
   }, [lastKeyword]);
 
-  const handleSearchClick = (keyword) => {
+  const handleSearchClick = async (keyword) => {
     setCardListState(true);
-    onSearch(keyword);
+    await onSearch(keyword);
   };
 
   const history = useHistory();

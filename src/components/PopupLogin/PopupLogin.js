@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import useFormValidation from '../../hooks/useFormWithValidation';
 import handleErrorMessage from '../../utils/handleErrorMessage';
 import setCustomValidity from '../../utils/setCustomValidity';
@@ -11,7 +11,6 @@ const PopupLogin = ({
   onLogin,
   onChangePopup,
 }) => {
-
   const {
     values,
     errors,
@@ -21,10 +20,9 @@ const PopupLogin = ({
   } = useFormValidation(setCustomValidity);
 
   const [errorMessage, setErrorMessage] = useState('');
-
   
   const handleLogin = () => {
-    onLogin(values)
+    return onLogin(values)
       .then(() => {
         resetForm();
         setErrorMessage('');
@@ -53,6 +51,7 @@ const PopupLogin = ({
       onSubmit={handleLogin}
       formTitle="Вход"
       submitTitle="Войти"
+      submitLoadingTitle="Вход..."
       linkBtnTitle="Зарегистрироваться"
       onBtnClick={onChangePopup}
       serverErrorMessage={errorMessage}

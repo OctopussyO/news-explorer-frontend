@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import delay from '../../utils/delay';
 import joinCN from '../../utils/joinClassNames';
@@ -13,14 +13,29 @@ const PopupWithForm = ({
   onSubmit,
   formTitle = '',
   submitTitle = '',
+  submitLoadingTitle = '',
   linkBtnTitle = '',
   isSubmitActive,
   onBtnClick,
   serverErrorMessage,
 }) => {
+  const [currentSubmitTitle, setSubmitTitle] = useState(submitTitle);
+  const [isDisabled, setDisabled] = useState(false);
+  const formRef = useRef(null);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit();
+    const formElements = Array.from(formRef.current.elements);
+    formElements.forEach((el) => el.disabled = true);
+    setSubmitTitle(submitLoadingTitle);
+    setDisabled(true);
+    onSubmit()
+      .finally(async () => {
+        await delay(300);
+        setSubmitTitle(submitTitle);
+        setDisabled(false);
+        formElements.forEach((el) => el.disabled = false);
+      });;
   };
 
   const handleBtnClick = async () => {
@@ -40,14 +55,18 @@ const PopupWithForm = ({
 
   return (
     <Popup isOpen={isOpen} onClose={onClose}>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit} ref={formRef}>
         <h3 className={titleClassName}>
           {formTitle}
         </h3>
         {children}
         <span className={errorClassname}>{serverErrorMessage}</span>
-        <Button isSubmit={true} isActive={isSubmitActive} outerClassName={submitClassName}>
-          {submitTitle}
+        <Button
+          isSubmit={true}
+          isActive={isSubmitActive && !isDisabled}
+          outerClassName={submitClassName}
+        >
+          {currentSubmitTitle}
         </Button>
         <p className={choiseClassName}>
           <span>или </span>

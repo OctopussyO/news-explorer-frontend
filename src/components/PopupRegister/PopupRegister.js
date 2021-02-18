@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import useFormValidation from '../../hooks/useFormWithValidation';
+import delay from '../../utils/delay';
 import handleErrorMessage from '../../utils/handleErrorMessage';
 import setCustomValidity from '../../utils/setCustomValidity';
 import FormInput from '../FormInput/FormInput';
@@ -11,7 +12,6 @@ const PopupRegister = ({
   onRegister,
   onChangePopup,
 }) => {
-
   const {
     values,
     errors,
@@ -23,7 +23,7 @@ const PopupRegister = ({
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleRegister = () => {
-    onRegister(values)
+    return onRegister(values)
       .then(() => {
         resetForm();
         setErrorMessage('');
@@ -50,9 +50,10 @@ const PopupRegister = ({
       onClose={handleClose}
       isSubmitActive={isFormValid}
       onSubmit={handleRegister}
-      formTitle = "Регистрация"
-      submitTitle = "Зарегистрироваться"
-      linkBtnTitle = "Войти"
+      formTitle="Регистрация"
+      submitTitle="Зарегистрироваться"
+      submitLoadingTitle="Регистрация..."
+      linkBtnTitle="Войти"
       onBtnClick={onChangePopup}
       serverErrorMessage={errorMessage}
     >

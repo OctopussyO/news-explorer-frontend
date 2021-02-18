@@ -18,9 +18,8 @@
 
 .disappear-animation {
   animation: appear .4s linear;
-  /* animation-delay: .2s; */
   animation-direction: reverse;
-  animation-fill-mode: backwards;
+  animation-fill-mode: forwards;
 }
 
 .page {

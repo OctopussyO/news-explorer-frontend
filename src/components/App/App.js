@@ -4,6 +4,7 @@ import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { DEFAULT_IMAGE_URL, ALT_DEFAULT_IMAGE_URL } from '../../utils/constants';
 import { formatDateToNums, takeWeekAgoDate } from '../../utils/date';
+import delay from '../../utils/delay';
 import mainApi from '../../utils/mainApi';
 import newsApi from '../../utils/newsApi';
 import { urlRegex } from '../../utils/regex';
@@ -134,10 +135,10 @@ const App = () => {
     if (currentUser.isLoggedIn && !!token) getUserData(token);
   }, [currentUser.isLoggedIn, token]);
 
-  const handleSearch = (keyword) => {
+  const handleSearch = async (keyword) => {
     setKeyword(keyword);
     setLoadingState(true);
-    newsApi.getData({keyword: keyword, from:dateWeekAgo, to:dateNow})
+    await newsApi.getData({keyword: keyword, from:dateWeekAgo, to:dateNow})
     .then((data) => {
       const foundNews = data.articles.map((article) => {
         const imageUrl = !!article.urlToImage && urlRegex.test(article.urlToImage)
@@ -157,7 +158,6 @@ const App = () => {
     .catch((err) => {
       console.error(err);
       setFoundNews(null);
-      // clearLastSearch();
     })
     .finally(() => setLoadingState(false));
   };
