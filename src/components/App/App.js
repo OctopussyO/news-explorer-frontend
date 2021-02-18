@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { DEFAULT_IMAGE_URL, ALT_DEFAULT_IMAGE_URL } from '../../utils/constants';
 import { formatDateToNums, takeWeekAgoDate } from '../../utils/date';
 import mainApi from '../../utils/mainApi';
 import newsApi from '../../utils/newsApi';
+import { urlRegex } from '../../utils/regex';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -125,13 +127,16 @@ const App = () => {
     newsApi.getData({keyword: keyword, from:dateWeekAgo, to:dateNow})
     .then((data) => {
       const foundNews = data.articles.map((article) => {
+        const imageUrl = !!article.urlToImage && urlRegex.test(article.urlToImage)
+          ? article.urlToImage
+          : DEFAULT_IMAGE_URL;
         return {
           title: article.title,
           text: article.description,
           date: article.publishedAt,
           source: article.source.name,
           link: article.url,
-          image: article.urlToImage,
+          image: imageUrl,
         };
       });
       setFoundNews(foundNews);

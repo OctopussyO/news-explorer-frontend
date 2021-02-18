@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { CommonPageStylesContext } from "../../contexts/CommonPageStylesContext";
 import joinCN from "../../utils/joinClassNames";
 import BookmarkIcon from "../svg/BookmarkIcon";
@@ -23,23 +23,24 @@ const NewsCard = ({
   const [isTooltipVisible, setTooltipState] = useState(false);
   const handleButtonHover = () => setTooltipState(!isTooltipVisible);
 
+  const [matched, setMatched] = useState(null);
+  const [isSaved, setIsSaved] = useState(false);
   
-  const matched = savedNews.find((item) => item.link === card.link);
-  card._id = matched ? matched._id : null;
-    
+  useEffect(() => {
+    setMatched(!!savedNews.length ? savedNews.find((item) => item.link === card.link) : null);
+  }, [card, savedNews]);
 
-  // const isSaved = card._id
+  useEffect(() => {
+    setIsSaved(!!matched ? true : false);
+  }, [matched]);
 
   const handleCommonCardClick = async () => {
     if (isLoggedIn) {
-      if (!card._id) {
+      if (!isSaved) {
         const temp = {...card};
         delete temp._id;
         onSaveClick(temp);
-      } else {
-        onDeleteClick(card._id);
-        card._id = null;
-      }
+      } else onDeleteClick(matched._id);
     } else onUnauthSaveClick();
   };
 
@@ -80,7 +81,7 @@ const NewsCard = ({
   const saveIconClassName = joinCN({
     basic: ['card__icon', 'card__icon_act_save'],
     condition: {
-      'card__icon_marked': card._id,
+      'card__icon_marked': isSaved,
     },
   });
   const keywordClassName = joinCN({ basic: ['card__keyword', robotoText] });

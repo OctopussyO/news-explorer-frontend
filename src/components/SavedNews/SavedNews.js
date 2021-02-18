@@ -9,6 +9,7 @@ const SavedNews = ({
   onDeleteClick,
 }) => {
   const { savedNews } = useContext(CurrentUserContext);
+
   return (
     <>
       <Header isMainPage={false} onLogoutClick={onLogout} />

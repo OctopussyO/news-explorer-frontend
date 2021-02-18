@@ -129,8 +129,10 @@
 }
 
 .card__description {
+  max-width: 100%;
   flex: 1 1 auto;
   overflow: hidden;
+  overflow-wrap: break-word;
 }
 
 .card__date {
