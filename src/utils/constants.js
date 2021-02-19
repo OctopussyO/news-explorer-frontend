@@ -15,7 +15,7 @@ const RENDERING_AMOUNT = 3;
 
 // Данные величины (кроме LOADING_DELAY) должны соответствовать времени анимации в стилях
 const OPEN_CLOSE_DELAY = 500;
-const APPEAR_DISAPPEAR_DELAY = 300;
+const APPEAR_DISAPPEAR_DELAY = 400;
 const LOADING_DELAY = 300;
 
 // Данные величины устанавливаются исходя из прописанных в стилях значений

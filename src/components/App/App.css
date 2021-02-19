@@ -11,14 +11,24 @@
   }
 }
 
+@keyframes disappear {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 .appear-animation {
   animation: appear .4s linear;
   animation-fill-mode: forwards;
 }
 
 .disappear-animation {
-  animation: appear .4s linear;
-  animation-direction: reverse;
+  animation: disappear .4s linear;
   animation-fill-mode: forwards;
 }
 

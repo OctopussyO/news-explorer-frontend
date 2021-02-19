@@ -121,10 +121,7 @@ const App = () => {
         name: '',
         savedNews: [],
       });
-      console.log(err);
-    })
-    .finally(() => {
-      // TODO -- Остановить прелоадер
+      console.error(err);
     });
   };
 
@@ -132,7 +129,6 @@ const App = () => {
   const tokenCheck = () => {
     const token = localStorage.getItem('token');
     setToken(token);
-    // TODO -- Запустить прелоадер
     if (token) {
       getUserData(token);
     } else {
@@ -212,7 +208,7 @@ const App = () => {
       })
       .catch((err) => {
         openInfoPopupWithError(err);
-        console.log(err)
+        console.error(err)
       });
   };
 
@@ -227,7 +223,7 @@ const App = () => {
       })
       .catch((err) => {
         openInfoPopupWithError();
-        console.log(err)
+        console.error(err)
       });
   };
 
