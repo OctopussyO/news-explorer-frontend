@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
+import { OPEN_CLOSE_DELAY, SUCCESS_REGISTRATION_MESSAGE } from '../../utils/constants';
 import delay from '../../utils/delay';
 import joinCN from '../../utils/joinClassNames';
 import About from '../About/About';
@@ -9,8 +10,6 @@ import NewsCardList from '../NewsCardList/NewsCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import PopupLogin from '../PopupLogin/PopupLogin';
 import PopupRegister from '../PopupRegister/PopupRegister';
-import PopupInfo from '../PopupInfo/PopupInfo';
-import { SUCCESS_REGISTRATION_MESSAGE } from '../../utils/constants';
 import './Main.css';
 
 const Main = ({
@@ -23,27 +22,29 @@ const Main = ({
   isLoading = false,
   onSaveClick,
   onDeleteClick,
+  onOpenInfoPopup,
 }) => {
   const [isLoginPopupOpen, setLoginPopupState] = useState(false);
-  const [isRegisterPopupOpen, setRegisterPopupState] = useState(false);
-  const [isInfoPopupOpen, setInfoPopupState] = useState(false);
+  const [isRegisterPopupOpen, setRegisterPopupState] = useState(false);  
 
   const openLoginPopup = () => setLoginPopupState(true);
   const openRegisterPopup = () => setRegisterPopupState(true);
-  const openInfoPopup = () => setInfoPopupState(true);
 
   const closeAllPopups = () => {
     setLoginPopupState(false);
     setRegisterPopupState(false);
-    setInfoPopupState(false);
   };
 
   const handleRegister = (data) => {
     return onRegister(data)
       .then(async () => {
         closeAllPopups();
-        await delay(500);
-        openInfoPopup();
+        await delay(OPEN_CLOSE_DELAY);
+        onOpenInfoPopup({
+          onBtnClick: openLoginPopup,
+          infoTitle: SUCCESS_REGISTRATION_MESSAGE,
+          linkBtnTitle: 'Войти',
+        });
       });
   };
 
@@ -127,13 +128,6 @@ const Main = ({
         onClose={closeAllPopups}
         onRegister={handleRegister}
         onChangePopup={openLoginPopup}
-      />
-      <PopupInfo
-        isOpen={isInfoPopupOpen}
-        onClose={closeAllPopups}
-        onBtnClick={openLoginPopup}
-        infoText={SUCCESS_REGISTRATION_MESSAGE}
-        linkBtnTitle="Войти"
       />
     </>
   );

@@ -1,5 +1,6 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
+import { OPEN_CLOSE_DELAY } from '../../utils/constants';
 import delay from '../../utils/delay';
 import joinCN from '../../utils/joinClassNames';
 import Button from '../Button/Button';
@@ -30,28 +31,30 @@ const PopupWithForm = ({
     setSubmitTitle(submitLoadingTitle);
     setDisabled(true);
     onSubmit()
-      .finally(async () => {
-        await delay(300);
-        setSubmitTitle(submitTitle);
+      .finally(() => {
         setDisabled(false);
         formElements.forEach((el) => el.disabled = false);
+        setSubmitTitle(submitTitle);
       });;
   };
 
   const handleBtnClick = async () => {
     onClose();
-    await delay(500);
+    await delay(OPEN_CLOSE_DELAY);
     onBtnClick();
   };
 
   // СТИЛИ
-  const { robotoText, interText } = useContext(CommonPageStylesContext);
+  const { robotoText, interText, appearAnimation } = useContext(CommonPageStylesContext);
 
   const titleClassName = joinCN({ basic: ['form__title', robotoText] });
   const submitClassName = joinCN({ basic: ['form__submit-button', robotoText] });
   const linkClassName = joinCN({ basic: ['form__link-button', interText] });
   const choiseClassName = joinCN({ basic: ['form__choise', interText] });
-  const errorClassname = joinCN({ basic: ['form__response-error', interText] });
+  const errorClassName = joinCN({
+    basic: ['form__response-error', interText],
+    condition: { [appearAnimation]: !!serverErrorMessage },
+  });
 
   return (
     <Popup isOpen={isOpen} onClose={onClose}>
@@ -60,7 +63,7 @@ const PopupWithForm = ({
           {formTitle}
         </h3>
         {children}
-        <span className={errorClassname}>{serverErrorMessage}</span>
+        <span className={errorClassName}>{serverErrorMessage}</span>
         <Button
           isSubmit={true}
           isActive={isSubmitActive && !isDisabled}

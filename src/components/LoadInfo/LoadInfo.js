@@ -9,7 +9,6 @@ const LoadInfo = ({
   isLoading = false,
   isNotFound = false,
   isError = false,
-  isEmpty = false,
 }) => {
   const { robotoSlabText, robotoText } = useContext(CommonPageStylesContext);
   const titleClassName = joinCN({ basic: ['info__title', robotoSlabText] });

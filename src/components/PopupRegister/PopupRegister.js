@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import useFormValidation from '../../hooks/useFormWithValidation';
+import { LOADING_DELAY } from '../../utils/constants';
 import delay from '../../utils/delay';
 import handleErrorMessage from '../../utils/handleErrorMessage';
 import setCustomValidity from '../../utils/setCustomValidity';
@@ -23,12 +24,14 @@ const PopupRegister = ({
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleRegister = () => {
+    setErrorMessage('');
     return onRegister(values)
       .then(() => {
         resetForm();
-        setErrorMessage('');
       })
-      .catch((err) => {
+      .catch(async (err) => {
+        // Добавляем небольшую задержку, чтобы не было неприятного глазу мерцания при быстром ответе
+        await delay(LOADING_DELAY);
         handleErrorMessage(err.status, setErrorMessage);
       });
   };

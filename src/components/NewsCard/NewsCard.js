@@ -10,6 +10,7 @@ import useCardTextTruncate from "../../hooks/useCardTextTruncate";
 import { formatDateToStr } from "../../utils/date";
 import delay from "../../utils/delay";
 import './NewsCard.css';
+import { APPEAR_DISAPPEAR_DELAY } from "../../utils/constants";
 
 const NewsCard = ({
   card,
@@ -48,7 +49,7 @@ const NewsCard = ({
   const [isDeleted, setDeletedState] = useState(false);
   const disappear = async () => {
     setDeletedState(true);
-    await delay(300);
+    await delay(APPEAR_DISAPPEAR_DELAY);
   };
 
   const handleDeleteCardClick = () => {

@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { DEFAULT_IMAGE_URL, ALT_DEFAULT_IMAGE_URL } from '../../utils/constants';
+import {
+  DEFAULT_IMAGE_URL,
+  OPEN_CLOSE_DELAY,
+  INTERNAL_SERVER_ERROR_POPUP_TITLE,
+  INTERNAL_SERVER_ERROR_POPUP_MESSAGE,
+  INVALID_DATA_POPUP_ERROR_MESSAGE,
+} from '../../utils/constants';
 import { formatDateToNums, takeWeekAgoDate } from '../../utils/date';
 import delay from '../../utils/delay';
 import mainApi from '../../utils/mainApi';
@@ -10,6 +16,7 @@ import newsApi from '../../utils/newsApi';
 import { urlRegex } from '../../utils/regex';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
+import PopupInfo from '../PopupInfo/PopupInfo';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import SavedNews from '../SavedNews/SavedNews';
 import './App.css';
@@ -22,14 +29,34 @@ const App = () => {
   });
   const [token, setToken] = useState('');
 
-  const [isRateLimited, setRateState] = useState(false);
-
   // Новости
   const [foundNews, setFoundNews] = useState([]);
   const [keyword, setKeyword] =useState('');
-
+  
   // Для обработки загрузки
   const [isLoading, setLoadingState] = useState(true);
+  
+  // Для вывода сообщений
+  const [isInfoPopupOpen, setInfoPopupState] = useState(false);
+  const [infoPopupOptions, setInfoPopupOptions] = useState({});
+
+  const openInfoPopup = (options) => {
+    setInfoPopupOptions(options);
+    setInfoPopupState(true);
+  };
+
+  const closeInfoPopup = async () => {
+    setInfoPopupState(false);
+    await delay(OPEN_CLOSE_DELAY);
+    setInfoPopupOptions({});
+  };
+
+  const openInfoPopupWithError = (err) => openInfoPopup({
+    infoTitle: INTERNAL_SERVER_ERROR_POPUP_TITLE,
+    infoText: !!err && err.status === 400
+      ? INVALID_DATA_POPUP_ERROR_MESSAGE
+      : INTERNAL_SERVER_ERROR_POPUP_MESSAGE,
+  });
   
   // Для обработки дат при поиске
   const today = new Date();
@@ -71,9 +98,10 @@ const App = () => {
     clearLastSearch();
   };
   
-  // Получает данные пользователя с сервера и устанавливает результаты в стейт текущего пользователя
-  const getUserData = (token) => {
-    Promise.all([mainApi.getOwnerInfo(token), mainApi.getOwnerData(token)])
+  // Получает данные пользователя с сервера и устанавливает результаты в стейт текущего пользователя.
+  // tokenParametr -- назван так, чтобы не было конфликта со стейтом token, который тоже используется в функции.
+  const getUserData = (tokenParametr) => {
+    Promise.all([mainApi.getOwnerInfo(tokenParametr), mainApi.getOwnerData(tokenParametr)])
     .then(([userInfo, userData]) => {
       if (!!userInfo & !!userData) {
         setCurrentUser({
@@ -84,11 +112,10 @@ const App = () => {
       }
     })
     .catch((err) => {
-      if (err.name === 'TypeError') {
-        // TODO -- сделать заглушку на этот случай и увеличить количество запросов на бэке
-        // setRateState(true);
-        console.log('Превышен лимит');
-      }
+      // Если данные запрашивались после авторизации и запрос выдал ошибку -- попап будет отрисован.
+      // Если же данные запрашивались при загрузке страницы и сервер ответил ошибкой, то попап не будет показан, 
+      // потому что это может смутить пользователя -- только вошёл, уже какая-то ошибка.
+      if (!!token) openInfoPopupWithError();
       setCurrentUser({
         isLoggedIn: false,
         name: '',
@@ -106,7 +133,6 @@ const App = () => {
     const token = localStorage.getItem('token');
     setToken(token);
     // TODO -- Запустить прелоадер
-    setRateState(false);
     if (token) {
       getUserData(token);
     } else {
@@ -118,7 +144,10 @@ const App = () => {
     }
   };
 
-  // При загрузке страницы проверяем, авторизован ли пользователь
+  // При загрузке страницы проверяем, авторизован ли пользователь, а также 
+  // выполняем поиск по последнему введённому слову 
+  // (проводим поиск по последнему слову, чтобы получать актуальные новости, 
+  // даже если пользователь вернулся на сайт спустя несколько дней дней)
   useEffect(() => {
     tokenCheck();
     const lastKeyword = localStorage.getItem('lastKeyword');
@@ -171,18 +200,20 @@ const App = () => {
         });
       })
       .catch((err) => {
-        // TODO -- дорисовать попап с ошибкой
-        console.error(err)
+        openInfoPopupWithError();
+        console.error(err);
       });
   };
 
   const handleSaveCard = (data) => {
     mainApi.saveItem(token, {...data, keyword})
-      .then(async () => {
-        // TODO -- дорисовать прелоадер какой-нибудь
+      .then(() => {
         updateSavedCards();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        openInfoPopupWithError(err);
+        console.log(err)
+      });
   };
 
   // Обрабатывает удаление карточки, принимает ассинхронных коллбэк для эффекта при удалении
@@ -194,7 +225,10 @@ const App = () => {
         }
         updateSavedCards();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        openInfoPopupWithError();
+        console.log(err)
+      });
   };
 
   // СТИЛИ
@@ -226,13 +260,13 @@ const App = () => {
                   isLoading={isLoading}
                   onSaveClick={handleSaveCard}
                   onDeleteClick={handleDeleteCard}
+                  onOpenInfoPopup={openInfoPopup}
                 />
               </Route>
               <ProtectedRoute
                 path="/saved-news"
                 loggedIn={currentUser.isLoggedIn}
                 component={SavedNews}
-                // cards={savedNews}
                 onLogout={handleLogout}
                 onDeleteClick={handleDeleteCard}
               />
@@ -243,6 +277,11 @@ const App = () => {
           </div>
           <Footer />
         </div>
+        <PopupInfo
+          isOpen={isInfoPopupOpen}
+          onClose={closeInfoPopup}
+          options={infoPopupOptions}
+        />
       </CommonPageStylesContext.Provider>
     </CurrentUserContext.Provider>
   );

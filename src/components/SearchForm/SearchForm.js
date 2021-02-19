@@ -32,7 +32,6 @@ const SearchForm = ({
       setDisabled(true);
       inputElement.blur();
       await onSearchClick(values.search);
-      console.log('hi')
       setDisabled(false);
     } else {
       const event = new Event('change');
