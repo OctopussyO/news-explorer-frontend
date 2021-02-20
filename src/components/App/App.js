@@ -195,6 +195,7 @@ const App = () => {
     });
   };
   
+  // Обновляет данные о сохранённых новостях
   const updateSavedCards = () => {
     mainApi.getOwnerData(token)
       .then((data) => {
@@ -209,8 +210,12 @@ const App = () => {
       });
   };
 
+  // Обрабатывает сохранение карточки
   const handleSaveCard = (data) => {
-    mainApi.saveItem(token, {...data, keyword})
+    mainApi.saveItem(token, {
+      ...data,
+      keyword: keyword[0].toUpperCase() + keyword.slice(1),
+    })
       .then(() => {
         updateSavedCards();
       })
