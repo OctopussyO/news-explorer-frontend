@@ -10,6 +10,7 @@ import MenuIcon from '../svg/MenuIcon';
 import CloseIcon from '../svg/CloseIcon';
 import throttle from '../../utils/throttle';
 import './Header.css';
+import '../Typo/Typo.css';
 
 const Header = ({
   isMainPage = false,
@@ -51,7 +52,7 @@ const Header = ({
   }, []);
 
   // СТИЛИ
-  const { pageNarrowClassName, robotoText } = useContext(CommonPageStylesContext);
+  const { pageNarrowClassName } = useContext(CommonPageStylesContext);
 
   const headerClassName = joinCN({
     basic: ['header', pageNarrowClassName],
@@ -62,7 +63,7 @@ const Header = ({
     },
   });
   const headerButtonClassName = joinCN({
-    basic: ['header__button', robotoText],
+    basic: ['header__button', 'typo', 'typo_font-family_roboto'],
     condition: {
       'header__button_type_main-page': isMainPage,
       'header__button_type_secondary-page': !isMainPage,

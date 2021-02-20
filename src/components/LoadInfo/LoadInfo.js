@@ -1,18 +1,16 @@
-import { useContext } from 'react';
-import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import joinCN from '../../utils/joinClassNames';
 import Preloader from '../Preloader/Preloader';
 import NotFoundIcon from '../svg/NotFoundIcon';
 import './LoadInfo.css';
+import '../Typo/Typo.css';
 
 const LoadInfo = ({
   isLoading = false,
   isNotFound = false,
   isError = false,
 }) => {
-  const { robotoSlabText, robotoText } = useContext(CommonPageStylesContext);
-  const titleClassName = joinCN({ basic: ['info__title', robotoSlabText] });
-  const textClassName = joinCN({ basic: ['info__text', robotoText] });
+  const titleClassName = joinCN({ basic: ['info__title', 'typo', 'typo_font-family_roboto-slab'] });
+  const textClassName = joinCN({ basic: ['info__text', 'typo', 'typo_font-family_roboto'] });
   return (
     <div className="info">
       { isLoading && (

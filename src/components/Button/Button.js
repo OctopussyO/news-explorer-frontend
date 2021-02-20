@@ -1,7 +1,6 @@
-import { useContext } from 'react';
-import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import joinCN from '../../utils/joinClassNames';
 import './Button.css';
+import '../Typo/Typo.css';
 
 const Button = ({
   children,
@@ -11,9 +10,8 @@ const Button = ({
   onClick,
   labelText = '',
 }) => {
-  const { robotoText } = useContext(CommonPageStylesContext);
   const className = joinCN({
-    basic: ['button', robotoText, outerClassName],
+    basic: ['button', 'typo', 'typo_font-family_roboto', outerClassName],
     condition: {
       'button_type_submit': isSubmit,
       'button_active': isSubmit & isActive,

@@ -5,27 +5,26 @@ import GHIcon from '../svg/GHIcon';
 import joinCN from '../../utils/joinClassNames';
 import Link from '../Link/Link';
 import './Footer.css';
+import '../Typo/Typo.css';
 
 const Footer = () => {
   const {
     pageNarrowClassName,
-    robotoText,
     pageListClassName,
   } = useContext(CommonPageStylesContext);
 
   const footerClassName = joinCN({ basic: ['footer', pageNarrowClassName] });
-  const footerCopyrightClassName = joinCN({ basic: ['footer__copyright', robotoText] });
   const footerLinksListClassName = joinCN({
     basic: ['footer__list', 'footer__list_content_text', pageListClassName],
   });
   const footerIconsListClassName = joinCN({
     basic: ['footer__list', 'footer__list_content_icon', pageListClassName],
   });
-  const footerLinkClassName = joinCN({ basic: ['footer__link', robotoText] });
+  const footerLinkClassName = joinCN({ basic: ['footer__link', 'typo', 'typo_font-family_roboto'] });
   
   return (
     <footer className={footerClassName}>
-      <p className={footerCopyrightClassName}>
+      <p className="footer__copyright typo typo_font-family_roboto">
         &copy; 2020 Supersite, Powered by News API
       </p>
       <div className="footer__links">

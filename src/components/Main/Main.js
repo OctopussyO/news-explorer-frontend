@@ -1,9 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import { OPEN_CLOSE_DELAY, SUCCESS_REGISTRATION_MESSAGE } from '../../utils/constants';
 import delay from '../../utils/delay';
-import joinCN from '../../utils/joinClassNames';
 import About from '../About/About';
 import Header from '../Header/Header';
 import NewsCardList from '../NewsCardList/NewsCardList';
@@ -11,6 +9,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import PopupLogin from '../PopupLogin/PopupLogin';
 import PopupRegister from '../PopupRegister/PopupRegister';
 import './Main.css';
+import '../Typo/Typo.css';
 
 const Main = ({
   onLogout,
@@ -80,22 +79,16 @@ const Main = ({
     if (history.location.state && history.action === 'REPLACE') openLoginPopup();
   }, []);
 
-  // СТИЛИ
-  const { robotoText, robotoSlabText } = useContext(CommonPageStylesContext);
-
-  const titleClassName = joinCN({ basic: ['cover__title', robotoSlabText] });
-  const subtitleClassName = joinCN({ basic: ['cover__subtitle', robotoText] });
-
   return (
     <>
       <section className="cover">
         <Header isMainPage={true} onLogoutClick={handleLogout} onLoginClick={openLoginPopup} />
         <div className="cover__content">
           <div className="cover__text">
-            <h2 className={titleClassName}>
+            <h2 className="cover__title typo typo_font-family_roboto-slab">
               Что творится в мире?
             </h2>
-            <p className={subtitleClassName}>
+            <p className="cover__subtitle typo typo_font-family_roboto">
               Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.
             </p>
           </div>

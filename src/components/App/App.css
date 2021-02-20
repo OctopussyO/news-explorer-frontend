@@ -60,22 +60,6 @@
   padding-left: 0;
 }
 
-.roboto-text {
-  font-family: 'Roboto', Helvetica, Arial, sans-serif;
-}
-
-.roboto-slab-text {
-  font-family: 'Roboto Slab', Georgia, 'Times New Roman', Times, serif;
-}
-
-.inter-text {
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
-}
-
-.source-sans-text {
-  font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
-}
-
 @media screen and (max-width: 1280px) {
   .page__narrow {
     padding-left: 40px;

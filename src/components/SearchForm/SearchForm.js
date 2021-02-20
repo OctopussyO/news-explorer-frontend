@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
-import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
+import { useEffect, useState } from 'react';
 import useFormValidation from '../../hooks/useFormWithValidation';
 import joinCN from '../../utils/joinClassNames';
 import setCustomValidity from '../../utils/setCustomValidity';
 import Button from '../Button/Button';
 import './SearchForm.css';
+import '../Typo/Typo.css';
 
 const SearchForm = ({
   outerClassName,
@@ -52,7 +52,6 @@ const SearchForm = ({
   }, [lastKeyword]);
   
   // СТИЛИ
-  const { robotoText } = useContext(CommonPageStylesContext);
   const formClassName = joinCN({
     basic: ['search-form', outerClassName],
     condition: {
@@ -60,13 +59,11 @@ const SearchForm = ({
       'search-form_focused': isFormFocus,
     },
   });
-  const inputClassName = joinCN({ basic: ['search-form__input', robotoText] });
-  const buttonClassName = joinCN({ basic: ['search-form__button', robotoText] });
   
   return (
     <form className={formClassName} onSubmit={handleSubmit} noValidate>
       <input
-        className={inputClassName}
+        className="search-form__input typo typo_font-family_roboto"
         type="text"
         name="search"
         placeholder={errors.search || "Введите тему новости"}
@@ -80,7 +77,11 @@ const SearchForm = ({
         value={values.search || inputLastKeyword || ""}
         disabled={isDisabled}
       />
-      <Button isSubmit={true} outerClassName={buttonClassName} isActive={!isDisabled}>
+      <Button
+        isSubmit={true}
+        outerClassName="search-form__button typo typo_font-family_roboto"
+        isActive={!isDisabled}
+      >
         {isDisabled ? "Поиск..." : "Искать"}
       </Button>
     </form>

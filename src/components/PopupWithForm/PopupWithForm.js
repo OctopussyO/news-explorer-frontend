@@ -6,6 +6,7 @@ import joinCN from '../../utils/joinClassNames';
 import Button from '../Button/Button';
 import Popup from '../Popup/Popup';
 import './PopupWithForm.css';
+import '../Typo/Typo.css';
 
 const PopupWithForm = ({
   children,
@@ -45,21 +46,17 @@ const PopupWithForm = ({
   };
 
   // СТИЛИ
-  const { robotoText, interText, appearAnimation } = useContext(CommonPageStylesContext);
+  const { appearAnimation } = useContext(CommonPageStylesContext);
 
-  const titleClassName = joinCN({ basic: ['form__title', robotoText] });
-  const submitClassName = joinCN({ basic: ['form__submit-button', robotoText] });
-  const linkClassName = joinCN({ basic: ['form__link-button', interText] });
-  const choiseClassName = joinCN({ basic: ['form__choise', interText] });
   const errorClassName = joinCN({
-    basic: ['form__response-error', interText],
+    basic: ['form__response-error', 'typo', 'typo_font-family_inter'],
     condition: { [appearAnimation]: !!serverErrorMessage },
   });
 
   return (
     <Popup isOpen={isOpen} onClose={onClose}>
       <form className="form" onSubmit={handleSubmit} ref={formRef}>
-        <h3 className={titleClassName}>
+        <h3 className="form__title typo typo_font-family_roboto">
           {formTitle}
         </h3>
         {children}
@@ -67,13 +64,16 @@ const PopupWithForm = ({
         <Button
           isSubmit={true}
           isActive={isSubmitActive && !isDisabled}
-          outerClassName={submitClassName}
+          outerClassName="form__submit-button typo typo_font-family_roboto"
         >
           {currentSubmitTitle}
         </Button>
-        <p className={choiseClassName}>
+        <p className="form__choise typo typo_font-family_inter">
           <span>или </span>
-          <Button outerClassName={linkClassName} onClick={handleBtnClick}>
+          <Button
+            outerClassName="form__link-button typo typo_font-family_inter"
+            onClick={handleBtnClick}
+          >
             {linkBtnTitle}
           </Button>
         </p>

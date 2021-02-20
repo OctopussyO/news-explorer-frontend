@@ -6,6 +6,7 @@ import Button from '../Button/Button';
 import LoadInfo from '../LoadInfo/LoadInfo';
 import NewsCard from '../NewsCard/NewsCard';
 import './NewsCardList.css';
+import '../Typo/Typo.css';
 
 const NewsCardList = ({
   cards = [],
@@ -24,13 +25,7 @@ const NewsCardList = ({
   const handleLoadMoreClick = () => setRenderingAmount(renderingAmount + RENDERING_AMOUNT);
   
   // СТИЛИ
-  const {
-    pageNarrowClassName,
-    pageListClassName,
-    robotoText,
-    robotoSlabText,
-  } = useContext(CommonPageStylesContext);
-  const titleClassName = joinCN({ basic: ['news-cards__title', robotoSlabText] });
+  const { pageNarrowClassName, pageListClassName } = useContext(CommonPageStylesContext);
   const sectionClassName = joinCN({
     basic: ['news-cards', pageNarrowClassName],
     condition: {
@@ -38,7 +33,6 @@ const NewsCardList = ({
       'news-cards_type_search': !isOwn,
     },
   });
-  const loadButtonClassName = joinCN({ basic: ['news-cards__button', robotoText] });
   const listClassName = joinCN({ basic: ['news-cards__list', pageListClassName] });  
 
   return (
@@ -63,12 +57,12 @@ const NewsCardList = ({
               Boolean(cards.length > 0)
               ? (
                 <>
-                  <h2 className={titleClassName}>
+                  <h2 className="news-cards__title typo typo_font-family_roboto-slab">
                     Результаты поиска
                   </h2>
                   <ul className={listClassName}>
                     { cards.slice(0, renderingAmount).map((card) => (
-                      <li className="news-cards__list-item" key={card.title} >
+                      <li className="news-cards__list-item" key={card.link} >
                         <NewsCard
                           card={card}
                           isOwn={false}
@@ -80,7 +74,10 @@ const NewsCardList = ({
                     )) }
                   </ul>
                   { Boolean(renderingAmount !== null & renderingAmount < cards.length) &&
-                    <Button outerClassName={loadButtonClassName} onClick={handleLoadMoreClick}>
+                    <Button
+                      outerClassName="news-cards__button typo typo_font-family_roboto"
+                      onClick={handleLoadMoreClick}
+                    >
                       Показать ещё
                     </Button>
                   }

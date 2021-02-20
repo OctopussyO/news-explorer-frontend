@@ -1,7 +1,5 @@
-import { useContext } from 'react';
-import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
-import joinCN from '../../utils/joinClassNames';
 import './FormInput.css';
+import '../Typo/Typo.css';
 
 const FormInput = ({
   id,
@@ -17,16 +15,13 @@ const FormInput = ({
   required,
   onChange,
 }) => {
-  const { interText } = useContext(CommonPageStylesContext);
-  
-  const inputClassName = joinCN({ basic: ['input-group__input', interText] });
-  const labelClassName = joinCN({ basic: ['input-group__label', interText] });
-  const errorClassName = joinCN({ basic: ['input-group__error', interText] });
-
   return (
     <div className="input-group">
-      <label className={labelClassName} htmlFor={id ? id : name}>{labelText}</label>
+      <label className="input-group__label typo typo_font-family_inter" htmlFor={id ? id : name}>
+        {labelText}
+      </label>
       <input
+        className="input-group__input typo typo_font-family_inter"
         id={id ? id : name}
         name={name}
         type={type}
@@ -39,9 +34,10 @@ const FormInput = ({
         value={value}
         onChange={onChange}
         autoComplete="off"
-        className={inputClassName}
       />
-      <span className={errorClassName}>{error && error}</span>
+      <span className="input-group__error typo typo_font-family_inter">
+        {error && error}
+      </span>
     </div>
   );
 };

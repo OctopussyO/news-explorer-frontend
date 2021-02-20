@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { CommonPageStylesContext } from "../../contexts/CommonPageStylesContext";
+import { APPEAR_DISAPPEAR_DELAY } from "../../utils/constants";
 import joinCN from "../../utils/joinClassNames";
 import BookmarkIcon from "../svg/BookmarkIcon";
 import Button from "../Button/Button";
@@ -10,7 +11,7 @@ import useCardTextTruncate from "../../hooks/useCardTextTruncate";
 import { formatDateToStr } from "../../utils/date";
 import delay from "../../utils/delay";
 import './NewsCard.css';
-import { APPEAR_DISAPPEAR_DELAY } from "../../utils/constants";
+import '../Typo/Typo.css';
 
 const NewsCard = ({
   card,
@@ -66,13 +67,7 @@ const NewsCard = ({
   const { titleLinesAmount, isTextTruncateNeeded } = useCardTextTruncate(titleRef, textRef);
 
   // СТИЛИ
-  const {
-    robotoText,
-    robotoSlabText,
-    sourceSansText,
-    disappearAnimation,
-    appearAnimation,
-  } = useContext(CommonPageStylesContext);
+  const { disappearAnimation, appearAnimation } = useContext(CommonPageStylesContext);
   const cardClassName = joinCN({
     basic: ['card'],
     condition: {
@@ -86,19 +81,16 @@ const NewsCard = ({
       'card__icon_marked': isSaved,
     },
   });
-  const keywordClassName = joinCN({ basic: ['card__keyword', robotoText] });
   const tooltipClassName = joinCN({
-    basic: ['card__tooltip', robotoText],
+    basic: ['card__tooltip', 'typo', 'typo_font-family_roboto'],
     condition: {
       'card__tooltip_for_delete': isOwn,
       'card__tooltip_for_auth': !isOwn,
       'card__tooltip_visible': isTooltipVisible,
     },
   });
-  const dateClassName = joinCN({ basic: ['card__date', sourceSansText] });
-  const titleClassName = joinCN({ basic: ['card__title', robotoSlabText] });
   const textClassName = joinCN({
-    basic: ['card__text', robotoText],
+    basic: ['card__text', 'typo', 'typo_font-family_roboto'],
     condition: {
       'card__text_truncated': isTextTruncateNeeded,
       'card__text_truncate_def': titleLinesAmount === 0 & isTextTruncateNeeded,
@@ -106,14 +98,7 @@ const NewsCard = ({
       'card__text_truncate_mid': titleLinesAmount === 2 & isTextTruncateNeeded,
       'card__text_truncate_max': titleLinesAmount === 3 & isTextTruncateNeeded,
     },
-  });
-  const sourcelinkClassName = joinCN({
-    basic: ['card__link', 'card__link_content_source', robotoSlabText],
-  });
-  const titleLinkClassName = joinCN({
-    basic: ['card__link', 'card__link_content_title', robotoSlabText],
-  });
-  
+  });  
 
   return (
     <figure className={cardClassName}>
@@ -146,16 +131,24 @@ const NewsCard = ({
             )
           }
         </div>
-        { isOwn && <span className={keywordClassName}>{card.keyword}</span> }
+        { isOwn && 
+          <span className="card__keyword typo typo_font-family_roboto">
+            {card.keyword}
+          </span> 
+        }
       </div>
       <img className="card__image" src={card.image} alt={altText} />
       <figcaption className=" card__text-content">
-        <p className={dateClassName}>
+        <p className="card__date typo typo_font-family_source-sans">
           {date}
         </p>
         <div className="card__description">
-          <h3 className={titleClassName} ref={titleRef}>
-            <Link isOuter={true} path={card.link} outerClassName={titleLinkClassName} >
+          <h3 className="card__title typo typo_font-family_roboto-slab" ref={titleRef}>
+            <Link
+              isOuter={true}
+              path={card.link}
+              outerClassName="card__link card__link_content_title typo typo_font-family_roboto-slab"
+            >
               {card.title}
             </Link>
           </h3>
@@ -163,7 +156,11 @@ const NewsCard = ({
             {card.text}
           </p>
         </div>
-        <Link isOuter={true} path={card.link} outerClassName={sourcelinkClassName} >
+        <Link
+          isOuter={true}
+          path={card.link}
+          outerClassName="card__link card__link_content_source typo typo_font-family_roboto-slab"
+        >
           {linkTitle}
         </Link>
       </figcaption>

@@ -3,6 +3,7 @@ import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import joinCN from '../../utils/joinClassNames';
 import './SavedNewsHeader.css';
+import '../Typo/Typo.css';
 
 const SavedNewsHeader = () => {
   const { name, savedNews } = useContext(CurrentUserContext);
@@ -89,22 +90,19 @@ const SavedNewsHeader = () => {
   };
 
   // СТИЛИ
-  const { pageNarrowClassName, robotoText, robotoSlabText } = useContext(CommonPageStylesContext);
+  const { pageNarrowClassName } = useContext(CommonPageStylesContext);
   const sectionClassName = joinCN({ basic: ['saved-news-header', pageNarrowClassName] });
-  const titleClassName = joinCN({ basic: ['saved-news-header__title', robotoText] });
-  const subtitleClassName = joinCN({ basic: ['saved-news-header__subtitle', robotoSlabText] });
-  const keywordsClassname = joinCN({ basic: ['saved-news-header__keywords', robotoText] });
   
   return (
     <section className={sectionClassName}>
-      <h2 className={titleClassName}>
+      <h2 className="saved-news-header__title typo typo_font-family_roboto">
         Сохранённые статьи
       </h2>
-      <p className={subtitleClassName}>
+      <p className={"saved-news-header__subtitle typo typo_font-family_roboto-slab"}>
         {name}, у вас {`${renderSavedNewsNumber()} ${renderSavedArticleWithEnding()}`}
       </p>
       { !!savedNewsNumber &&
-        <p className={keywordsClassname}>
+        <p className="saved-news-header__keywords typo typo_font-family_roboto">
           По ключевым словам: {renderKeywords()}
         </p>
       }

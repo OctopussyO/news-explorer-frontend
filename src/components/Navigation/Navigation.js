@@ -4,6 +4,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import joinCN from "../../utils/joinClassNames";
 import Link from "../Link/Link";
 import './Navigation.css';
+import '../Typo/Typo.css';
 
 const Navigation = ({
   outerClassName,
@@ -11,10 +12,12 @@ const Navigation = ({
   outerActiveLinkClassName,
 }) => {
   const { isLoggedIn } = useContext(CurrentUserContext);
-  const { robotoText, pageListClassName } = useContext(CommonPageStylesContext);
+  const { pageListClassName } = useContext(CommonPageStylesContext);
 
   const navClassName = joinCN({ basic: ['navigation', outerClassName] });
-  const navLinkClassName = joinCN({ basic: ['navigation__link', outerLinkClassName, robotoText] });
+  const navLinkClassName = joinCN({
+    basic: ['navigation__link', outerLinkClassName, 'typo', 'typo_font-family_roboto'],
+  });
   const navLinkActiveClassName = joinCN({
     basic: ['navigation__link_active', outerActiveLinkClassName],
   });

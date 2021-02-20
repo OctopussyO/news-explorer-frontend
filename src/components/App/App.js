@@ -239,10 +239,6 @@ const App = () => {
   const commonPageStyles = {
     pageNarrowClassName: 'page__narrow',
     pageListClassName: 'page__list',
-    robotoText: 'roboto-text',
-    robotoSlabText: 'roboto-slab-text',
-    interText: 'inter-text',
-    sourceSansText: 'source-sans-text',
     appearAnimation: 'appear-animation',
     disappearAnimation: 'disappear-animation',
   };
