@@ -26,7 +26,7 @@
 [![Nginx](https://img.shields.io/badge/-Nginx-464646??style=flat-square&logo=nginx)](https://https://www.netlify.com/)
 
 ### Инструкция по разрёртыванию проекта:
-```
+```bash
 # клонирование репозитория
 $ git clone https://github.com/OctopussyO/news-explorer-frontend.git
 
