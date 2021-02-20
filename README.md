@@ -26,24 +26,20 @@
 [![Nginx](https://img.shields.io/badge/-Nginx-464646??style=flat-square&logo=nginx)](https://https://www.netlify.com/)
 
 ### Инструкция по разрёртыванию проекта:
-клонирование репозитория
 ```
-git clone https://github.com/OctopussyO/news-explorer-frontend.git
-```
-установка зависимостей
-```
+# клонирование репозитория
+$ git clone https://github.com/OctopussyO/news-explorer-frontend.git
+
+# установка зависимостей
 $ npm install
-```
-запуск приложения в режиме разработчика
-```
+
+# запуск приложения в режиме разработчика
 $ npm run start
-```
-сборка проекта
-```
+
+# сборка проекта
 $ npm run build
-```
-сборка и деплой проекта на сервер
-```
+
+# сборка и деплой проекта на сервер
 $ npm run deploy
 ```
 
