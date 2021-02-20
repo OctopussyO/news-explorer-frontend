@@ -30,17 +30,26 @@
   font-weight: 400;
 }
 
-.about__paragraph {
+.about__text {
   color: #1A1B22;
   font-size: 18px;
   line-height: 24px;
   font-weight: 400;
-  margin-top: 0;
-  margin-bottom: 24px;
 }
 
-.about__paragraph:last-of-type {
+.about__paragraph {
+  margin-top: 24px;
   margin-bottom: 0;
+}
+
+.about__paragraph:first-of-type {
+  margin-top: 0;
+}
+
+.about__list {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: circle;
 }
 
 @media screen and (max-width: 1280px) {
