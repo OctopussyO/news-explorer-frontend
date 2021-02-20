@@ -66,6 +66,7 @@ const App = () => {
   // Обнуляет последний поиск
   const clearLastSearch = () => {
     localStorage.removeItem('lastKeyword');
+    localStorage.removeItem('lastFoundNews');
   };
 
   // Обрабатывает регистрацию
@@ -160,10 +161,11 @@ const App = () => {
     if (currentUser.isLoggedIn && !!token) getUserData(token);
   }, [currentUser.isLoggedIn, token]);
 
-  const handleSearch = async (keyword) => {
-    setKeyword(keyword);
+  // Обрабатывает поиск по ключевому слову/фразе
+  // keywordParametr -- назван так, чтобы не было конфликта со стейтом keyword, который тоже используется в функции.
+  const handleSearch = async (keywordParametr) => {
     setLoadingState(true);
-    await newsApi.getData({keyword: keyword, from:dateWeekAgo, to:dateNow})
+    await newsApi.getData({keyword: keywordParametr, from:dateWeekAgo, to:dateNow})
     .then((data) => {
       const foundNews = data.articles.map((article) => {
         const imageUrl = !!article.urlToImage && urlRegex.test(article.urlToImage)
@@ -179,12 +181,18 @@ const App = () => {
         };
       });
       setFoundNews(foundNews);
+      localStorage.setItem('lastFoundNews', JSON.stringify(foundNews));
     })
     .catch((err) => {
       console.error(err);
-      setFoundNews(null);
+      // Если поиск выполнялся сразу при загрузке страницы и не дал результатов, то используем
+      // последние найденные новости
+      setFoundNews(!!keyword ? null : JSON.parse(localStorage.getItem('lastFoundNews')));
     })
-    .finally(() => setLoadingState(false));
+    .finally(() => {
+      setKeyword(keywordParametr);
+      setLoadingState(false);
+    });
   };
   
   const updateSavedCards = () => {
