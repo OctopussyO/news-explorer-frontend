@@ -36,6 +36,10 @@
   outline: none;
 }
 
+.input-group__input:disabled {
+  background-color: transparent;
+}
+
 .input-group__error {
   min-height: 15px;
   color: #FF0000;

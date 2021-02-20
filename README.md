@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# News-explorer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img align="right" width="400px" src="https://downloader.disk.yandex.ru/preview/b681ce4148acf6c95f23909c48df2abd8908ef1ddad65c98eaec09e3128d7891/60314de8/46A899kYy3PWf3pkISNWvANgfgLjAcOFiY-aXf3k4YOuc7A4Etf4Pfp10PycasIxsa5epKcogKmStKMaxtGsdQ%3D%3D?uid=0&filename=news-explorer.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&tknv=v2&size=1920x913" alt="Иллюстрация к проекту">
 
-## Available Scripts
+Сервис, в котором можно найти новости по запросу и сохранить в личном кабинете.
 
-In the project directory, you can run:
+Ознакомиться с приложением можно по [ссылке](https://wow-news.students.nomoredomains.icu/).
+Бэкенд приложения расположен в [этом](https://github.com/OctopussyO/news-explorer-api) репозитории.
 
-### `npm start`
+### Функциональность
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Пользователь вводит в строку поиска ключевые слова и нажимает кнопку «Искать». После этого приложение выполняет  запрос к сервису NewsAPI, найти все подходящие материалы за последнюю неделю и отобразить карточки с ними. Когда пользователь сохраняет понравившиеся новости, они отображаются в специальном разделе на сайте.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Сайт состоит из двух страниц:
+- Главная. Содержит только окно поиска.
+- Страница с сохранёнными новостями. На ней отображаются материалы, которые пользователь добавил в избранное.
 
-### `npm test`
+Кроме них на сайте есть всплывающие окна с формой регистрации (чтобы пользователь мог сохранить новости в личном кабинете) и с формой входа.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Используемый стек
 
-### `npm run build`
+[![JavaScript](https://img.shields.io/badge/-JavaScript-464646??style=flat-square&logo=javascript)](https://www.javascript.com/)
+[![React.js](https://img.shields.io/badge/-React.js-464646??style=flat-square&logo=react.js)](https://ru.reactjs.org/)
+[![CSS](https://img.shields.io/badge/-CSS-464646??style=flat-square&logo=css3)](https://www.w3.org/Style/CSS/specs.ru.html)
+[![HTML](https://img.shields.io/badge/-HTML-464646??style=flat-square&logo=HTML5)](https://www.w3.org/TR/html52/introduction.html#introduction)
+[![Nginx](https://img.shields.io/badge/-Nginx-464646??style=flat-square&logo=nginx)](https://https://www.netlify.com/)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Инструкция по разрёртыванию проекта:
+```bash
+# клонирование репозитория
+$ git clone https://github.com/OctopussyO/news-explorer-frontend.git
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# установка зависимостей
+$ npm install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# запуск приложения в режиме разработчика
+$ npm run start
 
-### `npm run eject`
+# сборка проекта
+$ npm run build
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# сборка и деплой проекта на сервер
+$ npm run deploy
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

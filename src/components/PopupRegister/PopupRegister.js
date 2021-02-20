@@ -1,4 +1,8 @@
+import { useState } from 'react';
 import useFormValidation from '../../hooks/useFormWithValidation';
+import { LOADING_DELAY } from '../../utils/constants';
+import delay from '../../utils/delay';
+import handleErrorMessage from '../../utils/handleErrorMessage';
 import setCustomValidity from '../../utils/setCustomValidity';
 import FormInput from '../FormInput/FormInput';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
@@ -9,7 +13,6 @@ const PopupRegister = ({
   onRegister,
   onChangePopup,
 }) => {
-
   const {
     values,
     errors,
@@ -18,21 +21,45 @@ const PopupRegister = ({
     resetForm,
   } = useFormValidation(setCustomValidity);
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const handleRegister = () => {
-    onRegister();
+    setErrorMessage('');
+    return onRegister(values)
+      .then(() => {
+        resetForm();
+      })
+      .catch(async (err) => {
+        // Добавляем небольшую задержку, чтобы не было неприятного глазу мерцания при быстром ответе
+        await delay(LOADING_DELAY);
+        handleErrorMessage(err.status, setErrorMessage);
+        console.error(err);
+      });
+  };
+
+  const handleClose = () => {
+    onClose();
     resetForm();
+    setErrorMessage('');
+  };
+
+  const handleInputChange = (e) => {
+    handleChange(e);
+    setErrorMessage('');
   };
 
   return (
     <PopupWithForm
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       isSubmitActive={isFormValid}
       onSubmit={handleRegister}
-      formTitle = "Регистрация"
-      submitTitle = "Зарегистрироваться"
-      linkBtnTitle = "Войти"
+      formTitle="Регистрация"
+      submitTitle="Зарегистрироваться"
+      submitLoadingTitle="Регистрация..."
+      linkBtnTitle="Войти"
       onBtnClick={onChangePopup}
+      serverErrorMessage={errorMessage}
     >
       <FormInput
         id="email-register"
@@ -44,7 +71,7 @@ const PopupRegister = ({
         type="email"
         pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
         required={true}
-        onChange={handleChange}
+        onChange={handleInputChange}
       />
       <FormInput
         id="password-register"
@@ -56,7 +83,7 @@ const PopupRegister = ({
         type="password"
         minLength="6"
         required={true}
-        onChange={handleChange}
+        onChange={handleInputChange}
       />
       <FormInput
         name="name"
@@ -69,7 +96,7 @@ const PopupRegister = ({
         maxLength="30"
         pattern="^[A-Za-zА-Яа-яёЁ\s\-]+$"
         required={true}
-        onChange={handleChange}
+        onChange={handleInputChange}
       />
     </PopupWithForm>
   );

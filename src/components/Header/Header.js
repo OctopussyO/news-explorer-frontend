@@ -10,14 +10,14 @@ import MenuIcon from '../svg/MenuIcon';
 import CloseIcon from '../svg/CloseIcon';
 import throttle from '../../utils/throttle';
 import './Header.css';
+import '../Typo/Typo.css';
 
 const Header = ({
   isMainPage = false,
   onLogoutClick,
   onLoginClick,
 }) => {
-  const { isLoggedIn } = useContext(CurrentUserContext);
-
+  const { isLoggedIn, name } = useContext(CurrentUserContext);
   const [isMenuOpen, setMenuState] = useState(false);
 
   const handleMenuClick = () => setMenuState(!isMenuOpen);
@@ -52,7 +52,7 @@ const Header = ({
   }, []);
 
   // СТИЛИ
-  const { pageNarrowClassName, robotoText } = useContext(CommonPageStylesContext);
+  const { pageNarrowClassName } = useContext(CommonPageStylesContext);
 
   const headerClassName = joinCN({
     basic: ['header', pageNarrowClassName],
@@ -63,7 +63,7 @@ const Header = ({
     },
   });
   const headerButtonClassName = joinCN({
-    basic: ['header__button', robotoText],
+    basic: ['header__button', 'typo', 'typo_font-family_roboto'],
     condition: {
       'header__button_type_main-page': isMainPage,
       'header__button_type_secondary-page': !isMainPage,
@@ -111,7 +111,7 @@ const Header = ({
         { isLoggedIn
           ? (
             <Button outerClassName={headerButtonClassName} onClick={handleLogoutClick} labelText="Выйти">
-              Грета <LogoutIcon className="header__logout-icon" fill={isMainPage ? "#fff" : "#1A1B22"} />
+              {name} <LogoutIcon className="header__logout-icon" fill={isMainPage ? "#fff" : "#1A1B22"} />
             </Button>
           ) : (
             <Button outerClassName={headerButtonClassName} onClick={handleLoginClick}>

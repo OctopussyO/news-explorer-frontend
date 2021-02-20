@@ -1,5 +1,6 @@
 {
   "name": "news-explorer-frontend",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -15,6 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "npm run build && scp -r ./build/* octopussy@84.201.133.29:/home/octopussy/news-explorer-frontend",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

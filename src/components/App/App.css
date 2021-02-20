@@ -1,5 +1,37 @@
 @import url(../../vendor/fonts/fonts.css);
 
+@keyframes appear {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes disappear {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.appear-animation {
+  animation: appear .4s linear;
+  animation-fill-mode: forwards;
+}
+
+.disappear-animation {
+  animation: disappear .4s linear;
+  animation-fill-mode: forwards;
+}
+
 .page {
   height: 100%;
   display: flex;
@@ -9,6 +41,8 @@
 .page__content {
   position: relative;
   flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .page__narrow {
@@ -24,22 +58,6 @@
   margin-top: 0;
   margin-bottom: 0;
   padding-left: 0;
-}
-
-.roboto-text {
-  font-family: 'Roboto', Helvetica, Arial, sans-serif;
-}
-
-.roboto-slab-text {
-  font-family: 'Roboto Slab', Georgia, 'Times New Roman', Times, serif;
-}
-
-.inter-text {
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
-}
-
-.source-sans-text {
-  font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
 }
 
 @media screen and (max-width: 1280px) {

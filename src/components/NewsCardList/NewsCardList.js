@@ -1,28 +1,31 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
+import { RENDERING_AMOUNT } from '../../utils/constants';
 import joinCN from '../../utils/joinClassNames';
 import Button from '../Button/Button';
 import LoadInfo from '../LoadInfo/LoadInfo';
 import NewsCard from '../NewsCard/NewsCard';
 import './NewsCardList.css';
+import '../Typo/Typo.css';
 
 const NewsCardList = ({
   cards = [],
   isOwn = false,
   isLoading,
+  onSaveClick,
+  onDeleteClick,
+  onUnauthSaveClick,
+  newSearchTrigger,
 }) => {
-  const [renderingAmount, setRenderingAmount] = useState(isOwn ? null : 3);
+  const [renderingAmount, setRenderingAmount] = useState(isOwn ? null : RENDERING_AMOUNT);
+  useEffect(() => {
+    setRenderingAmount(RENDERING_AMOUNT);
+  }, [newSearchTrigger]);
 
-  const handleLoadMoreClick = () => setRenderingAmount(renderingAmount + 3);
+  const handleLoadMoreClick = () => setRenderingAmount(renderingAmount + RENDERING_AMOUNT);
   
   // СТИЛИ
-  const {
-    pageNarrowClassName,
-    pageListClassName,
-    robotoText,
-    robotoSlabText,
-  } = useContext(CommonPageStylesContext);
-  const titleClassName = joinCN({ basic: ['news-cards__title', robotoSlabText] });
+  const { pageNarrowClassName, pageListClassName } = useContext(CommonPageStylesContext);
   const sectionClassName = joinCN({
     basic: ['news-cards', pageNarrowClassName],
     condition: {
@@ -30,61 +33,63 @@ const NewsCardList = ({
       'news-cards_type_search': !isOwn,
     },
   });
-  const loadButtonClassName = joinCN({ basic: ['news-cards__button', robotoText] });
   const listClassName = joinCN({ basic: ['news-cards__list', pageListClassName] });  
 
   return (
-    <>
-    {/* Сохранённые карточки */}
-      {
-        Boolean(isOwn & cards.length > 0) && (
-          <section className={sectionClassName}>
+    <section className={sectionClassName}>
+      { isLoading
+        ? (
+          <LoadInfo isLoading={true} />
+        ) : (
+          Boolean(isOwn) ? (
             <ul className={listClassName}>
               { cards.map((card) => (
-                <li className="news-cards__list-item" key={card.id}>
-                  <NewsCard card={card} isOwn={true} />
+                <li className="news-cards__list-item" key={card._id}>
+                  <NewsCard card={card} isOwn={true} onDeleteClick={onDeleteClick} />
                 </li>
               )) }
             </ul>
-          </section>
-        )
-      }
-      {/* Найденные карточки */}
-      {
-        Boolean(!isOwn) && (
-          <section className={sectionClassName}>
-            { isLoading
+          ) : (
+            Boolean(cards === null)
+            ? (
+              <LoadInfo isError={true} />
+            ) : (
+              Boolean(cards.length > 0)
               ? (
-                <LoadInfo isLoading={true} />
+                <>
+                  <h2 className="news-cards__title typo typo_font-family_roboto-slab">
+                    Результаты поиска
+                  </h2>
+                  <ul className={listClassName}>
+                    { cards.slice(0, renderingAmount).map((card) => (
+                      <li className="news-cards__list-item" key={card.link} >
+                        <NewsCard
+                          card={card}
+                          isOwn={false}
+                          onSaveClick={onSaveClick}
+                          onDeleteClick={onDeleteClick}
+                          onUnauthSaveClick={onUnauthSaveClick}
+                        />
+                      </li>
+                    )) }
+                  </ul>
+                  { Boolean(renderingAmount !== null & renderingAmount < cards.length) &&
+                    <Button
+                      outerClassName="news-cards__button typo typo_font-family_roboto"
+                      onClick={handleLoadMoreClick}
+                    >
+                      Показать ещё
+                    </Button>
+                  }
+                </>
               ) : (
-                Boolean(cards.length > 0)
-                ? (
-                  <>
-                    <h2 className={titleClassName}>
-                      Результаты поиска
-                    </h2>
-                    <ul className={listClassName}>
-                      { cards.slice(0, renderingAmount).map((card) => (
-                        <li className="news-cards__list-item" key={card.id} >
-                          <NewsCard card={card} isOwn={false} />
-                        </li>
-                      )) }
-                    </ul>
-                    { Boolean(renderingAmount !== null & renderingAmount < cards.length) &&
-                      <Button outerClassName={loadButtonClassName} onClick={handleLoadMoreClick}>
-                        Показать ещё
-                      </Button>
-                    }
-                  </>
-                ) : (
-                  <LoadInfo isNotFound={true} />
-                )
+                <LoadInfo isNotFound={true} />
               )
-            }
-          </section>
+            )
+          )
         )
       }
-    </>
+    </section>
   );
 };
 

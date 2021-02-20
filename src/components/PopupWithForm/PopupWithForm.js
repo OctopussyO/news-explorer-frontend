@@ -1,10 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
+import { OPEN_CLOSE_DELAY } from '../../utils/constants';
 import delay from '../../utils/delay';
 import joinCN from '../../utils/joinClassNames';
 import Button from '../Button/Button';
 import Popup from '../Popup/Popup';
 import './PopupWithForm.css';
+import '../Typo/Typo.css';
 
 const PopupWithForm = ({
   children,
@@ -13,51 +15,65 @@ const PopupWithForm = ({
   onSubmit,
   formTitle = '',
   submitTitle = '',
+  submitLoadingTitle = '',
   linkBtnTitle = '',
   isSubmitActive,
   onBtnClick,
+  serverErrorMessage,
 }) => {
+  const [currentSubmitTitle, setSubmitTitle] = useState(submitTitle);
+  const [isDisabled, setDisabled] = useState(false);
+  const formRef = useRef(null);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit();
+    const formElements = Array.from(formRef.current.elements);
+    formElements.forEach((el) => el.disabled = true);
+    setSubmitTitle(submitLoadingTitle);
+    setDisabled(true);
+    onSubmit()
+      .finally(() => {
+        setDisabled(false);
+        formElements.forEach((el) => el.disabled = false);
+        setSubmitTitle(submitTitle);
+      });;
   };
-
-  const [errorMessage, setErrorMessage] = useState('');
-
-  // ДЛЯ ПРОВЕРКИ СТИЛЕЙ ОШИБКИ РАСКОММЕНТИРОВАТЬ:
-  // useEffect(() => {
-  //   setErrorMessage('Такой пользователь уже есть');
-  // }, []);
 
   const handleBtnClick = async () => {
     onClose();
-    await delay(500);
+    await delay(OPEN_CLOSE_DELAY);
     onBtnClick();
   };
 
   // СТИЛИ
-  const { robotoText, interText } = useContext(CommonPageStylesContext);
+  const { appearAnimation } = useContext(CommonPageStylesContext);
 
-  const titleClassName = joinCN({ basic: ['form__title', robotoText] });
-  const submitClassName = joinCN({ basic: ['form__submit-button', robotoText] });
-  const linkClassName = joinCN({ basic: ['form__link-button', interText] });
-  const choiseClassName = joinCN({ basic: ['form__choise', interText] });
-  const errorClassname = joinCN({ basic: ['form__response-error', interText] });
+  const errorClassName = joinCN({
+    basic: ['form__response-error', 'typo', 'typo_font-family_inter'],
+    condition: { [appearAnimation]: !!serverErrorMessage },
+  });
 
   return (
     <Popup isOpen={isOpen} onClose={onClose}>
-      <form className="form" onSubmit={handleSubmit}>
-        <h3 className={titleClassName}>
+      <form className="form" onSubmit={handleSubmit} ref={formRef}>
+        <h3 className="form__title typo typo_font-family_roboto">
           {formTitle}
         </h3>
         {children}
-        <span className={errorClassname}>{errorMessage}</span>
-        <Button isSubmit={true} isActive={isSubmitActive} outerClassName={submitClassName}>
-          {submitTitle}
+        <span className={errorClassName}>{serverErrorMessage}</span>
+        <Button
+          isSubmit={true}
+          isActive={isSubmitActive && !isDisabled}
+          outerClassName="form__submit-button typo typo_font-family_roboto"
+        >
+          {currentSubmitTitle}
         </Button>
-        <p className={choiseClassName}>
+        <p className="form__choise typo typo_font-family_inter">
           <span>или </span>
-          <Button outerClassName={linkClassName} onClick={handleBtnClick}>
+          <Button
+            outerClassName="form__link-button typo typo_font-family_inter"
+            onClick={handleBtnClick}
+          >
             {linkBtnTitle}
           </Button>
         </p>

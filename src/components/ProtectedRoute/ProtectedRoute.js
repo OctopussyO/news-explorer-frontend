@@ -5,7 +5,15 @@ function ProtectedRoute ({ component: Component, path, ...props }) {
   return(
     <Route path={path}>
       {
-        () => props.loggedIn ? <Component {...props} /> : <Redirect to="/" />
+        () => {
+          if (props.loggedIn === true) {
+            return <Component {...props} />
+          } else if (props.loggedIn === false) {
+            return <Redirect to={{ pathname: "/", state: {noAuthRedirected: true} }} />
+          } else {
+            return null;
+          }
+        }
       }
     </Route>
   );

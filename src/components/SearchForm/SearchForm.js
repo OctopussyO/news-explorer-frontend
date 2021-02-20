@@ -1,15 +1,18 @@
-import { useContext, useState } from 'react';
-import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
+import { useEffect, useState } from 'react';
 import useFormValidation from '../../hooks/useFormWithValidation';
 import joinCN from '../../utils/joinClassNames';
 import setCustomValidity from '../../utils/setCustomValidity';
 import Button from '../Button/Button';
 import './SearchForm.css';
+import '../Typo/Typo.css';
 
 const SearchForm = ({
   outerClassName,
   onSearchClick,
+  lastKeyword = '',
 }) => {
+  const [isDisabled, setDisabled] = useState(false);
+
   const [isFormFocus, setFormFocus] = useState(false);
   const handleFocus = () => setFormFocus(true);
   const handleBlur = () => setFormFocus(false);
@@ -19,19 +22,36 @@ const SearchForm = ({
     errors,
     isFormValid,
     handleChange,
-    resetForm,
   } = useFormValidation(setCustomValidity);
 
-  const handleSubmit = (e) => {
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const inputElement = Array.from(e.target.childNodes).find((node) => node.nodeName === 'INPUT');
     if (isFormValid) {
-      onSearchClick();
-      resetForm();
+      setDisabled(true);
+      inputElement.blur();
+      await onSearchClick(values.search);
+      setDisabled(false);
+    } else {
+      const event = new Event('change');
+      inputElement.dispatchEvent(event);
+      handleInputChange(event);
     }
   };
+
+  const [inputLastKeyword, setInputLastKeyword] = useState(lastKeyword);
+
+  const handleInputChange = (e) => {
+    setInputLastKeyword('');
+    handleChange(e);
+  };
+
+  useEffect(() => {
+    setInputLastKeyword(lastKeyword);
+  }, [lastKeyword]);
   
   // СТИЛИ
-  const { robotoText } = useContext(CommonPageStylesContext);
   const formClassName = joinCN({
     basic: ['search-form', outerClassName],
     condition: {
@@ -39,13 +59,11 @@ const SearchForm = ({
       'search-form_focused': isFormFocus,
     },
   });
-  const inputClassName = joinCN({ basic: ['search-form__input', robotoText] });
-  const buttonClassName = joinCN({ basic: ['search-form__button', robotoText] });
   
   return (
     <form className={formClassName} onSubmit={handleSubmit} noValidate>
       <input
-        className={inputClassName}
+        className="search-form__input typo typo_font-family_roboto"
         type="text"
         name="search"
         placeholder={errors.search || "Введите тему новости"}
@@ -55,11 +73,16 @@ const SearchForm = ({
         aria-label="Ключевое слово для поиска"
         onFocus={handleFocus}
         onBlur={handleBlur}
-        onChange={handleChange}
-        value={values.search || ""}
+        onChange={handleInputChange}
+        value={values.search || inputLastKeyword || ""}
+        disabled={isDisabled}
       />
-      <Button isSubmit={true} outerClassName={buttonClassName}>
-        Искать
+      <Button
+        isSubmit={true}
+        outerClassName="search-form__button typo typo_font-family_roboto"
+        isActive={!isDisabled}
+      >
+        {isDisabled ? "Поиск..." : "Искать"}
       </Button>
     </form>
   );

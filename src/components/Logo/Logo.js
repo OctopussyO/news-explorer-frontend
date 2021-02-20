@@ -1,14 +1,14 @@
-import { useContext } from 'react';
-import { CommonPageStylesContext } from '../../contexts/CommonPageStylesContext';
 import joinCN from '../../utils/joinClassNames';
 import Link from '../Link/Link';
 import './Logo.css';
+import '../Typo/Typo.css';
 
 const Logo = ({
   outerClassName,
 }) => {
-  const { robotoSlabText } = useContext(CommonPageStylesContext);
-  const logoClassName = joinCN({ basic: ['logo', robotoSlabText, outerClassName] });
+  const logoClassName = joinCN({
+    basic: ['logo', 'typo', 'typo_font-family_roboto-slab', outerClassName],
+  });
 
   return (
     <Link path="/" outerClassName={logoClassName}>NewsExplorer</Link>

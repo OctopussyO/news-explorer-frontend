@@ -48,3 +48,8 @@
 .form__link-button:hover {
   color: #347EFF;
 }
+
+.form__link-button:disabled {
+  cursor: default;
+  color: #B6BCBF;
+}
