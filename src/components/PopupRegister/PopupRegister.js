@@ -33,6 +33,7 @@ const PopupRegister = ({
         // Добавляем небольшую задержку, чтобы не было неприятного глазу мерцания при быстром ответе
         await delay(LOADING_DELAY);
         handleErrorMessage(err.status, setErrorMessage);
+        console.error(err);
       });
   };
 
