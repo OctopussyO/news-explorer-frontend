@@ -16,7 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "npm run build && scp -r ./build/* octopussy@84.201.133.29:/home/octopussy/news-explorer-frontend",
+    "deploy": "npm run build && scp -r ./build/* octopussy@178.154.195.242:/home/octopussy/news/front",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
