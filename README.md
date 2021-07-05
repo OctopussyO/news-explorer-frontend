@@ -1,6 +1,6 @@
 # News-explorer
 
-<img align="right" width="400px" src="https://downloader.disk.yandex.ru/preview/b681ce4148acf6c95f23909c48df2abd8908ef1ddad65c98eaec09e3128d7891/60314de8/46A899kYy3PWf3pkISNWvANgfgLjAcOFiY-aXf3k4YOuc7A4Etf4Pfp10PycasIxsa5epKcogKmStKMaxtGsdQ%3D%3D?uid=0&filename=news-explorer.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&tknv=v2&size=1920x913" alt="Иллюстрация к проекту">
+<img align="right" width="400px" src="https://raw.githubusercontent.com/OctopussyO/news-explorer-frontend/master/public/preview.png" alt="Иллюстрация к проекту">
 
 Сервис, в котором можно найти новости по запросу и сохранить в личном кабинете.
 
